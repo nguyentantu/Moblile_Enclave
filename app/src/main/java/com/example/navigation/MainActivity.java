@@ -293,9 +293,9 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        DrawerLayout  mDrawerLayout = findViewById(R.id.drawer_layout);
         if (id == R.id.nav_home) {
-            Intent intent = new Intent(MainActivity.this, MainActivity.class);
-            startActivity(intent);
+            mDrawerLayout.closeDrawers();
         } else if (id == R.id.nav_profile) {
 
         } else if (id == R.id.nav_logout) {
