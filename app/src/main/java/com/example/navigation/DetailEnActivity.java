@@ -130,4 +130,11 @@ public class DetailEnActivity extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(DetailEnActivity.this, ListEngineerActivity.class);
+        startActivity(intent);
+        super.onBackPressed();
+    }
 }

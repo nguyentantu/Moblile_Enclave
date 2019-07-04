@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#9B8989"
+    android:background="@color/colorWhite"
     tools:context=".MainActivity">
 
 
@@ -38,7 +38,7 @@
             android:layout_width="0dp"
             android:layout_height="139dp"
             android:layout_marginTop="116dp"
-            android:background="#D8CACA"
+            android:background="@color/colorWhite"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline"
