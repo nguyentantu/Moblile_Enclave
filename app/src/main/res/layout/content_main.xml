@@ -14,7 +14,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp">
+        android:layout_marginTop="40dp">
 
 
         <LinearLayout
@@ -22,11 +22,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Switch
-                android:id="@+id/switch1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="" />
+            <!--<Switch-->
+                <!--android:id="@+id/switch1"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="" />-->
 
             <LinearLayout
                 android:clipToPadding="false"

@@ -10,7 +10,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
@@ -97,18 +99,18 @@ public class MainActivity extends AppCompatActivity
         MainActivity.ListEngineers task = new MainActivity.ListEngineers();
         task.execute();
 
-        Switch aSwitch = findViewById(R.id.switch1);
-        aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                if (b){
-                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                } else {
-                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                }
-            }
-        });
+//        Switch aSwitch = findViewById(R.id.switch1);
+//        aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//
+//                if (b){
+//                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//                } else {
+//                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//                }
+//            }
+//        });
 
         pieChart = (PieChart) findViewById(R.id.linechart);
 
@@ -189,6 +191,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
     class ListEngineers extends AsyncTask<Void, Void, ArrayList<Engineers>> {
         @Override
         protected void onPreExecute() {
@@ -259,7 +262,22 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+
+        MenuItem menuItem= menu.findItem(R.id.myswitch);
+        View view = MenuItemCompat.getActionView(menuItem);
+        final Switch switcha = (Switch) view.findViewById(R.id.switchForActionBar);
+        switcha.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (isChecked){
+                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                } else {
+                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
     }
 
 //    @Override
@@ -309,6 +327,8 @@ public class MainActivity extends AppCompatActivity
             Intent webPageIntent = new Intent(Intent.ACTION_VIEW);
             webPageIntent.setData(Uri.parse("http://enclaveit.com/"));
             startActivity(webPageIntent);
+        } else if (id == R.id.myswitch){
+
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
