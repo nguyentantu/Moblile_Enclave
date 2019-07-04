@@ -41,6 +41,7 @@ import com.github.mikephil.charting.utils.MPPointF;
 import com.mahfa.dnswitch.DayNightSwitch;
 import com.mahfa.dnswitch.DayNightSwitchListener;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -60,7 +61,11 @@ public class MainActivity extends AppCompatActivity
     private PieChart pieChart;
 
     int totalEn = 0;
-    TextView txtTotalEngineer;
+    int totalPro = 0;
+    int totalTeam = 0;
+    int totalManager = 0;
+
+    TextView txtTotalEngineer, txtProject, txtTeam, txtManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +91,9 @@ public class MainActivity extends AppCompatActivity
     private void addControls() {
 
         txtTotalEngineer = findViewById(R.id.txt_engineers);
+        txtProject = findViewById(R.id.txt_pro);
+        txtTeam = findViewById(R.id.txt_team);
+        txtManager = findViewById(R.id.txt_manager);
 
         LinearLayout llEngineer = findViewById(R.id.ll_engineer);
         llEngineer.setOnClickListener(new View.OnClickListener() {
@@ -202,7 +210,13 @@ public class MainActivity extends AppCompatActivity
         protected void onPostExecute(ArrayList<Engineers> engineers) {
             super.onPostExecute(engineers);
 
-            ValueAnimator animator = ValueAnimator.ofInt(0, totalEn); //0 is min number, 600 is max number
+            //txtProject.setText(totalPro+"");
+            Log.i("aaaaaaaaaaaaaa", "ggggggggggg"+totalPro);
+
+            ValueAnimator animator = ValueAnimator.ofInt(1, totalEn);
+            ValueAnimator animator2 = ValueAnimator.ofInt(1, totalPro);
+            ValueAnimator animator3 = ValueAnimator.ofInt(1, totalTeam);
+            ValueAnimator animator4 = ValueAnimator.ofInt(0, totalManager);//0 is min number, 600 is max number
             animator.setDuration(3000); //Duration is in milliseconds
             animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 public void onAnimationUpdate(ValueAnimator animation) {
@@ -210,6 +224,30 @@ public class MainActivity extends AppCompatActivity
                 }
             });
             animator.start();
+
+            animator2.setDuration(600); //Duration is in milliseconds
+            animator2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    txtProject.setText(animation.getAnimatedValue().toString());
+                }
+            });
+            animator2.start();
+
+            animator3.setDuration(500); //Duration is in milliseconds
+            animator3.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    txtTeam.setText(animation.getAnimatedValue().toString());
+                }
+            });
+            animator3.start();
+
+            animator4.setDuration(300); //Duration is in milliseconds
+            animator4.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    txtManager.setText(animation.getAnimatedValue().toString());
+                }
+            });
+            animator4.start();
 
            // txtTotalEngineer.setText(totalEn + "");
         }
@@ -223,7 +261,7 @@ public class MainActivity extends AppCompatActivity
         protected ArrayList<Engineers> doInBackground(Void... voids) {
             ArrayList<Engineers> dsEngineer = new ArrayList<>();
             try {
-                URL url = new URL("https://cool-demo-api.herokuapp.com/api/v1/engineers");// link API
+                URL url = new URL("https://serverapp-api.herokuapp.com/api/v1/dashboard");// link API
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
@@ -236,7 +274,24 @@ public class MainActivity extends AppCompatActivity
                     builder.append(line);
                 }
                 JSONObject jsonArray = new JSONObject(builder.toString());
-                totalEn = jsonArray.getInt("total");
+                totalEn = jsonArray.getInt("engineer");
+                    totalPro = jsonArray.getInt("project");
+                    totalTeam = jsonArray.getInt("team");
+                    totalManager = jsonArray.getInt("manager");
+
+//                JSONArray jArray = new JSONArray(builder.toString());
+//
+//                Log.i("aaaaaaaaaaaaaaaa", jArray+"dfffffffffffff");
+//
+
+//                for(int i=0;i<jArray.length();i++){
+//                    JSONObject json_obj = jArray.getJSONObject(i);
+//                    totalEn = json_obj.getInt("Engineer");
+//                    totalPro = json_obj.getInt("Project");
+//                    totalTeam = json_obj.getInt("Team");
+//                    totalManager = json_obj.getInt("Manager");
+//
+//                }
 
                 br.close();
 
