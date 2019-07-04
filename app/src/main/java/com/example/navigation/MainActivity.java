@@ -1,5 +1,6 @@
 package com.example.navigation;
 
+import android.animation.ValueAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -83,6 +84,15 @@ public class MainActivity extends AppCompatActivity
     private void addControls() {
 
         txtTotalEngineer = findViewById(R.id.txt_engineers);
+
+        LinearLayout llEngineer = findViewById(R.id.ll_engineer);
+        llEngineer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ListEngineerActivity.class);
+                startActivity(intent);
+            }
+        });
 
         MainActivity.ListEngineers task = new MainActivity.ListEngineers();
         task.execute();
@@ -189,7 +199,16 @@ public class MainActivity extends AppCompatActivity
         protected void onPostExecute(ArrayList<Engineers> engineers) {
             super.onPostExecute(engineers);
 
-            txtTotalEngineer.setText(totalEn + "");
+            ValueAnimator animator = ValueAnimator.ofInt(0, totalEn); //0 is min number, 600 is max number
+            animator.setDuration(3000); //Duration is in milliseconds
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    txtTotalEngineer.setText(animation.getAnimatedValue().toString());
+                }
+            });
+            animator.start();
+
+           // txtTotalEngineer.setText(totalEn + "");
         }
 
         @Override
