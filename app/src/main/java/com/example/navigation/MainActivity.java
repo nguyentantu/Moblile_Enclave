@@ -64,12 +64,14 @@ public class MainActivity extends AppCompatActivity
     int totalPro = 0;
     int totalTeam = 0;
     int totalManager = 0;
+    int id;
 
-    TextView txtTotalEngineer, txtProject, txtTeam, txtManager;
+    String email, lastName, firstName;
+
+    TextView txtTotalEngineer, txtProject, txtTeam, txtManager, txtGmail, txtNameAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -85,7 +87,6 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         addControls();
-
     }
 
     private void addControls() {
@@ -94,6 +95,14 @@ public class MainActivity extends AppCompatActivity
         txtProject = findViewById(R.id.txt_pro);
         txtTeam = findViewById(R.id.txt_team);
         txtManager = findViewById(R.id.txt_manager);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view );
+        View headerView = navigationView.getHeaderView(0);
+        txtGmail =  headerView.findViewById(R.id.txt_gmail);
+        txtNameAdmin = headerView.findViewById(R.id.txt_nameHeader);
+
+        Intent intent = getIntent();
+        id = intent.getIntExtra("id",0);
 
         LinearLayout llEngineer = findViewById(R.id.ll_engineer);
         llEngineer.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +115,7 @@ public class MainActivity extends AppCompatActivity
 
         MainActivity.ListEngineers task = new MainActivity.ListEngineers();
         task.execute();
+
 
 //        Switch aSwitch = findViewById(R.id.switch1);
 //        aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -124,7 +134,6 @@ public class MainActivity extends AppCompatActivity
 
         createChart();
     }
-
 
     private void createChart() {
         pieChart.setUsePercentValues(true);
@@ -150,10 +159,10 @@ public class MainActivity extends AppCompatActivity
 
         List<Float> arrAmount = new ArrayList<>();
         // Add Fix 3 Items into Chart
-        arrAmount.add(30f); //99000000f
-        arrAmount.add(60f);
-        arrAmount.add(20f);
-        arrAmount.add(10f);
+        arrAmount.add(50f); //99000000f
+        arrAmount.add(30f);
+//        arrAmount.add(20f);
+//        arrAmount.add(10f);
         setData(arrAmount);
     }
 
@@ -201,6 +210,7 @@ public class MainActivity extends AppCompatActivity
 
 
     class ListEngineers extends AsyncTask<Void, Void, ArrayList<Engineers>> {
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -210,9 +220,10 @@ public class MainActivity extends AppCompatActivity
         protected void onPostExecute(ArrayList<Engineers> engineers) {
             super.onPostExecute(engineers);
 
-            //txtProject.setText(totalPro+"");
-            Log.i("aaaaaaaaaaaaaa", "ggggggggggg"+totalPro);
+            txtGmail.setText(email);
+            txtNameAdmin.setText(firstName+" "+lastName);
 
+            //txtProject.setText(totalPro+"");
             ValueAnimator animator = ValueAnimator.ofInt(1, totalEn);
             ValueAnimator animator2 = ValueAnimator.ofInt(1, totalPro);
             ValueAnimator animator3 = ValueAnimator.ofInt(1, totalTeam);
@@ -248,8 +259,6 @@ public class MainActivity extends AppCompatActivity
                 }
             });
             animator4.start();
-
-           // txtTotalEngineer.setText(totalEn + "");
         }
 
         @Override
@@ -261,7 +270,7 @@ public class MainActivity extends AppCompatActivity
         protected ArrayList<Engineers> doInBackground(Void... voids) {
             ArrayList<Engineers> dsEngineer = new ArrayList<>();
             try {
-                URL url = new URL("https://serverapp-api.herokuapp.com/api/v1/dashboard");// link API
+                URL url = new URL("https://cool-demo-api.herokuapp.com/api/v1/dashboard");// link API
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
@@ -274,25 +283,31 @@ public class MainActivity extends AppCompatActivity
                     builder.append(line);
                 }
                 JSONObject jsonArray = new JSONObject(builder.toString());
-                totalEn = jsonArray.getInt("engineer");
+                    totalEn = jsonArray.getInt("engineer");
                     totalPro = jsonArray.getInt("project");
                     totalTeam = jsonArray.getInt("team");
                     totalManager = jsonArray.getInt("manager");
 
-//                JSONArray jArray = new JSONArray(builder.toString());
-//
-//                Log.i("aaaaaaaaaaaaaaaa", jArray+"dfffffffffffff");
-//
+                try {
+                    URL url2 = new URL("https://cool-demo-api.herokuapp.com/api/v1/engineers/"+id);// link API
+                    HttpURLConnection conn = (HttpURLConnection) url2.openConnection();
+                    conn.setRequestMethod("GET");
+                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
 
-//                for(int i=0;i<jArray.length();i++){
-//                    JSONObject json_obj = jArray.getJSONObject(i);
-//                    totalEn = json_obj.getInt("Engineer");
-//                    totalPro = json_obj.getInt("Project");
-//                    totalTeam = json_obj.getInt("Team");
-//                    totalManager = json_obj.getInt("Manager");
-//
-//                }
+                    InputStreamReader isr2 = new InputStreamReader(conn.getInputStream(), "UTF-8");
+                    BufferedReader br2 = new BufferedReader(isr2);
+                    StringBuilder builder2 = new StringBuilder();
+                    String line2 = null;
+                    while ((line2 = br2.readLine()) != null) {
+                        builder2.append(line2);
+                    }
+                    JSONObject jsonArray2 = new JSONObject(builder2.toString());
+                    email = jsonArray2.getString("email");
+                    firstName = jsonArray2.getString("firstName");
+                    lastName = jsonArray2.getString("lastName");
+                } catch (Exception e){
 
+                }
                 br.close();
 
             } catch (Exception ex) {
@@ -351,9 +366,11 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout  mDrawerLayout = findViewById(R.id.drawer_layout);
         if (id == R.id.nav_home) {
             mDrawerLayout.closeDrawers();
-        } else if (id == R.id.nav_profile) {
-
-        } else if (id == R.id.nav_logout) {
+        }
+//        } else if (id == R.id.nav_profile) {
+//
+//        }
+        else if (id == R.id.nav_logout) {
             AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this); //Home is name of the activity
             builder.setMessage("Do you want to exit?");
             builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -385,7 +402,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.myswitch){
 
         }
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

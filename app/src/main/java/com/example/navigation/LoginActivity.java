@@ -32,7 +32,8 @@ public class LoginActivity extends AppCompatActivity {
     ProgressDialog mProgress;
 
     EditText edtUsername, edtPassword;
-    String UserName, Password, usernameget;
+    String UserName, Password;
+    int id;
 
 
     private CheckBox saveLoginCheckBox;
@@ -179,7 +180,7 @@ public class LoginActivity extends AppCompatActivity {
                     builder.append(line);
                 }
                 JSONObject jsonArray = new JSONObject(builder.toString());
-                usernameget = jsonArray.getString("scope");
+                id = jsonArray.getInt("id");
 
                 br.close();
 
@@ -192,8 +193,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (status == 200){
                     mProgress.dismiss();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.putExtra("usernameset", usernameget);
-
+                    intent.putExtra("id", id);
                     startActivity(intent);
                 }else if(status == 409){
                     return "existed";
