@@ -233,7 +233,6 @@ public class MainActivity extends AppCompatActivity
             txtGmail.setText(email);
             txtNameAdmin.setText(firstName+" "+lastName);
 
-
             //txtProject.setText(totalPro+"");
             ValueAnimator animator = ValueAnimator.ofInt(1, totalEn);
             ValueAnimator animator2 = ValueAnimator.ofInt(1, totalPro);
@@ -281,7 +280,7 @@ public class MainActivity extends AppCompatActivity
         protected ArrayList<Engineers> doInBackground(Void... voids) {
             ArrayList<Engineers> dsEngineer = new ArrayList<>();
             try {
-                URL url = new URL("https://cool-demo-api.herokuapp.com/api/v1/dashboard");// link API
+                URL url = new URL("https://serverapp-api.herokuapp.com/api/v1/dashboard");// link API
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
@@ -293,11 +292,11 @@ public class MainActivity extends AppCompatActivity
                 while ((line = br.readLine()) != null) {
                     builder.append(line);
                 }
-                JSONObject jsonArray = new JSONObject(builder.toString());
-                    totalEn = jsonArray.getInt("engineer");
-                    totalPro = jsonArray.getInt("project");
-                    totalTeam = jsonArray.getInt("team");
-                    totalManager = jsonArray.getInt("manager");
+                JSONObject jsonObject = new JSONObject(builder.toString());
+                    totalEn = jsonObject.getInt("engineer");
+                    totalPro = jsonObject.getInt("project");
+                    totalTeam = jsonObject.getInt("team");
+                    totalManager = jsonObject.getInt("manager");
 
                 try {
                     URL url2 = new URL("https://cool-demo-api.herokuapp.com/api/v1/engineers/"+id);// link API
