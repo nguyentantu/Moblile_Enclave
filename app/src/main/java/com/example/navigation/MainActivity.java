@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity
     int totalManager = 0;
     int id;
 
-    String email, lastName, firstName;
+     String email, lastName, firstName;
 
     TextView txtTotalEngineer, txtProject, txtTeam, txtManager, txtGmail, txtNameAdmin;
 
@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity
 
         Intent intent = getIntent();
         id = intent.getIntExtra("id",0);
+        //this.finish();
 
         LinearLayout llEngineer = findViewById(R.id.ll_engineer);
         llEngineer.setOnClickListener(new View.OnClickListener() {
@@ -157,13 +158,13 @@ public class MainActivity extends AppCompatActivity
         pieChart.setRotationEnabled(true);
         pieChart.setHighlightPerTapEnabled(true);
 
-        List<Float> arrAmount = new ArrayList<>();
-        // Add Fix 3 Items into Chart
-        arrAmount.add(50f); //99000000f
-        arrAmount.add(30f);
-//        arrAmount.add(20f);
-//        arrAmount.add(10f);
-        setData(arrAmount);
+//        List<Float> arrAmount = new ArrayList<>();
+//        // Add Fix 3 Items into Chart
+//        arrAmount.add(50f); //99000000f
+//        arrAmount.add(30f);
+////        arrAmount.add(20f);
+////        arrAmount.add(10f);
+//        setData(arrAmount);
     }
 
     private void setData(List<Float> amounts) {
@@ -220,8 +221,18 @@ public class MainActivity extends AppCompatActivity
         protected void onPostExecute(ArrayList<Engineers> engineers) {
             super.onPostExecute(engineers);
 
+            List<Float> arrAmount = new ArrayList<>();
+            // Add Fix 3 Items into Chart
+            arrAmount.add(Float.parseFloat(totalTeam+"")); //99000000f
+            arrAmount.add(Float.parseFloat(totalPro+""));
+//        arrAmount.add(20f);
+//        arrAmount.add(10f);
+            setData(arrAmount);
+
+
             txtGmail.setText(email);
             txtNameAdmin.setText(firstName+" "+lastName);
+
 
             //txtProject.setText(totalPro+"");
             ValueAnimator animator = ValueAnimator.ofInt(1, totalEn);

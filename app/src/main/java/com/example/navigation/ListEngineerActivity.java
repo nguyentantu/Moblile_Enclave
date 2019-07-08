@@ -69,6 +69,7 @@ public class ListEngineerActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(ListEngineerActivity.this, MainActivity.class);
 //                intent.putExtra("total", total);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });
@@ -150,7 +151,8 @@ public class ListEngineerActivity extends AppCompatActivity {
     public void onBackPressed() {
 
         Intent intent = new Intent(ListEngineerActivity.this, MainActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         super.onBackPressed();
     }
 }

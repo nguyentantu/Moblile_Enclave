@@ -55,6 +55,7 @@ public class DetailEnActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DetailEnActivity.this, ListEngineerActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP); // dont reload
                 startActivity(intent);
             }
         });
@@ -134,6 +135,7 @@ public class DetailEnActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(DetailEnActivity.this, ListEngineerActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
         super.onBackPressed();
     }
