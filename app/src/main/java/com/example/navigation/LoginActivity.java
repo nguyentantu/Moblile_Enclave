@@ -7,14 +7,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
@@ -27,7 +27,7 @@ import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity {
 
-    Button btnLogin;
+    TextView btnLogin;
 
     ProgressDialog mProgress;
 
@@ -157,7 +157,7 @@ public class LoginActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
 
             try{
-                URL url = new URL("https://cool-demo-api.herokuapp.com/api/v1/auth/login");
+                URL url = new URL("http://si-enclave.herokuapp.com/api/v1/auth/login");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
@@ -165,8 +165,6 @@ public class LoginActivity extends AppCompatActivity {
                 JSONObject jsonParam = new JSONObject();
                 jsonParam.put("username", UserName);
                 jsonParam.put("password", Password);
-
-                Log.i("myAppTag", "g=============="+jsonParam);
 
                 DataOutputStream os = new DataOutputStream(conn.getOutputStream());
                 //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
@@ -196,9 +194,10 @@ public class LoginActivity extends AppCompatActivity {
                     intent.putExtra("id", id);
                     startActivity(intent);
                 }else if(status == 409){
+                    mProgress.dismiss();
                     return "existed";
                 }
-                else {
+                else{
                     mProgress.dismiss();
                     return "false";
                 }

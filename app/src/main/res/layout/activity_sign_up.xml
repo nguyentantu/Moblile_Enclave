@@ -10,6 +10,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -21,9 +22,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
                 android:padding="16dp"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/logo2"/>
+                android:src="@drawable/logo2" />
 
             <EditText
                 android:id="@+id/edt_userName"
@@ -38,13 +39,16 @@
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:padding="8dp"
-                android:textColorHint="@color/colorBlack"
-                />
+                android:textColorHint="#B1A1A1"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="10dp"/>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorBlack"
-                />
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="10dp"/>
 
             <EditText
                 android:id="@+id/edt_email"
@@ -58,13 +62,17 @@
                 android:hint="Email"
                 android:maxLines="1"
                 android:padding="8dp"
-                android:textColorHint="@color/colorBlack" />
+                android:textColorHint="#B1A1A1"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="10dp"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorBlack"
-                />
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="10dp"/>
+
             <EditText
                 android:id="@+id/edt_password"
                 android:layout_width="match_parent"
@@ -78,13 +86,17 @@
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:padding="8dp"
-                android:textColorHint="@color/colorBlack" />
+                android:textColorHint="#B1A1A1"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="10dp"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorBlack"
-                />
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="10dp"/>
+
             <EditText
                 android:id="@+id/edt_confirmPass"
                 android:layout_width="match_parent"
@@ -98,12 +110,16 @@
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:padding="8dp"
-                android:textColorHint="@color/colorBlack" />
+                android:textColorHint="#B1A1A1"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="10dp"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/colorBlack" />
+                android:background="@color/colorBlack"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="10dp"/>
 
 
             <Button
@@ -118,26 +134,27 @@
                 android:text="Create account"
                 android:textAllCaps="false"
                 android:textColor="@color/colorWhite"
-                android:textSize="18sp" />
-
+                android:textSize="18sp"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"/>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_below="@+id/txt_so"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
                     android:onClick="backLogin"
                     android:text="Already a member? Login here"
                     android:textAlignment="center"
                     android:textColor="@color/colorBlack"
-                    android:textSize="17dp"
-                    android:layout_marginTop="15dp"/>
+                    android:textSize="17dp" />
 
 
             </LinearLayout>

@@ -5,7 +5,7 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="#CEB6B6"
+    android:background="#009688"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
     <LinearLayout
@@ -16,8 +16,8 @@
 
         <Button
             android:id="@+id/btn_back"
-            android:layout_width="20dp"
-            android:layout_height="25dp"
+            android:layout_width="25dp"
+            android:layout_height="35dp"
             android:layout_marginRight="15dp"
             android:layout_weight="1"
             android:background="@drawable/back" />
@@ -30,7 +30,7 @@
             android:lines="1"
             android:text=""
             android:textAllCaps="false"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
             android:textSize="20sp"
             android:textStyle="bold" />
 

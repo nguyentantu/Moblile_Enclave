@@ -93,6 +93,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void backLogin(View view) {
         Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
 
@@ -104,7 +105,7 @@ public class SignUpActivity extends AppCompatActivity {
             super.onPostExecute(s);
 
             if (s == "OK"){
-                Toast.makeText(SignUpActivity.this,"Sing up successful!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this,"Sign up successful!",Toast.LENGTH_SHORT).show();
                 Log.i("myAppTag", "(onPostExecute method) Result = Posted");
             } else if(s == "exist"){
                 Toast.makeText(SignUpActivity.this, "username exists!", Toast.LENGTH_SHORT).show();
@@ -117,7 +118,7 @@ public class SignUpActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
 
             try{
-                URL url = new URL("https://cool-demo-api.herokuapp.com/api/v1/auth/register");
+                URL url = new URL("http://si-enclave.herokuapp.com/api/v1/auth/register");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
@@ -127,8 +128,6 @@ public class SignUpActivity extends AppCompatActivity {
                 jsonParam.put("username", UserName);
                 jsonParam.put("password", Password);
 
-                Log.i("myAppTag", "g=============="+jsonParam);
-
                 DataOutputStream os = new DataOutputStream(conn.getOutputStream());
                 os.writeBytes(jsonParam.toString());
 
@@ -136,7 +135,6 @@ public class SignUpActivity extends AppCompatActivity {
                 os.close();
 
                 int status = conn.getResponseCode();
-                Log.i("myAppTag", "==================="+status);
 
                 if (status == 200){
                     mProgress.dismiss();
@@ -164,6 +162,7 @@ public class SignUpActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
 }

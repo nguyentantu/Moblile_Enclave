@@ -4,44 +4,33 @@ import android.animation.ValueAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
-import android.view.View;
-import android.support.v4.view.GravityCompat;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.view.MenuItem;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.animation.Easing;
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.github.mikephil.charting.utils.MPPointF;
-import com.mahfa.dnswitch.DayNightSwitch;
-import com.mahfa.dnswitch.DayNightSwitchListener;
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -49,16 +38,16 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
+import adapter.PagerAdapter;
 import model.Engineers;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    //public static final int[] MATERIAL_COLORS = {rgb("#20b1c3"), rgb("#6968b2"), rgb("#e6892e"), rgb("#202024"), rgb("#7d7d7f")};
-    protected String[] mChartLabel = new String[]{"Male", "Female", "aaa", "hhh"};
-    private PieChart pieChart;
+    private LinearLayout dotsLayout;
+    private TextView[] dots;
+    private int[] layouts;
 
     int totalEn = 0;
     int totalPro = 0;
@@ -66,7 +55,8 @@ public class MainActivity extends AppCompatActivity
     int totalManager = 0;
     int id;
 
-     String email, lastName, firstName;
+     String email, lastName, firstName, Strava;
+     ImageView avata;
 
     TextView txtTotalEngineer, txtProject, txtTeam, txtManager, txtGmail, txtNameAdmin;
 
@@ -86,10 +76,66 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
+
+        TabLayout tabLayout = (TabLayout)findViewById(R.id.tablayout);
+        tabLayout.addTab(tabLayout.newTab().setText(""));
+        tabLayout.addTab(tabLayout.newTab().setText(""));
+//        tabLayout.addTab(tabLayout.newTab().setText(""));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.setVisibility(View.GONE);
+
+        final ViewPager viewPager = (ViewPager)findViewById(R.id.pager);
+        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
+        viewPager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+
+                addBottomDots(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
         addControls();
     }
 
+    private void addBottomDots(int position) {
+        dots = new TextView[layouts.length];
+
+        dotsLayout.removeAllViews();
+        for (int i = 0; i < dots.length; i++) {
+            dots[i] = new TextView(this);
+            dots[i].setText(Html.fromHtml("&#8226;"));
+            dots[i].setTextSize(35);
+            dots[i].setTextColor(getResources().getColor(R.color.dot_inactive));
+            dotsLayout.addView(dots[i]);
+        }
+
+        if (dots.length > 0)
+            dots[position].setTextColor(getResources().getColor(R.color.dot_active));
+    }
+
     private void addControls() {
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+        dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
+        layouts = new int[]{
+                R.layout.fragment1,
+                R.layout.fragment2,
+//                R.layout.fragment3
+        };
 
         txtTotalEngineer = findViewById(R.id.txt_engineers);
         txtProject = findViewById(R.id.txt_pro);
@@ -100,6 +146,9 @@ public class MainActivity extends AppCompatActivity
         View headerView = navigationView.getHeaderView(0);
         txtGmail =  headerView.findViewById(R.id.txt_gmail);
         txtNameAdmin = headerView.findViewById(R.id.txt_nameHeader);
+        avata = headerView.findViewById(R.id.img_profile);
+
+
 
         Intent intent = getIntent();
         id = intent.getIntExtra("id",0);
@@ -117,97 +166,8 @@ public class MainActivity extends AppCompatActivity
         MainActivity.ListEngineers task = new MainActivity.ListEngineers();
         task.execute();
 
-
-//        Switch aSwitch = findViewById(R.id.switch1);
-//        aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//
-//                if (b){
-//                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-//                } else {
-//                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-//                }
-//            }
-//        });
-
-        pieChart = (PieChart) findViewById(R.id.linechart);
-
-        createChart();
     }
 
-    private void createChart() {
-        pieChart.setUsePercentValues(true);
-        pieChart.getDescription().setEnabled(false);
-        pieChart.setExtraOffsets(5, 10, 5, 5);
-        pieChart.setDrawEntryLabels(true); // disable label items
-
-        // Disable Legend Chart View
-        Legend l = pieChart.getLegend();
-        l.setEnabled(true);
-
-        // Hole View
-        pieChart.setDrawHoleEnabled(true);
-        pieChart.setHoleColor(Color.WHITE);
-
-        pieChart.animateY(1400, Easing.EasingOption.EaseInOutQuad); // Rotate Event
-        // Start Rotation View
-        pieChart.setRotationAngle(0);
-
-        // enable rotation of the chart by touch
-        pieChart.setRotationEnabled(true);
-        pieChart.setHighlightPerTapEnabled(true);
-
-//        List<Float> arrAmount = new ArrayList<>();
-//        // Add Fix 3 Items into Chart
-//        arrAmount.add(50f); //99000000f
-//        arrAmount.add(30f);
-////        arrAmount.add(20f);
-////        arrAmount.add(10f);
-//        setData(arrAmount);
-    }
-
-    private void setData(List<Float> amounts) {
-        try {
-            ArrayList<PieEntry> entries = new ArrayList<>();
-
-            for (int i = 0; i < amounts.size(); i++) {
-                entries.add(new PieEntry(amounts.get(i),
-                        mChartLabel[i % mChartLabel.length]));
-            }
-
-            PieDataSet dataSet = new PieDataSet(entries, "...............");
-
-            dataSet.setDrawIcons(true);
-
-            dataSet.setSliceSpace(2f);
-            dataSet.setIconsOffset(new MPPointF(0, 40));
-            dataSet.setSelectionShift(5f);
-
-            // Disable Chart Value View
-            dataSet.setDrawValues(true);
-
-            // Add colors for Chart Items
-            ArrayList<Integer> colors = new ArrayList<>();//
-            for (int c : ColorTemplate.COLORFUL_COLORS)
-                colors.add(c);
-
-            dataSet.setColors(colors);
-
-            PieData data = new PieData(dataSet);
-            data.setValueFormatter(new PercentFormatter());
-            data.setValueTextSize(11f);
-            data.setValueTextColor(Color.BLACK);
-            pieChart.setData(data);
-
-            // undo all highlights
-            pieChart.highlightValues(null);
-
-            pieChart.invalidate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 
     class ListEngineers extends AsyncTask<Void, Void, ArrayList<Engineers>> {
@@ -220,15 +180,11 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(ArrayList<Engineers> engineers) {
             super.onPostExecute(engineers);
-
-            List<Float> arrAmount = new ArrayList<>();
-            // Add Fix 3 Items into Chart
-            arrAmount.add(Float.parseFloat(totalTeam+"")); //99000000f
-            arrAmount.add(Float.parseFloat(totalPro+""));
-//        arrAmount.add(20f);
-//        arrAmount.add(10f);
-            setData(arrAmount);
-
+            // Set avatar
+            ColorGenerator generator  = ColorGenerator.MATERIAL;
+            TextDrawable drawable = (TextDrawable) TextDrawable.builder().buildRound(String.valueOf(firstName.charAt(0))
+                    , generator.getRandomColor());
+            avata.setImageDrawable(drawable);
 
             txtGmail.setText(email);
             txtNameAdmin.setText(firstName+" "+lastName);
@@ -280,7 +236,7 @@ public class MainActivity extends AppCompatActivity
         protected ArrayList<Engineers> doInBackground(Void... voids) {
             ArrayList<Engineers> dsEngineer = new ArrayList<>();
             try {
-                URL url = new URL("https://serverapp-api.herokuapp.com/api/v1/dashboard");// link API
+                URL url = new URL("http://si-enclave.herokuapp.com/api/v1/dashboard/total");// link API
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
@@ -315,6 +271,8 @@ public class MainActivity extends AppCompatActivity
                     email = jsonArray2.getString("email");
                     firstName = jsonArray2.getString("firstName");
                     lastName = jsonArray2.getString("lastName");
+                    Strava = jsonArray2.getString("avatar");
+
                 } catch (Exception e){
 
                 }
@@ -387,8 +345,9 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onClick(DialogInterface dialog, int id) {
 
-                    Intent intent1 = new Intent(MainActivity.this, LoginActivity.class);
-                    startActivity(intent1);
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP); // dont reload
+                    startActivity(intent);
                 }
             });
 
