@@ -2,11 +2,11 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#292b3d</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#4CAF50</color>
     <color name="graylight">#fafafa</color>
     <color name="startblue">#327F8A</color>
     <color name="endblue">#0bcce6</color>
-
+    <color name="white">#ffffff</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorGrapeFruit">#ED5565</color>
     <color name="colorGrapeFruitDark">#DA4453</color>
@@ -28,8 +28,6 @@
     <color name="colorPinkRoseDark">#D770AD</color>
     <color name="colorBlack">#0A0A0A</color>
     <color name="colorOrange">#EB714C</color>
-
-
     <color name="backgroundcolor">#fcfcfc</color>
     <color name="lightgray">#ededed</color>
     <color name="deeppurple">#7c4dff</color>
@@ -41,4 +39,16 @@
     <color name="dot_inactive">#cccccc</color>
     <!-- dots active colors -->
     <color name="dot_active">#000000</color>
+    <color name="bg_login">#26ae90</color>
+    <color name="bg_register">#2e3237</color>
+    <color name="bg_main">#428bca</color>
+    <color name="input_login">#222222</color>
+    <color name="input_login_hint">#999999</color>
+    <color name="input_register">#888888</color>
+    <color name="input_register_bg">#3b4148</color>
+    <color name="input_register_hint">#5e6266</color>
+    <color name="btn_login">#26ae90</color>
+    <color name="btn_login_bg">#eceef1</color>
+    <color name="lbl_name">#333333</color>
+    <color name="btn_logut_bg">#ff6861</color>
 </resources>

@@ -1,10 +1,11 @@
 package com.example.navigation;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,11 +22,13 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 import Common.Common;
 import Common.LinearLayoutManagerWithSmoothScroller;
 import adapter.PersonAdapter;
+import dmax.dialog.SpotsDialog;
 import model.Person;
 
 public class ListEngineerActivity extends AppCompatActivity {
@@ -36,6 +39,7 @@ public class ListEngineerActivity extends AppCompatActivity {
     PersonAdapter personAdapter;
     RequestQueue requestQueue;
     Button btnBack;
+    AlertDialog mProgress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +52,10 @@ public class ListEngineerActivity extends AppCompatActivity {
         recycler_person.addItemDecoration(new DividerItemDecoration(this, layoutManager.getOrientation()));
         people = new ArrayList<>();
         requestQueue = Volley.newRequestQueue(this);
+
+        mProgress = new SpotsDialog(this, R.style.Custom);
+        //mProgress.show();
+
 
         TextView txtNameApp = findViewById(R.id.txt_nameApp);
         txtNameApp.setText("Engineer List");
@@ -97,6 +105,7 @@ public class ListEngineerActivity extends AppCompatActivity {
             }
         });
         requestQueue.add(request);
+        //mProgress.dismiss();
     }
 
     // Because in PersonAdapter we calling startActivityForResult to start AlphatbetActivity
@@ -111,7 +120,6 @@ public class ListEngineerActivity extends AppCompatActivity {
                 int position = Common.findPositionWithName(group_character_clicked, people);
                 recycler_person.smoothScrollToPosition(position);
             } else {
-
             }
         }
     }
@@ -124,7 +132,6 @@ public class ListEngineerActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
         Intent intent = new Intent(ListEngineerActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP); // dont reload
         startActivity(intent);

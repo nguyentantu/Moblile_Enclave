@@ -13,14 +13,25 @@
         android:orientation="vertical"
         android:paddingBottom="10dp">
 
+    <LinearLayout
+        android:id="@+id/ll_pro"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:indeterminateDrawable="@drawable/my_progress_indeterminate"
+            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:layout_gravity="center">
+
+        </ProgressBar>
+    </LinearLayout>
+
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pieChart"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <ProgressBar
-                android:id="@+id/progressbar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+
         </com.github.mikephil.charting.charts.PieChart>
 
         <TextView

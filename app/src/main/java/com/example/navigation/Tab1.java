@@ -3,11 +3,11 @@ package com.example.navigation;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.android.volley.Request;
@@ -23,7 +23,9 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
+
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -35,6 +37,7 @@ public class Tab1 extends Fragment {
 
     int inProgress, pending, done;
     ProgressBar progressBar;
+    LinearLayout llPro;
 
     String[] mChartLabel = new String[]{"Inprogress", "Pending", "Done", "", "", "", "", "", "", "", "", ""};
     PieChart pieChart;
@@ -79,20 +82,8 @@ public class Tab1 extends Fragment {
 
         pieChart = (PieChart) view.findViewById(R.id.pieChart);
 
-        progressBar = view.findViewById(R.id.progressbar);
-
-        Runnable progressRunnable = new Runnable() {
-
-            @Override
-            public void run() {
-                progressBar.setVisibility(View.GONE);
-            }
-        };
-
-        Handler pdCanceller = new Handler();
-        pdCanceller.postDelayed(progressRunnable, 1000);
-
-
+        progressBar = view.findViewById(R.id.progressBar);
+        llPro = view.findViewById(R.id.ll_pro);
 
         pieChart.setUsePercentValues(true);
         pieChart.getDescription().setEnabled(false);
@@ -114,41 +105,6 @@ public class Tab1 extends Fragment {
         // enable rotation of the chart by touch
         pieChart.setRotationEnabled(true);
         pieChart.setHighlightPerTapEnabled(true);
-
-//        final List<Float> arrAmount = new ArrayList<>();
-//        // Add Fix 3 Items into Chart
-////        arrAmount.add(Float.parseFloat(totalen+"")); //99000000f
-////        arrAmount.add(Float.parseFloat(totalteam+""));
-//        arrAmount.add(20f);
-//        arrAmount.add(10f);
-//        setData(arrAmount);
-
-//        parseJSON();
-//
-////        String url = "http://si-enclave.herokuapp.com/api/v1/dashboard/projects";
-////        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-////            @Override
-////            public void onResponse(JSONObject response) {
-////                try {
-////                    JSONObject array = response.getJSONObject(toString());
-////                    int inProgress = array.getInt("inProgress");
-////                    int pending = array.getInt("pending");
-////                    int done = array.getInt("done");
-////                    arrAmount.add(Float.parseFloat(inProgress+"")); //99000000f
-////                    arrAmount.add(Float.parseFloat(pending+""));
-////                    arrAmount.add(Float.parseFloat(done+""));
-////                    setData(arrAmount);
-////
-////                } catch (Exception e){
-////                }
-////            }
-////        }, new Response.ErrorListener() {
-////            @Override
-////            public void onErrorResponse(VolleyError error) {
-////                error.printStackTrace();
-////            }
-////        });
-
 
     }
 
@@ -210,13 +166,13 @@ public class Tab1 extends Fragment {
             data.setValueFormatter(new PercentFormatter());
             data.setValueTextSize(11f);
             data.setValueTextColor(Color.BLACK);
-
             pieChart.setData(data);
-
-
             // undo all highlights
             pieChart.highlightValues(null);
             pieChart.invalidate();
+            if (pieChart.getData() != null){
+                llPro.setVisibility(View.GONE);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

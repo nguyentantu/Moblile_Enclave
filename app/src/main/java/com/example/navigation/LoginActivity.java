@@ -1,7 +1,6 @@
 package com.example.navigation;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,12 +24,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import dmax.dialog.SpotsDialog;
+
 public class LoginActivity extends AppCompatActivity {
 
     TextView btnLogin;
-
-    ProgressDialog mProgress;
-
+    AlertDialog mProgress;
     EditText edtUsername, edtPassword;
     String UserName, Password;
     int id;
@@ -53,11 +52,11 @@ public class LoginActivity extends AppCompatActivity {
         edtUsername = findViewById(R.id.edt_userName);
         edtPassword = findViewById(R.id.edt_password);
 
-        mProgress = new ProgressDialog(LoginActivity.this);
-        mProgress.setTitle("Processing...");
-        mProgress.setMessage("Please wait...");
-        mProgress.setCancelable(true);
-        mProgress.setIndeterminate(true);
+        mProgress = new SpotsDialog(this, R.style.Custom);
+//        mProgress.setTitle("Processing...");
+//        mProgress.setMessage("Please wait...");
+//        mProgress.setCancelable(true);
+//        mProgress.setIndeterminate(true);
 
         saveLoginCheckBox = findViewById(R.id.saveLoginCheckBox);
         loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
@@ -145,11 +144,9 @@ public class LoginActivity extends AppCompatActivity {
 
             if (s == "false"){
                 Toast.makeText(LoginActivity.this, "UserName or password incorrect!", Toast.LENGTH_SHORT).show();
-                Log.i("myAppTag", "(onPostExecute method) Result = Posted");
             }
 
             else {
-                Log.i("myAppTag", "(onPostExecute method) Result = Failed to post");
             }
         }
 
@@ -187,13 +184,14 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 int status = conn.getResponseCode();
+                Log.e("loggggggggggg", status+"");
 
                 if (status == 200){
                     mProgress.dismiss();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.putExtra("id", id);
                     startActivity(intent);
-                }else if(status == 409){
+                }else if(status == 404){
                     mProgress.dismiss();
                     return "existed";
                 }
@@ -203,7 +201,15 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
             }catch (Exception ex){
-                Log.i("myAppTag","Some error............................."+ex.toString());
+                mProgress.dismiss();
+                runOnUiThread(new Runnable()
+                {
+                    public void run()
+                    {
+                        Toast.makeText(LoginActivity.this, "Username or password incorrect!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
             return null;
         }
@@ -216,11 +222,7 @@ public class LoginActivity extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-
                 finish();
-
-                System.exit(1);
-
             }
         });
 
@@ -238,7 +240,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void signUp(View view) {
-        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+        Intent intent = new Intent(LoginActivity.this, ResetPasswordActivity.class);
         startActivity(intent);
     }
 

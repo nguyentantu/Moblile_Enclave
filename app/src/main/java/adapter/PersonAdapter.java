@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.navigation.AlphalbetActivity;
 import com.example.navigation.DetailEnActivity;
@@ -52,6 +51,7 @@ public class PersonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             GroupViewHolder groupViewHolder = new GroupViewHolder(group);
             return groupViewHolder;
         }
+
     }
 
     @Override
@@ -61,6 +61,7 @@ public class PersonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
+
         if (viewHolder instanceof GroupViewHolder) {
             GroupViewHolder groupViewHolder = (GroupViewHolder) viewHolder;
             groupViewHolder.txt_group_title.setText(personList.get(i).getName());
@@ -87,11 +88,9 @@ public class PersonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             // Set avatar
             Picasso.with(context).load(avatar).into(personViewHolder.img_person_avatar);
 
-
             personViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, personList.get(i).getId()+"", Toast.LENGTH_SHORT).show();
                     Context context = v.getContext();
                             Intent intent = new Intent(context, DetailEnActivity.class);
                             intent.putExtra("id", id);

@@ -8,22 +8,20 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bgrect"
-        >
+        android:background="@drawable/bgrect">
 
     </FrameLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
-        >
+        android:padding="16dp">
 
         <TextView
-            android:onClick="signUp"
+            android:onClick="backLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No account yet? Create one"
+            android:text="Already a member? Login here"
             android:textColor="#ffffff"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true" />
@@ -38,10 +36,10 @@
             android:layout_centerHorizontal="true"/>
 
         <TextView
-            android:id="@+id/btn_login"
+            android:id="@+id/btn_signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sign In"
+            android:text="Create an account"
             android:textColor="#ffffff"
             android:textSize="19dp"
             android:padding="16dp"
@@ -58,7 +56,7 @@
 
             <EditText
                 android:textColor="#fff"
-                android:id="@+id/edt_userName"
+                android:id="@+id/edt_userNam"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:background="@drawable/rect1"
@@ -74,33 +72,53 @@
 
             <EditText
                 android:textColor="#fff"
+                android:id="@+id/edt_email"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:background="@drawable/rect1"
+                android:layout_marginTop="20dp"
+                android:hint="Email"
+                android:inputType="textPassword"
+                android:textColorHint="#ffffff"
+                android:drawableLeft="@drawable/email"
+                android:paddingLeft="20dp"
+                android:drawablePadding="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
+            </EditText>
+
+            <EditText
+                android:textColor="#fff"
                 android:id="@+id/edt_password"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:background="@drawable/rect1"
                 android:layout_marginTop="20dp"
                 android:hint="Password"
-                android:inputType="textPassword"
                 android:textColorHint="#ffffff"
-                android:drawableLeft="@drawable/pass"
                 android:paddingLeft="20dp"
-                android:drawablePadding="16dp"
+                android:drawableLeft="@drawable/pass"
                 android:paddingTop="16dp"
-                android:paddingBottom="16dp">
-            </EditText>
-            <CheckBox
-                android:id="@+id/saveLoginCheckBox"
-                android:layout_width="wrap_content"
+                android:paddingBottom="16dp"
+                android:drawablePadding="16dp">
+
+                </EditText>
+            <EditText
+                android:textColor="#fff"
+                android:id="@+id/edt_confirmPass"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:layout_marginBottom="5dp"
-                android:padding="8dp"
-                android:text="Remember me "
-                android:textColor="@color/colorWhite"
-                android:layout_marginLeft="10dp"/>
+                android:layout_width="match_parent"
+                android:background="@drawable/rect1"
+                android:layout_marginTop="20dp"
+                android:hint="Confirm password"
+                android:textColorHint="#ffffff"
+                android:paddingLeft="20dp"
+                android:drawableLeft="@drawable/pass"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:drawablePadding="16dp">
+            </EditText>
         </LinearLayout>
+
     </RelativeLayout>
-
-
-
 </RelativeLayout>

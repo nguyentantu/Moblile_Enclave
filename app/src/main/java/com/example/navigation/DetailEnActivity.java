@@ -1,9 +1,10 @@
 package com.example.navigation;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
@@ -20,12 +21,13 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import dmax.dialog.SpotsDialog;
 import model.Engineers;
 
 public class DetailEnActivity extends AppCompatActivity {
 
     CircleImageView imgProDetail ;
-
+    AlertDialog mProgress;
     TextView txtUserName, txtEngName, txtEmail, txtAddress, txtDayOff, txtExperienceYears, txtSkype, txtPhone, txtSkill;
     TextView txtName;
     Button btnBack;
@@ -56,23 +58,18 @@ public class DetailEnActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btn_back);
         imgProDetail = findViewById(R.id.img_proDetail);
         txtSkill = findViewById(R.id.txt_skill);
-
-//        txtName.setText("Details");
-//
-//        btnBack.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(DetailEnActivity.this, ListEngineerActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP); // dont reload
-//                startActivity(intent);
-//            }
-//        });
+        mProgress = new SpotsDialog(this, R.style.Custom);
 
         Intent intent = getIntent();
         id = intent.getIntExtra("id",0);
         avatar = intent.getStringExtra("avatar");
         Picasso.with(getApplicationContext()).load(avatar)//download URL
                 .into(imgProDetail);
+
+            mProgress.show();
+            if (!txtUserName.getText().toString().equals(null)){
+                mProgress.dismiss();
+            }
 
         DetailEnActivity.DanhSachSanPhamTask task = new DetailEnActivity.DanhSachSanPhamTask();
         task.execute();
@@ -87,25 +84,19 @@ public class DetailEnActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ArrayList<Engineers> sanPhams) {
-            Log.e("========", listSkill+"");
 
             String text="";
             for (String details : listSkill) {
                 text = text + details + ", ";
             }
             txtSkill.setText(text);
-
-
-
             txtUserName.setText(lastName+" "+firstName);
-//            txtEngName.setText(englishName);
             txtEmail.setText(email);
             txtAddress.setText(address);
             txtDayOff.setText(salary/1000000+"M");
             txtExperienceYears.setText(experienceYears+" Years");
             txtSkype.setText(Skype);
             txtPhone.setText(phone);
-
         }
 
         @Override
@@ -154,9 +145,7 @@ public class DetailEnActivity extends AppCompatActivity {
             }
             return dsEngineer;
         }
-
     }
-
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(DetailEnActivity.this, ListEngineerActivity.class);
