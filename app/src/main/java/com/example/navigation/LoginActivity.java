@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        getSupportActionBar().hide();
 
         addControls();
     }
@@ -229,7 +230,7 @@ public class LoginActivity extends AppCompatActivity {
         builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
+                dialog.dismiss();
             }
         });
 

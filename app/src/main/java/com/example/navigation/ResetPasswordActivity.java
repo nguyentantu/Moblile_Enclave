@@ -161,7 +161,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 os.close();
 
                 final int status = conn.getResponseCode();
-                Log.e("loggggggggggg", status+"");
 
                 runOnUiThread(new Runnable() {
                     @Override
@@ -177,6 +176,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
                             case 404:
                                    Toast.makeText(ResetPasswordActivity.this, "Something wrong!!", Toast.LENGTH_SHORT).show();
+                                    progressBar.setVisibility(View.GONE);
                                    break;
                         }
 
@@ -184,7 +184,13 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 });
 
             }catch (Exception ex){
-                Log.i("myAppTag","Some error............................."+ex.toString());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(ResetPasswordActivity.this, "Something wrong!!", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                    }
+                });
             }
             return null;
         }

@@ -40,10 +40,13 @@ public class ListEngineerActivity extends AppCompatActivity {
     RequestQueue requestQueue;
     Button btnBack;
     AlertDialog mProgress;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_engineer);
+        getSupportActionBar().hide();
 
         recycler_person = findViewById(R.id.recycler_person);
         recycler_person.setHasFixedSize(true);
@@ -70,6 +73,7 @@ public class ListEngineerActivity extends AppCompatActivity {
             }
         });
         parseJSON();
+
     }
 
     private void parseJSON() {

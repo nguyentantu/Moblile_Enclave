@@ -9,4 +9,10 @@
         app:actionLayout="@layout/switch_layout"
         />
 
+    <!--<item android:id="@+id/action_search"-->
+        <!--android:icon="@drawable/search"-->
+        <!--android:title="Search"-->
+        <!--app:showAsAction="ifRoom|collapseActionView"-->
+        <!--app:actionViewClass="android.support.v7.widget.SearchView" />-->
+
 </menu>

@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -55,8 +56,11 @@ public class MainActivity extends AppCompatActivity
     int totalManager = 0;
     int id;
 
+    ProgressBar progressBar, progressBar2,progressBar3, progressBar4;
+
      String email, lastName, firstName, Strava;
      ImageView avata;
+     LinearLayout ll1, ll2, ll3, ll4;
 
     TextView txtTotalEngineer, txtProject, txtTeam, txtManager, txtGmail, txtNameAdmin;
 
@@ -149,7 +153,6 @@ public class MainActivity extends AppCompatActivity
         avata = headerView.findViewById(R.id.img_profile);
 
 
-
         Intent intent = getIntent();
         id = intent.getIntExtra("id",0);
         //this.finish();
@@ -163,9 +166,26 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        LinearLayout llTeams = findViewById(R.id.ll_team);
+        llTeams.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, TeamActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout llProjects = findViewById(R.id.ll_project);
+        llProjects.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ProjectActivity.class);
+                startActivity(intent);
+            }
+        });
+
         MainActivity.ListEngineers task = new MainActivity.ListEngineers();
         task.execute();
-
     }
 
 
@@ -180,6 +200,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(ArrayList<Engineers> engineers) {
             super.onPostExecute(engineers);
+
             // Set avatar
             ColorGenerator generator  = ColorGenerator.MATERIAL;
             TextDrawable drawable = (TextDrawable) TextDrawable.builder().buildRound(String.valueOf(firstName.charAt(0))
@@ -363,9 +384,10 @@ public class MainActivity extends AppCompatActivity
             Intent webPageIntent = new Intent(Intent.ACTION_VIEW);
             webPageIntent.setData(Uri.parse("http://enclaveit.com/"));
             startActivity(webPageIntent);
-        } else if (id == R.id.myswitch){
-
         }
+//        else if (id == R.id.nav_darkMode){
+//
+//        }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

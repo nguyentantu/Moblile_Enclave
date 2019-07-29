@@ -18,6 +18,7 @@ public class AlphalbetActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alphalbet);
+        getSupportActionBar().hide();
 
         recycler_alphabet = findViewById(R.id.recycler_alphabet);
         AlphabetAdapter alphabetAdapter = new AlphabetAdapter();

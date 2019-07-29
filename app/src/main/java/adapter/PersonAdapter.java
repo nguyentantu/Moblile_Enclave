@@ -10,14 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.example.navigation.AlphalbetActivity;
 import com.example.navigation.DetailEnActivity;
 import com.example.navigation.R;
 import com.squareup.picasso.Picasso;
-
 import java.util.List;
-
 import Common.Common;
 import de.hdodenhof.circleimageview.CircleImageView;
 import model.Person;
@@ -77,12 +74,6 @@ public class PersonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             personViewHolder.txt_person_name.setText(personList.get(i).getName());
             personViewHolder.txt_skype.setText(personList.get(i).getSkype());
 
-//            // Set avatar
-//            ColorGenerator generator  = ColorGenerator.MATERIAL;
-//            TextDrawable drawable = (TextDrawable) TextDrawable.builder().buildRound(String.valueOf(String.valueOf(personList.get(i).getName()).charAt(0))
-//                    , generator.getRandomColor());
-//            personViewHolder.img_person_avatar.setImageDrawable(drawable);
-
             final int id = personList.get(i).getId();
             final String avatar = personList.get(i).getAvatar();
             // Set avatar
@@ -108,7 +99,7 @@ public class PersonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private class GroupViewHolder extends RecyclerView.ViewHolder {
         TextView txt_group_title;
-        LinearLayout llEngineer;
+        LinearLayout llEngineer, llTeams;
 
         public GroupViewHolder(@NonNull View itemView) {
             super(itemView);

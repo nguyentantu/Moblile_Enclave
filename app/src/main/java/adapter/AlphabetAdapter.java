@@ -42,7 +42,7 @@ public class AlphabetAdapter extends RecyclerView.Adapter<AlphabetAdapter.MyView
         // Get available position of characters
         final int available_position = Common.alphabet_available.indexOf(alphabetList.get(i));
         if (available_position != -1){ // if characters is available in list
-            drawable = TextDrawable.builder().buildRound(alphabetList.get(i), Color.MAGENTA);
+            drawable = TextDrawable.builder().buildRound(alphabetList.get(i), Color.BLUE);
         } else {
             drawable = TextDrawable.builder().buildRound(alphabetList.get(i), Color.GRAY);
             myViewHolder.itemView.setClickable(false);

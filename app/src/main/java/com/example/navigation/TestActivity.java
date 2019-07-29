@@ -18,10 +18,10 @@ public class TestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
-
-        sliderDotspanel = (LinearLayout) findViewById(R.id.SliderDots);
+//
+//        viewPager = (ViewPager) findViewById(R.id.viewPager);
+//
+//        sliderDotspanel = (LinearLayout) findViewById(R.id.SliderDots);
 
 //        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
 //

@@ -10,10 +10,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -106,33 +102,6 @@ public class Tab1 extends Fragment {
         pieChart.setRotationEnabled(true);
         pieChart.setHighlightPerTapEnabled(true);
 
-    }
-
-    private void parseJSON() {
-        final List<Float> arrAmount = new ArrayList<>();
-        String url = "http://si-enclave.herokuapp.com/api/v1/dashboard/projects";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONObject array = response.getJSONObject(toString());
-                    int inProgress = array.getInt("inProgress");
-                    int pending = array.getInt("pending");
-                    int done = array.getInt("done");
-                    arrAmount.add(Float.parseFloat(inProgress+"")); //99000000f
-                    arrAmount.add(Float.parseFloat(pending+""));
-                    arrAmount.add(Float.parseFloat(done+""));
-                    setData(arrAmount);
-
-                    } catch (Exception e){
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
     }
 
     private void setData(List<Float> amounts) {

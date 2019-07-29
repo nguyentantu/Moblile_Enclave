@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/ll">
 
+    <include
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
-    <!--<include-->
-        <!--layout="@layout/toolbar"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content" />-->
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -87,14 +92,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Skype"
+                        android:text="Address"
                         android:textSize="20sp"/>
                     <TextView
-                        android:id="@+id/txt_skype"
+                        android:id="@+id/txt_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:textSize="14sp"
+                        android:textSize="13sp"
                         android:paddingTop="10dp"
                         android:textColor="@color/startblue"/>
                 </LinearLayout>
@@ -129,9 +134,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="5dp">
 
         <LinearLayout
+            android:onClick="SendEmail"
             android:paddingLeft="25dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -152,6 +158,8 @@
         </LinearLayout>
 
         <LinearLayout
+            android:onClick="Call"
+            android:layout_marginTop="7dp"
             android:paddingLeft="25dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -172,6 +180,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_marginTop="7dp"
             android:paddingLeft="25dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -179,9 +188,9 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                app:srcCompat="@drawable/ic_home_black_24dp"/>
+                app:srcCompat="@drawable/ic_skype"/>
             <TextView
-                android:id="@+id/txt_address"
+                android:id="@+id/txt_skype"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -192,6 +201,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_marginTop="7dp"
             android:paddingLeft="25dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -228,6 +238,6 @@
                 <!--android:text="aa@gmail.com"/>-->
         <!--</LinearLayout>-->
     </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
+        </LinearLayout>

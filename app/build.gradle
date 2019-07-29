@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "com.example.navigation"
         minSdkVersion 16
-        targetSdkVersion 26
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -41,4 +41,6 @@ dependencies {
     implementation 'com.android.volley:volley:1.1.0'
     implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     implementation 'com.github.d-max:spots-dialog:0.4@aar'
+    implementation 'com.squareup.okhttp3:okhttp:3.2.0'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
 }

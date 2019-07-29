@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimary">#61DFD3</color>
     <color name="colorPrimaryDark">#292b3d</color>
     <color name="colorAccent">#4CAF50</color>
     <color name="graylight">#fafafa</color>
-    <color name="startblue">#327F8A</color>
+    <color name="startblue">#069FB8</color>
     <color name="endblue">#0bcce6</color>
     <color name="white">#ffffff</color>
     <color name="colorWhite">#FFFFFF</color>
@@ -51,4 +51,8 @@
     <color name="btn_login_bg">#eceef1</color>
     <color name="lbl_name">#333333</color>
     <color name="btn_logut_bg">#ff6861</color>
+    <color name="df_transparent_black_background">#80000000</color>
+    <color name="whiteCardColor">#fff</color>
+    <color name="whiteTextColor">#fff</color>
+    <color name="blackTextColor">#000</color>
 </resources>
