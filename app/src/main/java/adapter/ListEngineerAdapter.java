@@ -28,6 +28,11 @@ public class ListEngineerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.personsList = personsList;
     }
 
+    public void  updatePersonList(ArrayList<Person> personsList) {
+        this.personsList = personsList;
+        notifyDataSetChanged();
+    }
+
 
     @NonNull
     @Override

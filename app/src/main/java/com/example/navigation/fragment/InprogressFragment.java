@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +49,7 @@ public class InprogressFragment extends Fragment {
     String nameProject, techonology, category, status;
     int earning, id, total, idTeam;
     RequestQueue requestQueue;
-    ArrayList<Project> movies;
+    //ArrayList<Project> movies;
     Project movie;
 
     private static final String TAG = InprogressFragment.class.getSimpleName();
@@ -96,13 +95,6 @@ public class InprogressFragment extends Fragment {
 
         parseJSON();
 
-//        DanhSachSanPhamTask task = new DanhSachSanPhamTask();
-//        task.execute();
-
-
-//        fetchStoreItems();
-
-        Log.e("moveveveve", movies+"");
         return view;
     }
 
@@ -113,9 +105,6 @@ public class InprogressFragment extends Fragment {
             public void onResponse(JSONObject response) {
                 try {
                     JSONArray array = response.getJSONArray("results");
-                    //JSONObject jsonArray = response.getJSONObject("results");
-                    //total = array.getInt("total");
-                    //JSONArray array = jsonArray.getJSONArray("results");
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject p = (JSONObject) array.get(i);
                         id = p.getInt("id");
@@ -154,7 +143,6 @@ public class InprogressFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String s) {
-            Log.e("tototoatooato", movie + "");
             mAdapter = new StoreAdapter(getContext(),itemsList);
             recyclerView.setAdapter(mAdapter);
         }
@@ -266,7 +254,6 @@ public class InprogressFragment extends Fragment {
                 nameProject = view.findViewById(R.id.txt_nameProject);
                 earning = view.findViewById(R.id.txt_earning);
                 category = view.findViewById(R.id.txt_category);
-                //status = view.findViewById(R.id.txt_status);
                 imgLanguage = view.findViewById(R.id.img_language);
                 technology = view.findViewById(R.id.txt_technology);
             }

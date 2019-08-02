@@ -77,6 +77,9 @@ public class DetailProjectActivity extends AppCompatActivity {
         people = new ArrayList<>();
         requestQueue = Volley.newRequestQueue(this);
 
+        personAdapter = new ListEngineerAdapter(DetailProjectActivity.this, people);
+        recycler_person.setAdapter(personAdapter);
+
         addControls();
     }
 
@@ -109,13 +112,8 @@ public class DetailProjectActivity extends AppCompatActivity {
         Intent intent = getIntent();
         id = intent.getIntExtra("id", 0);
         idTeam = intent.getIntExtra("idTeam", 0);
-
-        runOnUiThread(new Runnable() {
-            public void run() {
-                DetailProjectActivity.DanhSachSanPhamTask task = new DetailProjectActivity.DanhSachSanPhamTask();
-                task.execute();
-            }
-        });
+        DetailProjectActivity.DanhSachSanPhamTask task = new DetailProjectActivity.DanhSachSanPhamTask();
+        task.execute();
     }
 
 //    private void parseJSON() {
@@ -169,8 +167,12 @@ public class DetailProjectActivity extends AppCompatActivity {
                         role = p.getString("role");
                         people.add(new Person(name, skype, id, avatar, role));
                     }
-                    personAdapter = new ListEngineerAdapter(DetailProjectActivity.this, people);
-                    recycler_person.setAdapter(personAdapter);
+                    DetailProjectActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            personAdapter.updatePersonList(people);
+                        }
+                    });
 
 
                 } catch (Exception e){
@@ -199,8 +201,7 @@ public class DetailProjectActivity extends AppCompatActivity {
 //            TextView txtNameApp = findViewById(R.id.txt_nameApp);
 //            txtNameApp.setText(nameProject);
 
-            NumberFormat currentLocale = NumberFormat.getInstance();
-            String earninG = currentLocale.format(earning);
+
 
             getSupportActionBar().setTitle(nameProject);
 
@@ -211,6 +212,8 @@ public class DetailProjectActivity extends AppCompatActivity {
             txtStatus.setText(status.toUpperCase());
             txtTeam.setText(team);
             txtTechnology.setText(technology);
+            NumberFormat currentLocale = NumberFormat.getInstance();
+            String earninG = currentLocale.format(earning);
             txtEarning.setText(earninG+" VNĐ");
             txtEndDay.setText(endDay.substring(0,10));
 

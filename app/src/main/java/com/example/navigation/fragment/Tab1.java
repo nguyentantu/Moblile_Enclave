@@ -1,4 +1,4 @@
-package com.example.navigation;
+package com.example.navigation.fragment;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.example.navigation.R;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;

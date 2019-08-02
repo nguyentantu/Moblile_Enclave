@@ -1,4 +1,4 @@
-package com.example.navigation;
+package com.example.navigation.fragment;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.navigation.R;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;

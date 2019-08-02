@@ -7,16 +7,15 @@
     android:focusable="true"
     android:clickable="true"
     android:layout_margin="3dp"
-    android:orientation="horizontal"
-    android:background="?android:attr/selectableItemBackground">
+    android:background="@drawable/box_shape2"
+    android:orientation="horizontal">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:layout_margin="3dp"
-        android:background="@drawable/box_shape">
+        android:layout_margin="3dp">
 
         <LinearLayout
             android:orientation="horizontal"

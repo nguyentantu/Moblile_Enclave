@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    android:installLocation="preferExternal"
-    package="com.example.navigation">
+    package="com.example.navigation"
+    android:installLocation="preferExternal">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CheckInternetActivity"></activity>
+        <activity android:name=".TeamDetailActivity"></activity>
+        <activity android:name=".CheckInternetActivity" />
         <activity android:name=".DetailProjectActivity" />
         <activity android:name=".ProjectActivity" />
         <activity android:name=".TeamActivity" />
@@ -72,8 +73,8 @@
         <activity android:name=".AlphalbetActivity" />
 
         <receiver
-            android:name="com.example.navigation.InternetConnector_Receiver"
-            android:enabled="true" >
+            android:name=".InternetConnector_Receiver"
+            android:enabled="true">
             <intent-filter>
 
                 <!-- Intent filters for broadcast receiver -->
