@@ -1,5 +1,7 @@
 package adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.navigation.R;
 import com.example.navigation.TeamActivity;
+import com.example.navigation.TeamDetailActivity;
 
 import java.util.ArrayList;
 
@@ -46,12 +49,22 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ExampleViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ExampleViewHolder viewHolder, int i) {
-        Teams currentItem = mExampleList.get(i);
+        final Teams currentItem = mExampleList.get(i);
 
         //holder.mImageView.setImageResource(currentItem.getImageResource());
         viewHolder.txtNameTeam.setText(currentItem.getName());
         viewHolder.txtNameProject.setText(currentItem.getProjectName());
         viewHolder.txtTotalMember.setText(currentItem.getTotalMember()+"");
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+                Intent intent = new Intent(context, TeamDetailActivity.class);
+                intent.putExtra("id", currentItem.getId());
+                context.startActivity(intent);
+            }
+        });
     }
 
 //    @Override

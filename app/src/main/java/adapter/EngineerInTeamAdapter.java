@@ -13,17 +13,18 @@ import android.widget.TextView;
 import com.example.navigation.R;
 import com.squareup.picasso.Picasso;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import model.Person;
 
-public class ListEngineerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class EngineerInTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     int resource;
     Context context;
     ArrayList<Person> personsList;
 
-    public ListEngineerAdapter(Activity context, ArrayList<Person> personsList) {
+    public EngineerInTeamAdapter(Activity context, ArrayList<Person> personsList) {
         this.context = context;
         this.personsList = personsList;
     }
@@ -38,19 +39,36 @@ public class ListEngineerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        ViewGroup group = (ViewGroup) layoutInflater.inflate(R.layout.items_person_in_project, viewGroup, false);
-        ListEngineerAdapter.PersonViewHolder personViewHolder = new ListEngineerAdapter.PersonViewHolder(group);
+        ViewGroup group = (ViewGroup) layoutInflater.inflate(R.layout.person_inteam_layout, viewGroup, false);
+        EngineerInTeamAdapter.PersonViewHolder personViewHolder = new EngineerInTeamAdapter.PersonViewHolder(group);
         return personViewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
 
-        if (viewHolder instanceof ListEngineerAdapter.PersonViewHolder){
-            PersonViewHolder personViewHolder = (PersonViewHolder) viewHolder;
-            personViewHolder.txtName.setText(personsList.get(i).getName());
-            personViewHolder.txtEmail.setText(personsList.get(i).getSkype());
+        if (viewHolder instanceof EngineerInTeamAdapter.PersonViewHolder){
+            EngineerInTeamAdapter.PersonViewHolder personViewHolder = (EngineerInTeamAdapter.PersonViewHolder) viewHolder;
+            personViewHolder.txtName.setText(personsList.get(i).getLastName());
+            personViewHolder.txtEmail.setText(personsList.get(i).getEmail());
             personViewHolder.txtRole.setText(personsList.get(i).getRole());
+
+            NumberFormat currentLocale = NumberFormat.getInstance();
+            String salary = currentLocale.format(personsList.get(i).getSalary());
+            personViewHolder.txtSalary.setText(salary+" VNĐ");
+            //personViewHolder.txtExperienceYear.setText(personsList.get(i).getExperienceYear()+"");
+
+            if (personsList.get(i).getExperienceYear() < 3){
+                personViewHolder.txtExperienceYear.setText("SW 1");
+            } else if (personsList.get(i).getExperienceYear() < 5){
+                personViewHolder.txtExperienceYear.setText("SW 2");
+            }
+            else if (personsList.get(i).getExperienceYear() < 7){
+                personViewHolder.txtExperienceYear.setText("SW 3");
+            } else {
+                personViewHolder.txtExperienceYear.setText("SW 4");
+            }
+
             final String avatar = personsList.get(i).getAvatar();
             // Set avatar
             Picasso.with(context).load(avatar).into(personViewHolder.imgPerson);
@@ -67,8 +85,8 @@ public class ListEngineerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 personViewHolder.txtRole.setBackgroundColor(Color.YELLOW);
             }
 
+        }
     }
-}
 
     @Override
     public int getItemCount() {
@@ -76,15 +94,16 @@ public class ListEngineerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     public class PersonViewHolder extends RecyclerView.ViewHolder {
-            TextView txtName, txtEmail, txtRole;
-            CircleImageView imgPerson;
+        TextView txtName, txtEmail, txtRole, txtSalary, txtExperienceYear;
+        CircleImageView imgPerson;
         public PersonViewHolder(@NonNull View itemView) {
-                super(itemView);
-                txtName = itemView.findViewById(R.id.txt_person_name);
-                txtEmail = itemView.findViewById(R.id.txt_skype);
-                imgPerson = itemView.findViewById(R.id.person_avatar);
-                txtRole = itemView.findViewById(R.id.txt_role);
-            }
+            super(itemView);
+            txtName = itemView.findViewById(R.id.txt_person_name);
+            txtEmail = itemView.findViewById(R.id.txt_skype);
+            imgPerson = itemView.findViewById(R.id.person_avatar);
+            txtRole = itemView.findViewById(R.id.txt_role);
+            txtSalary = itemView.findViewById(R.id.txt_salary);
+            txtExperienceYear = itemView.findViewById(R.id.txt_experienceYear);
         }
     }
-
+}

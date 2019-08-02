@@ -55,9 +55,10 @@
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:textStyle="bold"
+                       android:textColor="@color/colorWhite"
                        android:padding="2dp"
-                       android:background="@color/endblue"
-                       android:text="member"/>
+                       android:background="#273c75"
+                       android:text="developer"/>
 
                </LinearLayout>
 

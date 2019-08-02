@@ -174,7 +174,7 @@ public class DetailEnActivity extends AppCompatActivity {
             txtUserName.setText(lastName+" "+firstName);
             txtEmail.setText(email);
             txtAddress.setText(address);
-            txtDayOff.setText(salary/1000000+"M VND");
+            txtDayOff.setText(salary/1000000+"M VNĐ");
             txtExperienceYears.setText(experienceYears+" Years");
             txtSkype.setText(Skype);
             txtPhone.setText(phone);

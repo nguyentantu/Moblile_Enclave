@@ -7,9 +7,8 @@
     android:layout_height="wrap_content"
     android:focusable="true"
     android:clickable="true"
-    android:gravity="center"
     android:orientation="horizontal"
-    android:background="@drawable/box_shape">
+    android:background="@drawable/box_shape2">
 
     <LinearLayout
         android:layout_width="50dp"
@@ -73,7 +72,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TextAppearance.AppCompat.Body1"
+                style="@style/TextAppearance.AppCompat.Body2"
                 android:text="Category : "/>
 
             <TextView
@@ -117,7 +116,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
-                style="@style/TextAppearance.AppCompat.Body1" />
+                style="@style/TextAppearance.AppCompat.Body2" />
 
 
         </LinearLayout>

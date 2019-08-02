@@ -223,8 +223,6 @@ public class DetailProjectActivity extends AppCompatActivity {
                 txtInform.setVisibility(View.VISIBLE);
             }
 
-            Log.e("Startday", idTeam+"");
-
             if (team != null ){
                 parseJSON2();
             }

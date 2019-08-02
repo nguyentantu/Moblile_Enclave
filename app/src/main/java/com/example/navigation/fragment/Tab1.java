@@ -122,7 +122,6 @@ public class Tab1 extends Fragment {
             PieDataSet dataSet = new PieDataSet(entries, "           Project statistical");
 
             dataSet.setDrawIcons(true);
-
             dataSet.setSliceSpace(2f);
             dataSet.setIconsOffset(new MPPointF(0, 40));
             dataSet.setSelectionShift(5f);
