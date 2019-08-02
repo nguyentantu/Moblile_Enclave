@@ -26,7 +26,6 @@ public class CheckInternetActivity extends AppCompatActivity {
         } else {
             changeTextStatus(false);
         }
-
     }
 
     // Method to change the text status

@@ -1,9 +1,11 @@
 package com.example.navigation;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class Tab1 extends Fragment {
 
     int inProgress, pending, done;
@@ -38,6 +42,7 @@ public class Tab1 extends Fragment {
     String[] mChartLabel = new String[]{"Inprogress", "Pending", "Done", "", "", "", "", "", "", "", "", ""};
     PieChart pieChart;
 
+    String tokenRead;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -113,7 +118,7 @@ public class Tab1 extends Fragment {
                         mChartLabel[i % mChartLabel.length]));
             }
 
-            PieDataSet dataSet = new PieDataSet(entries, "Project statistical");
+            PieDataSet dataSet = new PieDataSet(entries, "           Project statistical");
 
             dataSet.setDrawIcons(true);
 
@@ -150,6 +155,12 @@ public class Tab1 extends Fragment {
     class ListEngineers extends AsyncTask<String, Void, String> {
 
         @Override
+        protected void onPreExecute() {
+            readData();
+            super.onPreExecute();
+        }
+
+        @Override
         protected void onPostExecute(String s) {
             List<Float> arrAmount = new ArrayList<>();
             // Add Fix 2 Items into Chart
@@ -164,9 +175,10 @@ public class Tab1 extends Fragment {
         protected String doInBackground(String... strings) {
 
             try {
-                URL url = new URL("http://si-enclave.herokuapp.com/api/v1/dashboard/projects");// link API
+                URL url = new URL("http://si-enclave.herokuapp.com/api/v1/dashboard/statistic/projects/status");// link API
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
+                connection.setRequestProperty("Authorization", tokenRead);
                 connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
 
                 InputStreamReader isr = new InputStreamReader(connection.getInputStream(), "UTF-8");
@@ -186,6 +198,14 @@ public class Tab1 extends Fragment {
             }
             return null;
         }
+    }
+
+
+    public void readData()
+    {
+        SharedPreferences preferences = this.getActivity().getSharedPreferences("token", MODE_PRIVATE);
+        tokenRead = preferences.getString("token", "");
+        Log.e("tokenshareread", tokenRead);
     }
 
 }

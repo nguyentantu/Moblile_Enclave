@@ -1,16 +1,15 @@
 package com.example.navigation;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -24,31 +23,30 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
-import Common.LinearLayoutManagerWithSmoothScroller;
 import adapter.TeamAdapter;
-import model.Engineers;
 import model.Teams;
 
 public class TeamActivity extends AppCompatActivity {
 
-//    private RecyclerView recyclerView;
-//    private GridLayoutManager gridLayoutManager;
-//    private TeamAdapter teamAdapter;
-//    private List<Teams> teams;
+    private ArrayList<Teams> mExampleList;
 
-    RecyclerView recycler_person;
-    LinearLayoutManager layoutManager;
-    ArrayList<Teams> teams;
-    TeamAdapter teamAdapter;
+    private RecyclerView mRecyclerView;
+    private TeamAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
     RequestQueue requestQueue;
-    Button btnBack;
-    private GridLayoutManager gridLayoutManager;
+
+    private SearchView searchView;
+
+//    RecyclerView recycler_person;
+//    LinearLayoutManager layoutManager;
+//    ArrayList<Teams> teams;
+//    TeamAdapter teamAdapter;
+//    RequestQueue requestQueue;
+//    Button btnBack;
+//    private GridLayoutManager gridLayoutManager;
 
 
 //    TeamAdapter teamAdapter;
@@ -67,113 +65,50 @@ public class TeamActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team);
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
 
-//        addControls();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Team List");
 
-        recycler_person = findViewById(R.id.recycler_team);
-        recycler_person.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManagerWithSmoothScroller(this);
-        recycler_person.setLayoutManager(layoutManager);
-        recycler_person.addItemDecoration(new DividerItemDecoration(this, layoutManager.getOrientation()));
-        teams = new ArrayList<>();
         requestQueue = Volley.newRequestQueue(this);
 
-        //mProgress = new SpotsDialog(this, R.style.Custom);
-        //mProgress.show();
+        createExampleList();
+        buildRecyclerView();
 
-        gridLayoutManager = new GridLayoutManager(this,2);
-        recycler_person.setLayoutManager(gridLayoutManager);
-
-        btnBack = findViewById(R.id.btn_back);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(TeamActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
-            }
-        });
-        TextView txtNameApp = findViewById(R.id.txt_nameApp);
-        txtNameApp.setText("Team List");
-
-        parseJSON();
-    }
-
-//    private void addControls() {
-//        lvTeam = findViewById(R.id.lv_team);
-//        teamAdapter = new TeamAdapter(TeamActivity.this, R.layout.teamsitem);
-//        lvTeam.setAdapter(teamAdapter);
-//
-//        txtToolbar = findViewById(R.id.txt_nameApp);
-//        txtToolbar.setText("List Teams");
-//
-//        Button btnBack = findViewById(R.id.btn_back);
-//        btnBack.setOnClickListener(new View.OnClickListener() {
+//        editText.addTextChangedListener(new TextWatcher() {
 //            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(TeamActivity.this, MainActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//                startActivity(intent);
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                filter(s.toString());
 //            }
 //        });
-//        requestQueue = Volley.newRequestQueue(this);
-//        parseJSON();
-//    }
 
-    class DanhSachSanPhamTask extends AsyncTask<Void, Void, ArrayList<Engineers>> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<Engineers> sanPhams) {
-
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-        }
-
-        @Override
-        protected ArrayList<Engineers> doInBackground(Void... voids) {
-            ArrayList<Engineers> dsEngineer = new ArrayList<>();
-            try {
-                URL url = new URL("http://si-enclave.herokuapp.com/api/v1/teams?limit=100&offset=0");// link API
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
-                connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-
-                InputStreamReader isr = new InputStreamReader(connection.getInputStream(), "UTF-8");
-                BufferedReader br = new BufferedReader(isr);
-                StringBuilder builder = new StringBuilder();
-                String line = null;
-                while ((line = br.readLine()) != null) {
-                    builder.append(line);
-                }
-                JSONObject jsonArray = new JSONObject(builder.toString());
-                JSONArray array = jsonArray.getJSONArray("results");
-                for (int i = 0; i < array.length(); i++) {
-                    JSONObject p = (JSONObject) array.get(i);
-                     totalMember = p.getInt("totalMember");
-                     name = p.getString("name");
-                     projectName = p.getString("projectName");
-//                     teams = new Teams(name, projectName, totalMember, id);
-//                     teamAdapter.add(teams);
-                }
-
-                br.close();
-
-            } catch (Exception ex) {
-                Log.e("LOI", ex.toString());
-            }
-            return dsEngineer;
-        }
     }
 
-    private void parseJSON() {
+    private void filter(String text) {
+        ArrayList<Teams> filteredList = new ArrayList<>();
+
+        for (Teams item : mExampleList) {
+            if (item.getName().toLowerCase().contains(text.toLowerCase()) | item.getProjectName().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+
+        mAdapter.filterList(filteredList);
+    }
+
+    private void createExampleList() {
+        mExampleList = new ArrayList<>();
+
         String url = "http://si-enclave.herokuapp.com/api/v1/teams?limit=100&offset=0";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -182,17 +117,16 @@ public class TeamActivity extends AppCompatActivity {
                     JSONArray array = response.getJSONArray("results");
                     for (int  i=0;i<array.length();i++){
                         JSONObject p = (JSONObject)array.get(i);
-                        id = p.getInt("id");
-                        totalMember = p.getInt("totalMember");
-                        name = p.getString("name");
-                        projectName = p.getString("projectName");
+                        int id = p.getInt("id");
+                        int totalMember = p.getInt("totalMember");
+                        String name = p.getString("name");
+                        String projectName = p.getString("projectName");
 
-                        Teams person = new Teams();
-                        teams.add(new Teams(name, projectName, totalMember, id));
+                        mExampleList.add(new Teams(id, name, projectName, totalMember));
                     }
 
-                    teamAdapter = new TeamAdapter(TeamActivity.this, teams);
-                    recycler_person.setAdapter(teamAdapter);
+                    mAdapter = new TeamAdapter(TeamActivity.this, mExampleList);
+                    mRecyclerView.setAdapter(mAdapter);
 
                 } catch (Exception e){
                 }
@@ -205,4 +139,77 @@ public class TeamActivity extends AppCompatActivity {
         });
         requestQueue.add(request);
     }
+//
+//        mExampleList.add(new ExampleItem(R.drawable.ic_launcher_background, "One", "Line 2"));
+//        mExampleList.add(new ExampleItem(R.drawable.ic_launcher_background, "Two", "Line 2"));
+//        mExampleList.add(new ExampleItem(R.drawable.ic_launcher_background, "Three", "Line 2"));
+//        mExampleList.add(new ExampleItem(R.drawable.ic_launcher_background, "Four", "Line 2"));
+//        mExampleList.add(new ExampleItem(R.drawable.ic_launcher_background, "Five", "Line 2"));
+//        mExampleList.add(new ExampleItem(R.drawable.ic_launcher_background, "Six", "Line 2"));
+//        mExampleList.add(new ExampleItem(R.drawable.ic_launcher_background, "Seven", "Line 2"));
+//        mExampleList.add(new ExampleItem(R.drawable.ic_launcher_background, "Eight", "Line 2"));
+//        mExampleList.add(new ExampleItem(R.drawable.ic_launcher_background, "Nine", "Line 2"));
+
+    private void buildRecyclerView() {
+        mRecyclerView = findViewById(R.id.recycler_team);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mAdapter = new TeamAdapter(TeamActivity.this, mExampleList);
+
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.searchmenu, menu);
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.action_search)
+                .getActionView();
+        searchView.setSearchableInfo(searchManager
+                .getSearchableInfo(getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
+        // listening to search query text change
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // filter recycler view when query submitted
+                filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                // filter recycler view when text is changed
+                filter(query);
+                return false;
+            }
+        });
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(TeamActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP); // dont reload
+                startActivity(intent);
+                super.onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(TeamActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP); // dont reload
+        startActivity(intent);
+        super.onBackPressed();
+    }
+
 }

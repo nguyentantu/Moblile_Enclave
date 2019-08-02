@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText edtUsername, edtPassword;
     String UserName, Password;
     int id;
+    String token, tokenRead;
 
 
     private CheckBox saveLoginCheckBox;
@@ -46,8 +47,18 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
 
+        //checkToken();
         addControls();
     }
+
+//    private void checkToken() {
+//        SharedPreferences preferences = getSharedPreferences("token", MODE_PRIVATE);
+//        tokenRead = preferences.getString("token", "");
+//        if (!tokenRead.equals("")){
+//            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//            startActivity(intent);
+//        }
+//    }
 
     private void addControls() {
         edtUsername = findViewById(R.id.edt_userName);
@@ -143,6 +154,9 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
+            writeData();
+            readData();
+
             if (s == "false"){
                 Toast.makeText(LoginActivity.this, "UserName or password incorrect!", Toast.LENGTH_SHORT).show();
             }
@@ -177,6 +191,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 JSONObject jsonArray = new JSONObject(builder.toString());
                 id = jsonArray.getInt("id");
+                token = jsonArray.getString("token");
 
                 br.close();
 
@@ -243,6 +258,23 @@ public class LoginActivity extends AppCompatActivity {
     public void signUp(View view) {
         Intent intent = new Intent(LoginActivity.this, ResetPasswordActivity.class);
         startActivity(intent);
+    }
+
+    public void writeData()
+    {
+        SharedPreferences preferences = getSharedPreferences("token", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("token", token);
+        editor.commit();
+    }
+
+
+
+    public void readData()
+    {
+        SharedPreferences preferences = getSharedPreferences("token", MODE_PRIVATE);
+        tokenRead = preferences.getString("token", "");
+        Log.e("tokenshare", tokenRead);
     }
 
 }

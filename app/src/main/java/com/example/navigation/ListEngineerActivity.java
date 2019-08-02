@@ -9,9 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -46,7 +46,9 @@ public class ListEngineerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_engineer);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Engineer List");
 
         recycler_person = findViewById(R.id.recycler_person);
         recycler_person.setHasFixedSize(true);
@@ -59,19 +61,15 @@ public class ListEngineerActivity extends AppCompatActivity {
         mProgress = new SpotsDialog(this, R.style.Custom);
         //mProgress.show();
 
-
-        TextView txtNameApp = findViewById(R.id.txt_nameApp);
-        txtNameApp.setText("Engineer List");
-
-        btnBack = findViewById(R.id.btn_back);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ListEngineerActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
-            }
-        });
+//        btnBack = findViewById(R.id.btn_back);
+//        btnBack.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(ListEngineerActivity.this, MainActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                startActivity(intent);
+//            }
+//        });
         parseJSON();
 
     }
@@ -89,15 +87,15 @@ public class ListEngineerActivity extends AppCompatActivity {
                         String name = p.getString("firstName");
                         String skype = p.getString("skype");
                         String avatar = p.getString("avatar");
-                        Person person = new Person();
-                        person.setId(id);
-                        person.setAvatar(avatar);
-                        people.add(new Person(name, skype, -1, id, avatar));
+                        int yearExperience = p.getInt("expYear");
+                        people.add(new Person(name, skype, -1, id, avatar, yearExperience));
                     }
                     people = Common.sortList(people); // sort
                     people = Common.addAlphabet(people);
                     personAdapter = new PersonAdapter(ListEngineerActivity.this, people);
                     recycler_person.setAdapter(personAdapter);
+
+                    Log.e("peopleList", people+"");
 
                 } catch (Exception e){
                 }
@@ -140,5 +138,18 @@ public class ListEngineerActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP); // dont reload
         startActivity(intent);
         super.onBackPressed();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(ListEngineerActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP); // dont reload
+                startActivity(intent);
+                super.onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -74,6 +74,17 @@ public class PersonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             personViewHolder.txt_person_name.setText(personList.get(i).getName());
             personViewHolder.txt_skype.setText(personList.get(i).getSkype());
 
+            if (personList.get(i).getExperienceYear() < 3){
+                personViewHolder.txtYear.setText("SW 1");
+            } else if (personList.get(i).getExperienceYear() < 5){
+                personViewHolder.txtYear.setText("SW 2");
+            }
+            else if (personList.get(i).getExperienceYear() < 7){
+                personViewHolder.txtYear.setText("SW 3");
+            } else {
+                personViewHolder.txtYear.setText("SW 4");
+            }
+
             final int id = personList.get(i).getId();
             final String avatar = personList.get(i).getAvatar();
             // Set avatar
@@ -109,13 +120,14 @@ public class PersonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     private class PersonViewHolder extends RecyclerView.ViewHolder {
-        TextView txt_person_name, txt_skype;
+        TextView txt_person_name, txt_skype, txtYear;
         CircleImageView img_person_avatar;
         public PersonViewHolder(@NonNull View itemView) {
             super(itemView);
             txt_person_name = itemView.findViewById(R.id.txt_person_name);
             txt_skype = itemView.findViewById(R.id.txt_skype);
             img_person_avatar = itemView.findViewById(R.id.person_avatar);
+            txtYear = itemView.findViewById(R.id.txt_role);
         }
     }
 }

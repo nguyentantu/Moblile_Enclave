@@ -1,18 +1,42 @@
 package model;
 
 public class Person {
-    private String name, skype, avatar;
-    private int viewType, id;
+    private String name, skype, avatar, role;
+    private int viewType, id, experienceYear;
 
     public Person() {
     }
 
-    public Person(String name, String skype, int viewType, int id, String avatar) {
+    public Person(String name, String skype, int viewType, int id, String avatar, int experienceYear) {
         this.name = name;
         this.skype = skype;
         this.viewType = viewType;
         this.id = id;
         this.avatar = avatar;
+        this.experienceYear = experienceYear;
+    }
+    public Person(String name, String skype, int id, String avatar, String role) {
+        this.name = name;
+        this.skype = skype;
+        this.id = id;
+        this.avatar = avatar;
+        this.role = role;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public int getExperienceYear() {
+        return experienceYear;
+    }
+
+    public void setExperienceYear(int experienceYear) {
+        this.experienceYear = experienceYear;
     }
 
     public String getAvatar() {

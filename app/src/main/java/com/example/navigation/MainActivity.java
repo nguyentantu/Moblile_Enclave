@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,7 +30,6 @@ import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 
 import org.json.JSONObject;
@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity
 
     TextView txtTotalEngineer, txtProject, txtTeam, txtManager, txtGmail, txtNameAdmin;
 
+    String tokenRead;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -79,7 +81,6 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-
 
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tablayout);
         tabLayout.addTab(tabLayout.newTab().setText(""));
@@ -111,6 +112,7 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
+
 
         addControls();
     }
@@ -194,18 +196,18 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         protected void onPreExecute() {
+            readData();
             super.onPreExecute();
         }
 
         @Override
         protected void onPostExecute(ArrayList<Engineers> engineers) {
             super.onPostExecute(engineers);
-
             // Set avatar
             ColorGenerator generator  = ColorGenerator.MATERIAL;
-            TextDrawable drawable = (TextDrawable) TextDrawable.builder().buildRound(String.valueOf(firstName.charAt(0))
-                    , generator.getRandomColor());
-            avata.setImageDrawable(drawable);
+//            TextDrawable drawable = (TextDrawable) TextDrawable.builder().buildRound(String.valueOf(firstName.charAt(0))
+//                    , generator.getRandomColor());
+//            avata.setImageDrawable(drawable);
 
             txtGmail.setText(email);
             txtNameAdmin.setText(firstName+" "+lastName);
@@ -260,7 +262,8 @@ public class MainActivity extends AppCompatActivity
                 URL url = new URL("http://si-enclave.herokuapp.com/api/v1/dashboard/total");// link API
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
-                connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                connection.setRequestProperty("Authorization", tokenRead);
+                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
 
                 InputStreamReader isr = new InputStreamReader(connection.getInputStream(), "UTF-8");
                 BufferedReader br = new BufferedReader(isr);
@@ -279,7 +282,8 @@ public class MainActivity extends AppCompatActivity
                     URL url2 = new URL("https://cool-demo-api.herokuapp.com/api/v1/engineers/"+id);// link API
                     HttpURLConnection conn = (HttpURLConnection) url2.openConnection();
                     conn.setRequestMethod("GET");
-                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                    conn.setRequestProperty("Authorization", tokenRead);
+                    conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
 
                     InputStreamReader isr2 = new InputStreamReader(conn.getInputStream(), "UTF-8");
                     BufferedReader br2 = new BufferedReader(isr2);
@@ -293,6 +297,7 @@ public class MainActivity extends AppCompatActivity
                     firstName = jsonArray2.getString("firstName");
                     lastName = jsonArray2.getString("lastName");
                     Strava = jsonArray2.getString("avatar");
+
 
                 } catch (Exception e){
 
@@ -364,6 +369,10 @@ public class MainActivity extends AppCompatActivity
                 public void onClick(DialogInterface dialog, int id) {
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
+//                    SharedPreferences preferences = getSharedPreferences("token", MODE_PRIVATE);
+//                    SharedPreferences.Editor editor = preferences.edit();
+//                    editor.putString("token", null);
+//                    editor.commit();
                 }
             });
 
@@ -391,5 +400,12 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void readData()
+    {
+        SharedPreferences preferences = getSharedPreferences("token", MODE_PRIVATE);
+        tokenRead = preferences.getString("token", "");
+        Log.e("tokenshareread", tokenRead);
     }
 }

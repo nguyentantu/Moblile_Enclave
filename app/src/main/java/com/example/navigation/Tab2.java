@@ -1,5 +1,6 @@
 package com.example.navigation;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -29,6 +29,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class Tab2 extends Fragment {
 
     ArrayList<Integer> list = new ArrayList<>();
@@ -37,6 +39,7 @@ public class Tab2 extends Fragment {
     private BarChart mChart;
     int totalEn, totalPro;
     String[] months = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+    String tokenRead;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -119,6 +122,12 @@ public class Tab2 extends Fragment {
     class ListEngineers extends AsyncTask<String, Void, String> {
 
         @Override
+        protected void onPreExecute() {
+            readData();
+            super.onPreExecute();
+        }
+
+        @Override
         protected void onPostExecute(String s) {
 
             ArrayList<BarEntry> yVals = new ArrayList<>();
@@ -185,6 +194,7 @@ public class Tab2 extends Fragment {
                 URL url = new URL("http://si-enclave.herokuapp.com/api/v1/dashboard/cashflow/2018");// link API
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
+                connection.setRequestProperty("Authorization", tokenRead);
                 connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
 
                 InputStreamReader isr = new InputStreamReader(connection.getInputStream(), "UTF-8");
@@ -214,6 +224,13 @@ public class Tab2 extends Fragment {
             }
             return null;
         }
+    }
+
+    public void readData()
+    {
+        SharedPreferences preferences = this.getActivity().getSharedPreferences("token", MODE_PRIVATE);
+        tokenRead = preferences.getString("token", "");
+        Log.e("tokenshareread", tokenRead);
     }
 
 }

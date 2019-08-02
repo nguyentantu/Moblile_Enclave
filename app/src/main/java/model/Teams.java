@@ -9,7 +9,7 @@ public class Teams {
     public Teams() {
     }
 
-    public Teams(String name, String projectName, int totalMember, int id) {
+    public Teams(int id, String name, String projectName, int totalMember ) {
         this.name = name;
         this.projectName = projectName;
         this.totalMember = totalMember;
