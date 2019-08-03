@@ -52,6 +52,15 @@
                 android:textColor="@color/whiteTextColor"
                 android:background="@drawable/onboarding_button"/>
 
+            <ProgressBar
+                android:id="@+id/progressBar_checkinternet"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center|bottom"
+                android:visibility="gone"
+                android:layout_marginBottom="20dp"/>
+
         </LinearLayout>
     </android.support.v7.widget.CardView>
 

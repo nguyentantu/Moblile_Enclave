@@ -1,6 +1,7 @@
 package com.example.navigation;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 import Common.Common;
 import Common.LinearLayoutManagerWithSmoothScroller;
 import adapter.EngineerInTeamAdapter;
+import dmax.dialog.SpotsDialog;
 import model.Engineers;
 import model.Person;
 
@@ -41,7 +43,7 @@ public class TeamDetailActivity extends AppCompatActivity {
     ProgressBar progressBar;
     int id, salary, totalMember, experienceYear;
     TextView txtTeamName, txtNumberOfMember, txtDateCreated, txtProjectName;
-
+    AlertDialog mProgress;
     RecyclerView recycler_person;
     LinearLayoutManager layoutManager;
     ArrayList<Person> people;
@@ -62,6 +64,8 @@ public class TeamDetailActivity extends AppCompatActivity {
         recycler_person.addItemDecoration(new DividerItemDecoration(this, layoutManager.getOrientation()));
         people = new ArrayList<>();
         requestQueue = Volley.newRequestQueue(this);
+
+        mProgress = new SpotsDialog(this, R.style.Custom);
 
         personAdapter = new EngineerInTeamAdapter(TeamDetailActivity.this, people);
         recycler_person.setAdapter(personAdapter);
@@ -158,12 +162,13 @@ public class TeamDetailActivity extends AppCompatActivity {
     class DanhSachSanPhamTask extends AsyncTask<Void, Void, ArrayList<Engineers>> {
         @Override
         protected void onPreExecute() {
+            mProgress.show();
             super.onPreExecute();
         }
 
         @Override
         protected void onPostExecute(ArrayList<Engineers> sanPhams) {
-
+            mProgress.dismiss();
             getSupportActionBar().setTitle("Team Detail");
 
             //txtNameProject.setText(nameProject);

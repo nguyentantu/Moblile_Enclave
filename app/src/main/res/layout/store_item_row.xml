@@ -7,13 +7,13 @@
     android:layout_height="wrap_content"
     android:focusable="true"
     android:clickable="true"
+    android:padding="10dp"
     android:orientation="horizontal"
     android:background="@drawable/box_shape2">
 
     <LinearLayout
         android:layout_width="50dp"
         android:layout_height="match_parent"
-        android:layout_marginRight="5dp"
         android:orientation="vertical"
         android:gravity="center">
         <de.hdodenhof.circleimageview.CircleImageView
@@ -24,7 +24,7 @@
             android:id="@+id/txt_technology"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="9.5dp"
+            android:textSize="9dp"
             android:textColor="#000"
             android:textAlignment="center"/>
 
@@ -34,9 +34,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:layout_margin="3dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:orientation="vertical"

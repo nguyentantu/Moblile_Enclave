@@ -8,14 +8,20 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 public class CheckInternetActivity extends AppCompatActivity {
+
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_internet);
         getSupportActionBar().hide();
+
+        //progressBar = findViewById(R.id.progressBar_checkinternet);
 
         // At activity startup we manually check the internet status and change
         // the text status
@@ -43,11 +49,14 @@ public class CheckInternetActivity extends AppCompatActivity {
             dialog1.findViewById(R.id.btnSpinAndWinRedeem).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    //progressBar.setVisibility(View.VISIBLE);
+                    dialog1.findViewById(R.id.progressBar_checkinternet).setVisibility(View.VISIBLE);
                     ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                     NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
                     if (networkInfo != null && networkInfo.isConnected()) {
                         changeTextStatus(true);
                     } else {
+                        Toast.makeText(CheckInternetActivity.this, "No internet connection!", Toast.LENGTH_SHORT).show();
                         changeTextStatus(false);
                     }
                 }

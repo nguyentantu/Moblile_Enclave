@@ -1,5 +1,6 @@
 package com.example.navigation.fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -42,6 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import dmax.dialog.SpotsDialog;
 import model.Project;
 
 public class PendingFragment extends Fragment {
@@ -51,6 +53,7 @@ public class PendingFragment extends Fragment {
     RequestQueue requestQueue;
     ArrayList<Project> movies;
     Project movie;
+    AlertDialog mProgress;
 
     private static final String TAG = PendingFragment.class.getSimpleName();
 
@@ -82,7 +85,10 @@ public class PendingFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recycler_view);
         itemsList = new ArrayList<>();
-        mAdapter = new StoreAdapter(getContext(),itemsList);
+        mAdapter = new StoreAdapter(getActivity(),itemsList);
+
+        mProgress = new SpotsDialog(getActivity(), R.style.Custom);
+        mProgress.show();
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -132,7 +138,7 @@ public class PendingFragment extends Fragment {
 
                     mAdapter = new StoreAdapter(getContext(),itemsList);
                     recyclerView.setAdapter(mAdapter);
-
+                    mProgress.dismiss();
                 } catch (Exception e){
                 }
             }

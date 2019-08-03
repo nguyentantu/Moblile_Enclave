@@ -68,6 +68,7 @@ public class DetailEnActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btn_back);
         imgProDetail = findViewById(R.id.img_proDetail);
         txtSkill = findViewById(R.id.txt_skill);
+
         mProgress = new SpotsDialog(this, R.style.Custom);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -160,11 +161,14 @@ public class DetailEnActivity extends AppCompatActivity {
     class DanhSachSanPhamTask extends AsyncTask<Void, Void, ArrayList<Engineers>> {
         @Override
         protected void onPreExecute() {
+            mProgress.show();
             super.onPreExecute();
         }
 
         @Override
         protected void onPostExecute(ArrayList<Engineers> sanPhams) {
+
+            mProgress.dismiss();
 
             String text="";
             for (String details : listSkill) {

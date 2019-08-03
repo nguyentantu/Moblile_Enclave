@@ -59,17 +59,8 @@ public class ListEngineerActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
 
         mProgress = new SpotsDialog(this, R.style.Custom);
-        //mProgress.show();
+        mProgress.show();
 
-//        btnBack = findViewById(R.id.btn_back);
-//        btnBack.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(ListEngineerActivity.this, MainActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//                startActivity(intent);
-//            }
-//        });
         parseJSON();
 
     }
@@ -95,6 +86,9 @@ public class ListEngineerActivity extends AppCompatActivity {
                     personAdapter = new PersonAdapter(ListEngineerActivity.this, people);
                     recycler_person.setAdapter(personAdapter);
 
+//                    viewDialog.hideDialog();
+                    mProgress.dismiss();
+
                     Log.e("peopleList", people+"");
 
                 } catch (Exception e){
@@ -107,7 +101,6 @@ public class ListEngineerActivity extends AppCompatActivity {
             }
         });
         requestQueue.add(request);
-        //mProgress.dismiss();
     }
 
     // Because in PersonAdapter we calling startActivityForResult to start AlphatbetActivity

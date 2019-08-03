@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/spl"
-    android:layout_width="250dp"
-    android:layout_height="250dp"
+    android:layout_width="150dp"
+    android:layout_height="150dp"
     tools:context=".SplashScreen"
     android:layout_gravity="center">
 

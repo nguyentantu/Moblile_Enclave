@@ -1,6 +1,7 @@
 package com.example.navigation;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,7 +11,6 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import Common.Common;
 import Common.LinearLayoutManagerWithSmoothScroller;
 import adapter.ListEngineerAdapter;
+import dmax.dialog.SpotsDialog;
 import model.Engineers;
 import model.Person;
 
@@ -61,6 +62,7 @@ public class DetailProjectActivity extends AppCompatActivity {
     ArrayList<Person> people;
     ListEngineerAdapter personAdapter;
     RequestQueue requestQueue;
+    AlertDialog mProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +78,9 @@ public class DetailProjectActivity extends AppCompatActivity {
         recycler_person.addItemDecoration(new DividerItemDecoration(this, layoutManager.getOrientation()));
         people = new ArrayList<>();
         requestQueue = Volley.newRequestQueue(this);
+
+        mProgress = new SpotsDialog(DetailProjectActivity.this, R.style.Custom);
+        mProgress.show();
 
         personAdapter = new ListEngineerAdapter(DetailProjectActivity.this, people);
         recycler_person.setAdapter(personAdapter);
@@ -173,7 +178,7 @@ public class DetailProjectActivity extends AppCompatActivity {
                             personAdapter.updatePersonList(people);
                         }
                     });
-
+                    mProgress.dismiss();
 
                 } catch (Exception e){
                 }
@@ -196,15 +201,7 @@ public class DetailProjectActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<Engineers> sanPhams) {
 
-            Log.e("peopleDetail", name + avatar + skype);
-
-//            TextView txtNameApp = findViewById(R.id.txt_nameApp);
-//            txtNameApp.setText(nameProject);
-
-
-
             getSupportActionBar().setTitle(nameProject);
-
 
             //txtNameProject.setText(nameProject);
             txtDescription.setText(description);

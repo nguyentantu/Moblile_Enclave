@@ -1,6 +1,7 @@
 package com.example.navigation.fragment;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -42,6 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import dmax.dialog.SpotsDialog;
 import model.Project;
 
 public class InprogressFragment extends Fragment {
@@ -51,6 +53,7 @@ public class InprogressFragment extends Fragment {
     RequestQueue requestQueue;
     //ArrayList<Project> movies;
     Project movie;
+    AlertDialog mProgress;
 
     private static final String TAG = InprogressFragment.class.getSimpleName();
 
@@ -83,6 +86,9 @@ public class InprogressFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view);
         itemsList = new ArrayList<>();
         mAdapter = new StoreAdapter(getContext(),itemsList);
+
+        mProgress = new SpotsDialog(getActivity(), R.style.Custom);
+        mProgress.show();
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -121,7 +127,7 @@ public class InprogressFragment extends Fragment {
 
                     mAdapter = new StoreAdapter(getContext(),itemsList);
                     recyclerView.setAdapter(mAdapter);
-
+                    mProgress.dismiss();
                 } catch (Exception e){
                 }
             }

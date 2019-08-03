@@ -1,5 +1,6 @@
 package com.example.navigation;
 
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +27,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import adapter.TeamAdapter;
+import dmax.dialog.SpotsDialog;
 import model.Teams;
 
 public class TeamActivity extends AppCompatActivity {
@@ -35,24 +37,10 @@ public class TeamActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private TeamAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-
+    AlertDialog mProgress;
     RequestQueue requestQueue;
 
     private SearchView searchView;
-
-//    RecyclerView recycler_person;
-//    LinearLayoutManager layoutManager;
-//    ArrayList<Teams> teams;
-//    TeamAdapter teamAdapter;
-//    RequestQueue requestQueue;
-//    Button btnBack;
-//    private GridLayoutManager gridLayoutManager;
-
-
-//    TeamAdapter teamAdapter;
-//    ListView lvTeam;
-//    Teams teams;
-//
     String name, projectName;
     int totalMember;
     //RequestQueue requestQueue;
@@ -71,6 +59,9 @@ public class TeamActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Team List");
 
         requestQueue = Volley.newRequestQueue(this);
+
+        mProgress = new SpotsDialog(this, R.style.Custom);
+        mProgress.show();
 
         createExampleList();
         buildRecyclerView();
@@ -127,6 +118,7 @@ public class TeamActivity extends AppCompatActivity {
 
                     mAdapter = new TeamAdapter(TeamActivity.this, mExampleList);
                     mRecyclerView.setAdapter(mAdapter);
+                    mProgress.dismiss();
 
                 } catch (Exception e){
                 }
