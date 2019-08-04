@@ -115,7 +115,6 @@ public class InprogressFragment extends Fragment {
                         movie = new Project(nameProject, techonology, category, status, earning, id);
                         itemsList.add(movie);
                     }
-
                     mAdapter = new StoreAdapter(getContext(),itemsList);
                     recyclerView.setAdapter(mAdapter);
                     mProgress.dismiss();
