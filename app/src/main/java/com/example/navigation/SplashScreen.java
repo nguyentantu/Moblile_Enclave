@@ -19,8 +19,6 @@ public class SplashScreen extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
-//        Intent i=new Intent(this,PlayMusic.class);
-//        startService(i);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

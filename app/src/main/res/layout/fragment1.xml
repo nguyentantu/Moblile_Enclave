@@ -22,23 +22,30 @@
             android:indeterminateDrawable="@drawable/my_progress_indeterminate"
             android:layout_height="100dp"
             android:layout_width="match_parent"
-            android:layout_gravity="center">
+            android:layout_gravity="center"/>
 
-        </ProgressBar>
     </LinearLayout>
 
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/pieChart"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
 
-        </com.github.mikephil.charting.charts.PieChart>
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/txt1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="40dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Project Status"/>
+
+            </com.github.mikephil.charting.charts.PieChart>
+
+        </LinearLayout>
 
     </LinearLayout>
 

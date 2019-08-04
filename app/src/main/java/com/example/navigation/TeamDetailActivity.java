@@ -2,6 +2,7 @@ package com.example.navigation;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,9 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ProgressBar;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -39,8 +40,7 @@ import model.Person;
 
 public class TeamDetailActivity extends AppCompatActivity {
 
-    String name, firstName, lastName, avatar, role, email, teamName, dateCreated, projectName;
-    ProgressBar progressBar;
+    String firstName, lastName, avatar, role, email, teamName, dateCreated, projectName;
     int id, salary, totalMember, experienceYear;
     TextView txtTeamName, txtNumberOfMember, txtDateCreated, txtProjectName;
     AlertDialog mProgress;
@@ -50,6 +50,8 @@ public class TeamDetailActivity extends AppCompatActivity {
     Person person;
     EngineerInTeamAdapter personAdapter;
     RequestQueue requestQueue;
+    int idPerson, idProject, idTeam;
+    LinearLayout llProjectName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,89 +77,20 @@ public class TeamDetailActivity extends AppCompatActivity {
 
 
     private void addControls() {
-        //txtNameProject = findViewById(R.id.txt_nameProject);
+
         txtTeamName = findViewById(R.id.txt_teamName);
         txtNumberOfMember = findViewById(R.id.txt_numberOfMember);
         txtDateCreated = findViewById(R.id.txt_dayCreate);
         txtProjectName = findViewById(R.id.txt_nameProject);
 
+        llProjectName = findViewById(R.id.ll_projectName);
+
         Intent intent = getIntent();
         id = intent.getIntExtra("id", 0);
-        //idTeam = intent.getIntExtra("idTeam", 0);
+
         TeamDetailActivity.DanhSachSanPhamTask task = new TeamDetailActivity.DanhSachSanPhamTask();
         task.execute();
     }
-
-//    private void parseJSON() {
-//        String url = "http://si-enclave.herokuapp.com/api/v1/projects/" + id;
-//        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                try {
-//                    JSONObject jsonArray = response.getJSONObject(response.toString());
-//                    nameProject = jsonArray.getString("name");
-//                    technology = jsonArray.getString("technology");
-//                    description = jsonArray.getString("description");
-//                    startDay = jsonArray.getString("start");
-//                    endDay = jsonArray.getString("end");
-//                    status = jsonArray.getString("status");
-//                    earning = jsonArray.getInt("earning");
-//                    earningPerMonth = jsonArray.getInt("earningPerMonth");
-//
-//                    JSONObject jsonObject = jsonArray.getJSONObject("team");
-//                    team = jsonObject.getString("name");
-//                    idTeam = jsonObject.getInt("id");
-//
-//
-//
-//                } catch (Exception e){
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                error.printStackTrace();
-//            }
-//        });
-//        requestQueue.add(request);
-//    }
-
-//    private void parseJSON2() {
-//        String url = "http://si-enclave.herokuapp.com/api/v1/teams/"+id;
-//        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                try {
-//                    //JSONObject jsonObject1 = new JSONObject(builder2.toString());
-//                    JSONArray array = response.getJSONArray("engineers");
-//                    for (int i = 0; i < array.length(); i++) {
-//                        JSONObject p = (JSONObject) array.get(i);
-//                        int id = p.getInt("id");
-//                        name = p.getString("firstName");
-//                        skype = p.getString("email");
-//                        avatar = p.getString("avatar");
-//                        role = p.getString("role");
-//                        people.add(new Person(name, skype, id, avatar, role));
-//                    }
-//                    TeamDetailActivity.this.runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            personAdapter.updatePersonList(people);
-//                        }
-//                    });
-//
-//
-//                } catch (Exception e){
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                error.printStackTrace();
-//            }
-//        });
-//        requestQueue.add(request);
-//    }
 
     class DanhSachSanPhamTask extends AsyncTask<Void, Void, ArrayList<Engineers>> {
         @Override
@@ -171,36 +104,21 @@ public class TeamDetailActivity extends AppCompatActivity {
             mProgress.dismiss();
             getSupportActionBar().setTitle("Team Detail");
 
-            //txtNameProject.setText(nameProject);
             txtTeamName.setText(teamName);
             txtNumberOfMember.setText(totalMember+" members");
             txtDateCreated.setText(dateCreated.substring(0,10));
             txtProjectName.setText(projectName);
 
-            Log.e("listlist", people+"");
-//            personAdapter = new EngineerInTeamAdapter(TeamDetailActivity.this, people);
-//            recycler_person.setAdapter(personAdapter);
-
-
-//            txtStatus.setText(status.toUpperCase());
-//            txtTeam.setText(team);
-//            txtTechnology.setText(technology);
-//            NumberFormat currentLocale = NumberFormat.getInstance();
-//            String earninG = currentLocale.format(earning);
-//            txtEarning.setText(earninG+" VNĐ");
-//            txtEndDay.setText(endDay.substring(0,10));
-
-//            if (team == null){
-//                txtTeam.setVisibility(View.GONE);
-//                teamvv.setVisibility(View.GONE);
-//                txtInform.setVisibility(View.VISIBLE);
-//            }
-
-//            Log.e("Startday", idTeam+"");
-//
-//            if (team != null ){
-//                parseJSON2();
-//            }
+            llProjectName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context2 = v.getContext();
+                    Intent intent = new Intent(context2, DetailProjectActivity.class);
+                    intent.putExtra("id", idProject);
+                    intent.putExtra("idTeam", idTeam);
+                    context2.startActivity(intent);
+                }
+            });
         }
 
         @Override
@@ -228,13 +146,14 @@ public class TeamDetailActivity extends AppCompatActivity {
                 teamName = jsonArray.getString("name");
                 totalMember = jsonArray.getInt("totalMember");
                 dateCreated = jsonArray.getString("createdAt");
-
+                idTeam = jsonArray.getInt("id");
                 JSONObject jsonObject = jsonArray.getJSONObject("projects");
                 projectName = jsonObject.getString("name");
-
+                idProject = jsonObject.getInt("id");
                 JSONArray array = jsonArray.getJSONArray("engineers");
                 for (int i = 0; i < array.length(); i++) {
                     JSONObject p = (JSONObject) array.get(i);
+                    idPerson = p.getInt("id");
                     firstName = p.getString("firstName");
                     lastName = p.getString("lastName");
                     avatar = p.getString("avatar");
@@ -242,59 +161,15 @@ public class TeamDetailActivity extends AppCompatActivity {
                     role = p.getString("role");
                     salary = p.getInt("salary");
                     experienceYear = p.getInt("expYear");
-
-                    person = new Person(firstName, lastName, email, avatar, role, salary, experienceYear);
+                    person = new Person(idPerson,firstName, lastName, email, avatar, role, salary, experienceYear);
                     people.add(person);
-                    //people.add(new Person(firstName, lastName, email, avatar, role, salary));
                 }
-
-
-//                personAdapter = new EngineerInTeamAdapter(TeamDetailActivity.this, people);
-//                recycler_person.setAdapter(personAdapter);
-
-//                personAdapter = new EngineerInTeamAdapter(TeamDetailActivity.this, people);
-//                recycler_person.setAdapter(personAdapter);
-
                 TeamDetailActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         personAdapter.updatePersonList(people);
                     }
                 });
-
-
-
-//                try {
-//                    URL url2 = new URL("http://si-enclave.herokuapp.com/api/v1/teams/"+idTeam);// link API
-//                    HttpURLConnection connection2 = (HttpURLConnection) url2.openConnection();
-//                    connection2.setRequestMethod("GET");
-//                    connection2.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-//
-//                    InputStreamReader isr2 = new InputStreamReader(connection2.getInputStream(), "UTF-8");
-//                    BufferedReader br2 = new BufferedReader(isr2);
-//                    StringBuilder builder2 = new StringBuilder();
-//                    String line2 = null;
-//                    while ((line2 = br2.readLine()) != null) {
-//                        builder2.append(line2);
-//                    }
-//                    JSONObject jsonObject1 = new JSONObject(builder2.toString());
-//                    JSONArray array = jsonObject1.getJSONArray("engineers");
-//                    for (int i = 0; i < array.length(); i++) {
-//                        JSONObject p = (JSONObject) array.get(i);
-//                        int id = p.getInt("id");
-//                        name = p.getString("firstName");
-//                        skype = p.getString("email");
-//                        avatar = p.getString("avatar");
-//                        role = p.getString("role");
-//                        people.add(new Person(name, skype, id, avatar, role));
-//
-//                        //people.add(new Person(name, skype, id, avatar));
-//                    }
-////                    people = Common.sortList(people); // sort
-////                    people = Common.addAlphabet(people);
-//                    personAdapter = new ListEngineerAdapter(DetailProjectActivity.this, people);
-//                    recycler_person.setAdapter(personAdapter);
-
             } catch (RuntimeException e) {
             } catch (ProtocolException e) {
                 e.printStackTrace();
@@ -330,9 +205,7 @@ public class TeamDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent = new Intent(TeamDetailActivity.this, TeamActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP); // dont reload
-                startActivity(intent);
+                finish();
                 super.onBackPressed();
                 return true;
         }

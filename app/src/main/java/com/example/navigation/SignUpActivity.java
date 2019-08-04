@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -45,7 +44,6 @@ public class SignUpActivity extends AppCompatActivity {
         mProgress.setIndeterminate(true);
 
         btnSignup = findViewById(R.id.btn_signup);
-
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,19 +60,14 @@ public class SignUpActivity extends AppCompatActivity {
                         UserName = edtUsername.getText().toString();
                         Password = edtPassword.getText().toString();
                         ConfirmPass = edtConfimPass.getText().toString();
-
                         try {
-
                             if (!Password.equals(ConfirmPass)) {
                                 Toast.makeText(SignUpActivity.this, "Password Not matching", Toast.LENGTH_SHORT).show();
                             } else {
                                 mProgress.show();
                                 new SignUpActivity.postJSON().execute();
                             }
-
-
                         } catch (Exception e) {
-                            Log.i("myApp", "Error in on create........................." + e.toString());
                         }
                     }
                 }
@@ -90,13 +83,11 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-
     public void backLogin(View view) {
         Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
-
 
     public class postJSON extends AsyncTask<String, Integer, String> {
 
@@ -106,11 +97,9 @@ public class SignUpActivity extends AppCompatActivity {
 
             if (s == "OK"){
                 Toast.makeText(SignUpActivity.this,"Sign up successful!",Toast.LENGTH_SHORT).show();
-                Log.i("myAppTag", "(onPostExecute method) Result = Posted");
             } else if(s == "exist"){
                 Toast.makeText(SignUpActivity.this, "username exists!", Toast.LENGTH_SHORT).show();
             } else {
-                Log.i("myAppTag", "(onPostExecute method) Result = Failed to post");
             }
         }
 
@@ -127,7 +116,6 @@ public class SignUpActivity extends AppCompatActivity {
                 JSONObject jsonParam = new JSONObject();
                 jsonParam.put("username", UserName);
                 jsonParam.put("password", Password);
-
                 DataOutputStream os = new DataOutputStream(conn.getOutputStream());
                 os.writeBytes(jsonParam.toString());
 
@@ -135,28 +123,20 @@ public class SignUpActivity extends AppCompatActivity {
                 os.close();
 
                 int status = conn.getResponseCode();
-
                 if (status == 200){
                     mProgress.dismiss();
-                    //Toast.makeText(SignUpActivity.this,"Successful!",Toast.LENGTH_SHORT).show();
                     return "OK";
                 }else if(status == 409){
                     mProgress.dismiss();
                     return "exist";
-                }
-
-                else {
-                    //Toast.makeText(SignUpActivity.this, "nooooooooooooooooooo",Toast.LENGTH_SHORT).show();
+                } else {
                     return null;
                 }
-
             }catch (Exception ex){
-                Log.i("myAppTag","Some error............................."+ex.toString());
             }
             return null;
         }
     }
-
 
     @Override
     public void onBackPressed() {

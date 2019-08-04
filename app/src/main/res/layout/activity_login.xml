@@ -8,21 +8,18 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bgrect">
-
-    </FrameLayout>
+        android:background="@drawable/bgrect"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
-        >
+        android:padding="16dp">
 
         <TextView
             android:onClick="signUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Forget password"
+            android:text="Forget Password"
             android:textColor="#ffffff"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true" />
@@ -87,6 +84,7 @@
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp">
             </EditText>
+
             <CheckBox
                 android:id="@+id/saveLoginCheckBox"
                 android:layout_width="wrap_content"
@@ -97,9 +95,7 @@
                 android:text="Remember me "
                 android:textColor="@color/colorWhite"
                 android:layout_marginLeft="10dp"/>
+
         </LinearLayout>
     </RelativeLayout>
-
-
-
 </RelativeLayout>

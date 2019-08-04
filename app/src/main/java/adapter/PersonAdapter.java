@@ -33,7 +33,6 @@ public class PersonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-
         if (viewType == Common.VIEWTYPE_GROUP) {
             ViewGroup group = (ViewGroup) layoutInflater.inflate(R.layout.group_layout, viewGroup, false);
             GroupViewHolder groupViewHolder = new GroupViewHolder(group);
@@ -42,13 +41,11 @@ public class PersonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             ViewGroup group = (ViewGroup) layoutInflater.inflate(R.layout.person_layout, viewGroup, false);
             PersonViewHolder personViewHolder = new PersonViewHolder(group);
             return personViewHolder;
-        }
-        else {
+        } else {
             ViewGroup group = (ViewGroup) layoutInflater.inflate(R.layout.group_layout, viewGroup, false);
             GroupViewHolder groupViewHolder = new GroupViewHolder(group);
             return groupViewHolder;
         }
-
     }
 
     @Override
@@ -58,7 +55,6 @@ public class PersonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
-
         if (viewHolder instanceof GroupViewHolder) {
             GroupViewHolder groupViewHolder = (GroupViewHolder) viewHolder;
             groupViewHolder.txt_group_title.setText(personList.get(i).getName());
@@ -78,18 +74,15 @@ public class PersonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 personViewHolder.txtYear.setText("SW 1");
             } else if (personList.get(i).getExperienceYear() < 5){
                 personViewHolder.txtYear.setText("SW 2");
-            }
-            else if (personList.get(i).getExperienceYear() < 7){
+            } else if (personList.get(i).getExperienceYear() < 7){
                 personViewHolder.txtYear.setText("SW 3");
             } else {
                 personViewHolder.txtYear.setText("SW 4");
             }
-
             final int id = personList.get(i).getId();
             final String avatar = personList.get(i).getAvatar();
             // Set avatar
             Picasso.with(context).load(avatar).into(personViewHolder.img_person_avatar);
-
             personViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -110,7 +103,7 @@ public class PersonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private class GroupViewHolder extends RecyclerView.ViewHolder {
         TextView txt_group_title;
-        LinearLayout llEngineer, llTeams;
+        LinearLayout llEngineer;
 
         public GroupViewHolder(@NonNull View itemView) {
             super(itemView);

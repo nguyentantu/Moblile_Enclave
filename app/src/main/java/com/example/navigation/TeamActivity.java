@@ -11,8 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,27 +31,18 @@ import model.Teams;
 public class TeamActivity extends AppCompatActivity {
 
     private ArrayList<Teams> mExampleList;
-
     private RecyclerView mRecyclerView;
     private TeamAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     AlertDialog mProgress;
     RequestQueue requestQueue;
-
     private SearchView searchView;
-    String name, projectName;
-    int totalMember;
-    //RequestQueue requestQueue;
-    TextView txtToolbar;
     int id;
-    EditText aa;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team);
-//        getSupportActionBar().hide();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Team List");
@@ -65,24 +54,6 @@ public class TeamActivity extends AppCompatActivity {
 
         createExampleList();
         buildRecyclerView();
-
-//        editText.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                filter(s.toString());
-//            }
-//        });
-
     }
 
     private void filter(String text) {
@@ -93,13 +64,11 @@ public class TeamActivity extends AppCompatActivity {
                 filteredList.add(item);
             }
         }
-
         mAdapter.filterList(filteredList);
     }
 
     private void createExampleList() {
         mExampleList = new ArrayList<>();
-
         String url = "http://si-enclave.herokuapp.com/api/v1/teams?limit=100&offset=0";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -112,14 +81,11 @@ public class TeamActivity extends AppCompatActivity {
                         int totalMember = p.getInt("totalMember");
                         String name = p.getString("name");
                         String projectName = p.getString("projectName");
-
                         mExampleList.add(new Teams(id, name, projectName, totalMember));
                     }
-
                     mAdapter = new TeamAdapter(TeamActivity.this, mExampleList);
                     mRecyclerView.setAdapter(mAdapter);
                     mProgress.dismiss();
-
                 } catch (Exception e){
                 }
             }
@@ -131,16 +97,6 @@ public class TeamActivity extends AppCompatActivity {
         });
         requestQueue.add(request);
     }
-//
-//        mExampleList.add(new ExampleItem(R.drawable.ic_launcher_background, "One", "Line 2"));
-//        mExampleList.add(new ExampleItem(R.drawable.ic_launcher_background, "Two", "Line 2"));
-//        mExampleList.add(new ExampleItem(R.drawable.ic_launcher_background, "Three", "Line 2"));
-//        mExampleList.add(new ExampleItem(R.drawable.ic_launcher_background, "Four", "Line 2"));
-//        mExampleList.add(new ExampleItem(R.drawable.ic_launcher_background, "Five", "Line 2"));
-//        mExampleList.add(new ExampleItem(R.drawable.ic_launcher_background, "Six", "Line 2"));
-//        mExampleList.add(new ExampleItem(R.drawable.ic_launcher_background, "Seven", "Line 2"));
-//        mExampleList.add(new ExampleItem(R.drawable.ic_launcher_background, "Eight", "Line 2"));
-//        mExampleList.add(new ExampleItem(R.drawable.ic_launcher_background, "Nine", "Line 2"));
 
     private void buildRecyclerView() {
         mRecyclerView = findViewById(R.id.recycler_team);
@@ -203,5 +159,4 @@ public class TeamActivity extends AppCompatActivity {
         startActivity(intent);
         super.onBackPressed();
     }
-
 }

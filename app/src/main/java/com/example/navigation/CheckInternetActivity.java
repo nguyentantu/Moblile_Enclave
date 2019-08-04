@@ -21,8 +21,6 @@ public class CheckInternetActivity extends AppCompatActivity {
         setContentView(R.layout.activity_check_internet);
         getSupportActionBar().hide();
 
-        //progressBar = findViewById(R.id.progressBar_checkinternet);
-
         // At activity startup we manually check the internet status and change
         // the text status
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

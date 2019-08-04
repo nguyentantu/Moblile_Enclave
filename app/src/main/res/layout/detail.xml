@@ -8,10 +8,6 @@
     android:orientation="vertical"
     android:id="@+id/ll">
 
-    <!--<include-->
-        <!--layout="@layout/toolbar"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content" />-->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -72,13 +68,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Experience"
-                        android:textSize="20sp"/>
+                        android:textSize="18sp"/>
                     <TextView
                         android:id="@+id/txt_yearExperience"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:textSize="15sp"
+                        android:textSize="17sp"
                         android:paddingTop="10dp"
                         android:textColor="@color/startblue"/>
                 </LinearLayout>
@@ -87,20 +83,21 @@
                     android:gravity="center"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:layout_gravity="center"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Address"
-                        android:textSize="20sp" />
+                        android:text="Total Project"
+                        android:textSize="18sp" />
                     <TextView
-                        android:id="@+id/txt_address"
+                        android:id="@+id/txt_totalProject"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:textSize="12sp"
+                        android:textSize="17sp"
                         android:paddingTop="10dp"
                         android:textColor="@color/startblue"/>
                 </LinearLayout>
@@ -115,13 +112,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Salary"
-                        android:textSize="20sp"/>
+                        android:textSize="18sp"/>
                     <TextView
                         android:id="@+id/txt_dayOff"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:textSize="15sp"
+                        android:textSize="17sp"
                         android:paddingTop="10dp"
                         android:textColor="@color/startblue"/>
                 </LinearLayout>
@@ -210,6 +207,29 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:srcCompat="@drawable/ic_address"/>
+
+            <TextView
+                android:id="@+id/txt_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text=""
+                android:textSize="16dp"
+                android:textColor="@color/yello"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="7dp"
+            android:paddingLeft="25dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -224,24 +244,7 @@
                 android:textSize="16dp"
                 android:textColor="@color/yello"/>
         </LinearLayout>
-
-        <!--<LinearLayout-->
-            <!--android:paddingLeft="25dp"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content">-->
-            <!--<ImageView-->
-                <!--android:layout_width="36dp"-->
-                <!--android:layout_height="36dp"-->
-                <!--android:src="@drawable/ic_home_black_24dp"/>-->
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center_vertical"-->
-                <!--android:paddingLeft="20dp"-->
-                <!--android:text="aa@gmail.com"/>-->
-        <!--</LinearLayout>-->
     </LinearLayout>
         </LinearLayout>
     </ScrollView>
-        </LinearLayout>
+</LinearLayout>

@@ -19,18 +19,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
@@ -41,6 +39,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import adapter.PagerAdapter;
+import de.hdodenhof.circleimageview.CircleImageView;
 import model.Engineers;
 
 public class MainActivity extends AppCompatActivity
@@ -56,14 +55,9 @@ public class MainActivity extends AppCompatActivity
     int totalManager = 0;
     int id;
 
-    ProgressBar progressBar, progressBar2,progressBar3, progressBar4;
-
-     String email, lastName, firstName, Strava;
-     ImageView avata;
-     LinearLayout ll1, ll2, ll3, ll4;
-
+    String email, lastName, firstName, Strava;
+    CircleImageView avatar;
     TextView txtTotalEngineer, txtProject, txtTeam, txtManager, txtGmail, txtNameAdmin;
-
     String tokenRead;
 
     @Override
@@ -81,11 +75,9 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tablayout);
         tabLayout.addTab(tabLayout.newTab().setText(""));
         tabLayout.addTab(tabLayout.newTab().setText(""));
-//        tabLayout.addTab(tabLayout.newTab().setText(""));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setVisibility(View.GONE);
 
@@ -118,8 +110,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void addBottomDots(int position) {
-        dots = new TextView[layouts.length];
 
+        dots = new TextView[layouts.length];
         dotsLayout.removeAllViews();
         for (int i = 0; i < dots.length; i++) {
             dots[i] = new TextView(this);
@@ -140,7 +132,7 @@ public class MainActivity extends AppCompatActivity
         layouts = new int[]{
                 R.layout.fragment1,
                 R.layout.fragment2,
-//                R.layout.fragment3
+//              R.layout.fragment3
         };
 
         txtTotalEngineer = findViewById(R.id.txt_engineers);
@@ -152,12 +144,10 @@ public class MainActivity extends AppCompatActivity
         View headerView = navigationView.getHeaderView(0);
         txtGmail =  headerView.findViewById(R.id.txt_gmail);
         txtNameAdmin = headerView.findViewById(R.id.txt_nameHeader);
-        avata = headerView.findViewById(R.id.img_profile);
-
+        avatar = headerView.findViewById(R.id.img_profile);
 
         Intent intent = getIntent();
         id = intent.getIntExtra("id",0);
-        //this.finish();
 
         LinearLayout llEngineer = findViewById(R.id.ll_engineer);
         llEngineer.setOnClickListener(new View.OnClickListener() {
@@ -190,8 +180,6 @@ public class MainActivity extends AppCompatActivity
         task.execute();
     }
 
-
-
     class ListEngineers extends AsyncTask<Void, Void, ArrayList<Engineers>> {
 
         @Override
@@ -205,19 +193,16 @@ public class MainActivity extends AppCompatActivity
             super.onPostExecute(engineers);
             // Set avatar
             ColorGenerator generator  = ColorGenerator.MATERIAL;
-//            TextDrawable drawable = (TextDrawable) TextDrawable.builder().buildRound(String.valueOf(firstName.charAt(0))
-//                    , generator.getRandomColor());
-//            avata.setImageDrawable(drawable);
 
             txtGmail.setText(email);
             txtNameAdmin.setText(firstName+" "+lastName);
+            Picasso.with(MainActivity.this).load(Strava).into(avatar);
 
-            //txtProject.setText(totalPro+"");
             ValueAnimator animator = ValueAnimator.ofInt(1, totalEn);
             ValueAnimator animator2 = ValueAnimator.ofInt(1, totalPro);
             ValueAnimator animator3 = ValueAnimator.ofInt(1, totalTeam);
             ValueAnimator animator4 = ValueAnimator.ofInt(0, totalManager);//0 is min number, 600 is max number
-            animator.setDuration(3000); //Duration is in milliseconds
+            animator.setDuration(2500); //Duration is in milliseconds
             animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 public void onAnimationUpdate(ValueAnimator animation) {
                     txtTotalEngineer.setText(animation.getAnimatedValue().toString());
@@ -225,7 +210,7 @@ public class MainActivity extends AppCompatActivity
             });
             animator.start();
 
-            animator2.setDuration(600); //Duration is in milliseconds
+            animator2.setDuration(2000); //Duration is in milliseconds
             animator2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 public void onAnimationUpdate(ValueAnimator animation) {
                     txtProject.setText(animation.getAnimatedValue().toString());
@@ -233,7 +218,7 @@ public class MainActivity extends AppCompatActivity
             });
             animator2.start();
 
-            animator3.setDuration(500); //Duration is in milliseconds
+            animator3.setDuration(2000); //Duration is in milliseconds
             animator3.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 public void onAnimationUpdate(ValueAnimator animation) {
                     txtTeam.setText(animation.getAnimatedValue().toString());
@@ -264,7 +249,6 @@ public class MainActivity extends AppCompatActivity
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("Authorization", tokenRead);
                 connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-
                 InputStreamReader isr = new InputStreamReader(connection.getInputStream(), "UTF-8");
                 BufferedReader br = new BufferedReader(isr);
                 StringBuilder builder = new StringBuilder();
@@ -277,14 +261,12 @@ public class MainActivity extends AppCompatActivity
                     totalPro = jsonObject.getInt("project");
                     totalTeam = jsonObject.getInt("team");
                     totalManager = jsonObject.getInt("manager");
-
                 try {
-                    URL url2 = new URL("https://cool-demo-api.herokuapp.com/api/v1/engineers/"+id);// link API
+                    URL url2 = new URL("http://si-enclave.herokuapp.com/api/v1/engineers/"+id);// link API
                     HttpURLConnection conn = (HttpURLConnection) url2.openConnection();
                     conn.setRequestMethod("GET");
                     conn.setRequestProperty("Authorization", tokenRead);
                     conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-
                     InputStreamReader isr2 = new InputStreamReader(conn.getInputStream(), "UTF-8");
                     BufferedReader br2 = new BufferedReader(isr2);
                     StringBuilder builder2 = new StringBuilder();
@@ -297,29 +279,33 @@ public class MainActivity extends AppCompatActivity
                     firstName = jsonArray2.getString("firstName");
                     lastName = jsonArray2.getString("lastName");
                     Strava = jsonArray2.getString("avatar");
-
-
                 } catch (Exception e){
-
                 }
                 br.close();
-
             } catch (Exception ex) {
-                Log.e("LOI", ex.toString());
             }
             return dsEngineer;
         }
-
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this); //Home is name of the activity
+        builder.setMessage("Do you want to exit?");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                finishAffinity();
+            }
+        });
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alert=builder.create();
+        alert.show();
     }
 
     @Override
@@ -333,7 +319,6 @@ public class MainActivity extends AppCompatActivity
         switcha.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
                 if (isChecked){
                     getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 } else {
@@ -343,13 +328,6 @@ public class MainActivity extends AppCompatActivity
         });
         return super.onCreateOptionsMenu(menu);
     }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -369,10 +347,6 @@ public class MainActivity extends AppCompatActivity
                 public void onClick(DialogInterface dialog, int id) {
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
-//                    SharedPreferences preferences = getSharedPreferences("token", MODE_PRIVATE);
-//                    SharedPreferences.Editor editor = preferences.edit();
-//                    editor.putString("token", null);
-//                    editor.commit();
                 }
             });
 
@@ -394,9 +368,6 @@ public class MainActivity extends AppCompatActivity
             webPageIntent.setData(Uri.parse("http://enclaveit.com/"));
             startActivity(webPageIntent);
         }
-//        else if (id == R.id.nav_darkMode){
-//
-//        }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -406,6 +377,5 @@ public class MainActivity extends AppCompatActivity
     {
         SharedPreferences preferences = getSharedPreferences("token", MODE_PRIVATE);
         tokenRead = preferences.getString("token", "");
-        Log.e("tokenshareread", tokenRead);
     }
 }

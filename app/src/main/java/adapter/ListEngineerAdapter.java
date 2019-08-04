@@ -2,6 +2,7 @@ package adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -9,12 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import com.example.navigation.DetailEnActivity;
 import com.example.navigation.R;
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import model.Person;
 
@@ -33,7 +32,6 @@ public class ListEngineerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         notifyDataSetChanged();
     }
 
-
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -45,7 +43,6 @@ public class ListEngineerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-
         if (viewHolder instanceof ListEngineerAdapter.PersonViewHolder){
             PersonViewHolder personViewHolder = (PersonViewHolder) viewHolder;
             personViewHolder.txtName.setText(personsList.get(i).getName());
@@ -54,19 +51,27 @@ public class ListEngineerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             final String avatar = personsList.get(i).getAvatar();
             // Set avatar
             Picasso.with(context).load(avatar).into(personViewHolder.imgPerson);
-
             if (personViewHolder.txtRole.getText().equals("developer") ){
                 personViewHolder.txtRole.setBackgroundColor(Color.GREEN);
                 personViewHolder.txtRole.setText("DEV");
             } else if (personViewHolder.txtRole.getText().equals("leader") ){
                 personViewHolder.txtRole.setBackgroundColor(Color.RED);
                 personViewHolder.txtRole.setText(personsList.get(i).getRole().toUpperCase());
-            }
-            else if (personViewHolder.txtRole.getText().equals("quality assurance") ){
+            } else if (personViewHolder.txtRole.getText().equals("quality assurance") ){
                 personViewHolder.txtRole.setText("QA");
                 personViewHolder.txtRole.setBackgroundColor(Color.YELLOW);
             }
-
+            final int id = personsList.get(i).getId();
+            personViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, DetailEnActivity.class);
+                    intent.putExtra("id", id);
+                    intent.putExtra("avatar",avatar);
+                    context.startActivity(intent);
+                }
+            });
     }
 }
 

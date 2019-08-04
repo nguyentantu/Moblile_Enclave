@@ -2,20 +2,18 @@ package com.example.navigation;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -46,14 +44,10 @@ import model.Engineers;
 import model.Person;
 
 public class DetailProjectActivity extends AppCompatActivity {
-    TextView txtNameProject, txtTechnology, txtStatus, txtDescription, txtStartDay, txtTeam, txtEarning, txtEndDay;
+    TextView txtTechnology, txtStatus, txtDescription, txtStartDay, txtTeam, txtEarning, txtEndDay;
     int id, earning, earningPerMonth;
     String nameProject, technology, status, startDay, team, description, endDay;
     String name, skype, avatar, role;
-    CardView cardTeam;
-    ProgressBar progressBar;
-    LinearLayout llPro;
-    Button btnBack;
     int idTeam;
     TextView txtInform, teamvv;
 
@@ -63,13 +57,13 @@ public class DetailProjectActivity extends AppCompatActivity {
     ListEngineerAdapter personAdapter;
     RequestQueue requestQueue;
     AlertDialog mProgress;
+    LinearLayout llTeamName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_project);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         recycler_person = findViewById(R.id.recycler_personProject);
         recycler_person.setHasFixedSize(true);
@@ -78,19 +72,16 @@ public class DetailProjectActivity extends AppCompatActivity {
         recycler_person.addItemDecoration(new DividerItemDecoration(this, layoutManager.getOrientation()));
         people = new ArrayList<>();
         requestQueue = Volley.newRequestQueue(this);
-
         mProgress = new SpotsDialog(DetailProjectActivity.this, R.style.Custom);
         mProgress.show();
-
         personAdapter = new ListEngineerAdapter(DetailProjectActivity.this, people);
         recycler_person.setAdapter(personAdapter);
 
         addControls();
     }
 
-
     private void addControls() {
-        //txtNameProject = findViewById(R.id.txt_nameProject);
+
         txtDescription = findViewById(R.id.txt_description);
         txtTechnology = findViewById(R.id.txt_technologyProject);
         txtStartDay = findViewById(R.id.txt_startDay);
@@ -98,21 +89,11 @@ public class DetailProjectActivity extends AppCompatActivity {
         txtTeam = findViewById(R.id.txt_team);
         txtEarning = findViewById(R.id.txt_earning);
         txtEndDay = findViewById(R.id.txt_endDay);
-        //cardTeam = findViewById(R.id.cardTem);
         teamvv = findViewById(R.id.team);
 
         txtInform = findViewById(R.id.txt_informTeam);
-//        txtInform.setVisibility(View.GONE);
 
-//        btnBack = findViewById(R.id.btn_back);
-//        btnBack.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(DetailProjectActivity.this, ProjectActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//                startActivity(intent);
-//            }
-//        });
+        llTeamName = findViewById(R.id.ll_teamName);
 
         Intent intent = getIntent();
         id = intent.getIntExtra("id", 0);
@@ -120,40 +101,6 @@ public class DetailProjectActivity extends AppCompatActivity {
         DetailProjectActivity.DanhSachSanPhamTask task = new DetailProjectActivity.DanhSachSanPhamTask();
         task.execute();
     }
-
-//    private void parseJSON() {
-//        String url = "http://si-enclave.herokuapp.com/api/v1/projects/" + id;
-//        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                try {
-//                    JSONObject jsonArray = response.getJSONObject(response.toString());
-//                    nameProject = jsonArray.getString("name");
-//                    technology = jsonArray.getString("technology");
-//                    description = jsonArray.getString("description");
-//                    startDay = jsonArray.getString("start");
-//                    endDay = jsonArray.getString("end");
-//                    status = jsonArray.getString("status");
-//                    earning = jsonArray.getInt("earning");
-//                    earningPerMonth = jsonArray.getInt("earningPerMonth");
-//
-//                    JSONObject jsonObject = jsonArray.getJSONObject("team");
-//                    team = jsonObject.getString("name");
-//                    idTeam = jsonObject.getInt("id");
-//
-//
-//
-//                } catch (Exception e){
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                error.printStackTrace();
-//            }
-//        });
-//        requestQueue.add(request);
-//    }
 
     private void parseJSON2() {
         String url = "http://si-enclave.herokuapp.com/api/v1/teams/"+idTeam;
@@ -166,7 +113,7 @@ public class DetailProjectActivity extends AppCompatActivity {
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject p = (JSONObject) array.get(i);
                         int id = p.getInt("id");
-                        name = p.getString("firstName");
+                        name = p.getString("lastName");
                         skype = p.getString("email");
                         avatar = p.getString("avatar");
                         role = p.getString("role");
@@ -202,8 +149,6 @@ public class DetailProjectActivity extends AppCompatActivity {
         protected void onPostExecute(ArrayList<Engineers> sanPhams) {
 
             getSupportActionBar().setTitle(nameProject);
-
-            //txtNameProject.setText(nameProject);
             txtDescription.setText(description);
             txtStartDay.setText(startDay.substring(0,10));
             txtStatus.setText(status.toUpperCase());
@@ -218,11 +163,19 @@ public class DetailProjectActivity extends AppCompatActivity {
                 txtTeam.setVisibility(View.GONE);
                 teamvv.setVisibility(View.GONE);
                 txtInform.setVisibility(View.VISIBLE);
-            }
-
-            if (team != null ){
+            } else if (team != null ){
                 parseJSON2();
             }
+
+            llTeamName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, TeamDetailActivity.class);
+                    intent.putExtra("id", idTeam);
+                    context.startActivity(intent);
+                }
+            });
         }
 
         @Override
@@ -238,7 +191,6 @@ public class DetailProjectActivity extends AppCompatActivity {
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-
                 InputStreamReader isr = new InputStreamReader(connection.getInputStream(), "UTF-8");
                 BufferedReader br = new BufferedReader(isr);
                 StringBuilder builder = new StringBuilder();
@@ -255,43 +207,9 @@ public class DetailProjectActivity extends AppCompatActivity {
                 status = jsonArray.getString("status");
                 earning = jsonArray.getInt("earning");
                 earningPerMonth = jsonArray.getInt("earningPerMonth");
-
                 JSONObject jsonObject = jsonArray.getJSONObject("team");
                 team = jsonObject.getString("name");
                 idTeam = jsonObject.getInt("id");
-
-
-//                try {
-//                    URL url2 = new URL("http://si-enclave.herokuapp.com/api/v1/teams/"+idTeam);// link API
-//                    HttpURLConnection connection2 = (HttpURLConnection) url2.openConnection();
-//                    connection2.setRequestMethod("GET");
-//                    connection2.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-//
-//                    InputStreamReader isr2 = new InputStreamReader(connection2.getInputStream(), "UTF-8");
-//                    BufferedReader br2 = new BufferedReader(isr2);
-//                    StringBuilder builder2 = new StringBuilder();
-//                    String line2 = null;
-//                    while ((line2 = br2.readLine()) != null) {
-//                        builder2.append(line2);
-//                    }
-//                    JSONObject jsonObject1 = new JSONObject(builder2.toString());
-//                    JSONArray array = jsonObject1.getJSONArray("engineers");
-//                    for (int i = 0; i < array.length(); i++) {
-//                        JSONObject p = (JSONObject) array.get(i);
-//                        int id = p.getInt("id");
-//                        name = p.getString("firstName");
-//                        skype = p.getString("email");
-//                        avatar = p.getString("avatar");
-//                        role = p.getString("role");
-//                        people.add(new Person(name, skype, id, avatar, role));
-//
-//                        //people.add(new Person(name, skype, id, avatar));
-//                    }
-////                    people = Common.sortList(people); // sort
-////                    people = Common.addAlphabet(people);
-//                    personAdapter = new ListEngineerAdapter(DetailProjectActivity.this, people);
-//                    recycler_person.setAdapter(personAdapter);
-
             } catch (RuntimeException e) {
             } catch (ProtocolException e) {
                 e.printStackTrace();
@@ -327,9 +245,7 @@ public class DetailProjectActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent = new Intent(DetailProjectActivity.this, ProjectActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP); // dont reload
-                startActivity(intent);
+                finish();
                 super.onBackPressed();
                 return true;
         }

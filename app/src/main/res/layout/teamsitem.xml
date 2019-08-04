@@ -41,7 +41,6 @@
 
         </LinearLayout>
 
-
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -60,13 +59,7 @@
                 style="@style/TextAppearance.AppCompat.Body1"
                 tools:text="5" />
 
-
         </LinearLayout>
-        <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="1dp"-->
-        <!--android:layout_marginTop="5dp"-->
-        <!--android:background="@color/lightgray"/>-->
 
     </LinearLayout>
 </LinearLayout>

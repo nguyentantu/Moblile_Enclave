@@ -3,7 +3,6 @@
 
     <stroke
         android:width="0.5dp" />
-
     <padding
         android:top="1dp"
         android:left="1dp"

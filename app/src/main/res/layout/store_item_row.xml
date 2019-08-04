@@ -50,16 +50,6 @@
                 style="@style/TextAppearance.AppCompat.Headline"
                 tools:text="Robert"/>
 
-
-            <!--<TextView-->
-                <!--android:id="@+id/txt_category"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:textAlignment="textEnd"-->
-                <!--tools:text="Business"-->
-                <!--style="@style/TextAppearance.AppCompat.Body1"-->
-                <!--android:gravity="end" />-->
-
         </LinearLayout>
 
         <LinearLayout
@@ -83,20 +73,6 @@
 
         </LinearLayout>
 
-
-        <!--<LinearLayout-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
-
-        <!--<TextView-->
-        <!--android:id="@+id/txt_technology"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--tools:text="Android"/>-->
-
-        <!--</LinearLayout>-->
-
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -116,13 +92,8 @@
                 android:textColor="#000"
                 style="@style/TextAppearance.AppCompat.Body2" />
 
-
         </LinearLayout>
-        <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="1dp"-->
-        <!--android:layout_marginTop="5dp"-->
-        <!--android:background="@color/lightgray"/>-->
 
     </LinearLayout>
+
 </LinearLayout>

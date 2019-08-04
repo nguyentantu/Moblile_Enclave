@@ -1,6 +1,5 @@
 package com.example.navigation.fragment;
 
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -12,12 +11,10 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -52,9 +49,8 @@ import model.Project;
 public class DoneFragment extends Fragment {
 
     String nameProject, techonology, category, status;
-    int earning, id, total, idTeam;
+    int earning, id, total;
     RequestQueue requestQueue;
-    ArrayList<Project> movies;
     Project movie;
     AlertDialog mProgress;
 
@@ -85,30 +81,21 @@ public class DoneFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_inprogress, container, false);
-
         recyclerView = view.findViewById(R.id.recycler_view);
         itemsList = new ArrayList<>();
         mAdapter = new StoreAdapter(getContext(),itemsList);
-
         mProgress = new SpotsDialog(getActivity(), R.style.Custom);
         mProgress.show();
-
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new DoneFragment.GridSpacingItemDecoration(2, dpToPx(8), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         recyclerView.setNestedScrollingEnabled(false);
-
         requestQueue = Volley.newRequestQueue(getContext());
 
         parseJSON();
 
-//        DoneFragment.DanhSachSanPhamTask task = new DoneFragment.DanhSachSanPhamTask();
-//        task.execute();
-
-
-//        fetchStoreItems();
         return view;
     }
 
@@ -119,9 +106,6 @@ public class DoneFragment extends Fragment {
             public void onResponse(JSONObject response) {
                 try {
                     JSONArray array = response.getJSONArray("results");
-                    //JSONObject jsonArray = response.getJSONObject("results");
-                    //total = array.getInt("total");
-                    //JSONArray array = jsonArray.getJSONArray("results");
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject p = (JSONObject) array.get(i);
                         id = p.getInt("id");
@@ -129,13 +113,11 @@ public class DoneFragment extends Fragment {
                         nameProject = p.getString("name");
                         techonology = p.getString("technology");
                         status = p.getString("status");
-
                         JSONObject jsonObject = p.getJSONObject("category");
                         category = jsonObject.getString("name");
                         movie = new Project(nameProject, techonology, category, status, earning, id);
                         itemsList.add(movie);
                     }
-
                     mAdapter = new StoreAdapter(getContext(),itemsList);
                     recyclerView.setAdapter(mAdapter);
                     mProgress.dismiss();
@@ -151,7 +133,6 @@ public class DoneFragment extends Fragment {
         requestQueue.add(request);
     }
 
-
     class DanhSachSanPhamTask extends AsyncTask<Void, Void, String> {
         @Override
         protected void onPreExecute() {
@@ -160,7 +141,6 @@ public class DoneFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String s) {
-            Log.e("tototoatooato", movie + "");
             mAdapter = new StoreAdapter(getContext(),itemsList);
             recyclerView.setAdapter(mAdapter);
         }
@@ -177,7 +157,6 @@ public class DoneFragment extends Fragment {
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-
                 InputStreamReader isr = new InputStreamReader(connection.getInputStream(), "UTF-8");
                 BufferedReader br = new BufferedReader(isr);
                 StringBuilder builder = new StringBuilder();
@@ -195,7 +174,6 @@ public class DoneFragment extends Fragment {
                     nameProject = p.getString("name");
                     techonology = p.getString("technology");
                     status = p.getString("status");
-
                     JSONObject jsonObject = p.getJSONObject("category");
                     category = jsonObject.getString("name");
                     movie = new Project(nameProject, techonology, category, status, earning, id);
@@ -266,14 +244,12 @@ public class DoneFragment extends Fragment {
         public class MyViewHolder extends RecyclerView.ViewHolder {
             public TextView nameProject, earning, category, technology, title;
             public CircleImageView imgLanguage;
-            Button btnBack;
 
             public MyViewHolder(View view) {
                 super(view);
                 nameProject = view.findViewById(R.id.txt_nameProject);
                 earning = view.findViewById(R.id.txt_earning);
                 category = view.findViewById(R.id.txt_category);
-                //status = view.findViewById(R.id.txt_status);
                 imgLanguage = view.findViewById(R.id.img_language);
                 technology = view.findViewById(R.id.txt_technology);
             }
@@ -301,7 +277,6 @@ public class DoneFragment extends Fragment {
             holder.nameProject.setText(movie.getNameProject());
             holder.earning.setText(earn+" VNĐ");
             holder.category.setText(movie.getCategory());
-            //holder.status.setText(movie.getStatus());
             holder.technology.setText(movie.getTechnology());
 
             final int id = movie.getId();
@@ -314,7 +289,6 @@ public class DoneFragment extends Fragment {
                     context.startActivity(intent);
                 }
             });
-
             String language = movie.getTechnology();
             switch (language){
                 case "Swift":

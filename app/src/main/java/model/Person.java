@@ -5,6 +5,7 @@ public class Person {
     private int viewType, id, experienceYear;
     private String firstName, lastName, email;
     int salary;
+    int idPerson;
 
     public Person() {
     }
@@ -25,7 +26,7 @@ public class Person {
         this.role = role;
     }
 
-    public Person(String firstName, String lastName, String email, String avatar, String role, int salary, int experienceYear) {
+    public Person(int idPerson, String firstName, String lastName, String email, String avatar, String role, int salary, int experienceYear) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -33,6 +34,15 @@ public class Person {
         this.role = role;
         this.salary = salary;
         this.experienceYear = experienceYear;
+        this.idPerson = idPerson;
+    }
+
+    public int getIdPerson() {
+        return idPerson;
+    }
+
+    public void setIdPerson(int idPerson) {
+        this.idPerson = idPerson;
     }
 
     public String getFirstName() {

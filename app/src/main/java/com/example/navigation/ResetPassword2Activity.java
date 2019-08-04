@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +21,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class ResetPassword2Activity extends AppCompatActivity {
+
     Button btnResetPassword, btnBack, btnConfirm;
     EditText edtEmail, edtPassword, edtConfirmPassword, edtCode;
     ProgressBar progressBar;
@@ -38,6 +38,7 @@ public class ResetPassword2Activity extends AppCompatActivity {
     }
 
     private void addControls() {
+
         progressBar = findViewById(R.id.progressBar);
         edtEmail = findViewById(R.id.edt_email);
         edtPassword = findViewById(R.id.edt_password);
@@ -50,7 +51,6 @@ public class ResetPassword2Activity extends AppCompatActivity {
         Intent intent = getIntent();
         Email = intent.getStringExtra("email");
         id = intent.getIntExtra("id",0);
-
         edtEmail.setText(Email);
         edtEmail.setEnabled(false);
         edtCode.setVisibility(View.GONE);
@@ -63,7 +63,6 @@ public class ResetPassword2Activity extends AppCompatActivity {
                 finish();
             }
         });
-
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +101,6 @@ public class ResetPassword2Activity extends AppCompatActivity {
                     try {
                         new postJSON2().execute();
                     }catch (Exception e){
-
                     }
                 }
             }
@@ -137,31 +135,22 @@ public class ResetPassword2Activity extends AppCompatActivity {
                 while ((line = br.readLine()) != null) {
                     builder.append(line);
                 }
-                //JSONObject jsonObject = new JSONObject(builder.toString());
-                //id = jsonObject.getInt("id");
-
                 br.close();
                 os.flush();
                 os.close();
 
                 final int status = conn.getResponseCode();
-                Log.e("loggggggggggg", status+"");
-
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         switch (status){
                             case 200:
                                 progressBar.setVisibility(View.GONE);
-//                        Intent intent = new Intent(ResetPassword2Activity.this, ResetPasswordActivity.class);
-//                        intent.putExtra("email", Email);
-//                        startActivity(intent);
                                 break;
                         }
                     }
                 });
             }catch (Exception ex){
-                Log.i("myAppTag","Some error............................."+ex.toString());
             }
             return null;
         }
@@ -196,16 +185,11 @@ public class ResetPassword2Activity extends AppCompatActivity {
                 while ((line = br.readLine()) != null) {
                     builder.append(line);
                 }
-                //JSONObject jsonObject = new JSONObject(builder.toString());
-                //id = jsonObject.getInt("id");
-
                 br.close();
                 os.flush();
                 os.close();
 
                 final int status = conn.getResponseCode();
-                Log.e("loggggggggggg", status+"");
-
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -220,9 +204,7 @@ public class ResetPassword2Activity extends AppCompatActivity {
                         }
                     }
                 });
-
             }catch (Exception ex){
-                Log.i("myAppTag","Some error............................."+ex.toString());
             }
             return null;
         }

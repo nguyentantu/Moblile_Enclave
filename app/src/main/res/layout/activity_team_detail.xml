@@ -83,6 +83,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_projectName"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -123,14 +124,6 @@
         android:padding="2dp"
         android:orientation="vertical">
 
-        <!--<View-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="1dp"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:layout_marginLeft="100dp"-->
-            <!--android:layout_marginRight="100dp"-->
-            <!--android:background="@color/blackTextColor" />-->
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_personTeam"
             android:layout_width="match_parent"
@@ -138,7 +131,5 @@
             android:layout_height="match_parent">
 
         </android.support.v7.widget.RecyclerView>
-
     </LinearLayout>
-
 </LinearLayout>

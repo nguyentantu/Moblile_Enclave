@@ -7,12 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.example.navigation.R;
-
 import java.util.List;
-
 import Common.Common;
 import Interface.IOnAlphabetClickListenner;
 

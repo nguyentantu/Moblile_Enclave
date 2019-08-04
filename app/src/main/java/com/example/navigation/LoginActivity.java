@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
@@ -35,7 +34,6 @@ public class LoginActivity extends AppCompatActivity {
     int id;
     String token, tokenRead;
 
-
     private CheckBox saveLoginCheckBox;
     private SharedPreferences loginPreferences; // save status
     private SharedPreferences.Editor loginPrefsEditor;
@@ -47,28 +45,14 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
 
-        //checkToken();
         addControls();
     }
-
-//    private void checkToken() {
-//        SharedPreferences preferences = getSharedPreferences("token", MODE_PRIVATE);
-//        tokenRead = preferences.getString("token", "");
-//        if (!tokenRead.equals("")){
-//            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//            startActivity(intent);
-//        }
-//    }
 
     private void addControls() {
         edtUsername = findViewById(R.id.edt_userName);
         edtPassword = findViewById(R.id.edt_password);
 
         mProgress = new SpotsDialog(this, R.style.Custom);
-//        mProgress.setTitle("Processing...");
-//        mProgress.setMessage("Please wait...");
-//        mProgress.setCancelable(true);
-//        mProgress.setIndeterminate(true);
 
         saveLoginCheckBox = findViewById(R.id.saveLoginCheckBox);
         loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
@@ -82,8 +66,6 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         btnLogin = findViewById(R.id.btn_login);
-
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,7 +73,6 @@ public class LoginActivity extends AppCompatActivity {
                 if (!checkData()){
                     Toast.makeText(LoginActivity.this, "UserName and password are required!", Toast.LENGTH_SHORT).show();
                 } else {
-
                     int lengthUser = edtUsername.getText().length();
                     int lengthPass = edtPassword.getText().length();
 
@@ -100,24 +81,15 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     else {
                         mProgress.show();
-
                         UserName = edtUsername.getText().toString();
                         Password = edtPassword.getText().toString();
-
                         try {
-
                             new postJSON().execute();
-
                         }catch (Exception e){
-                            Log.i("myApp", "Error in on create........................."+e.toString());
                         }
-
                         if (view == btnLogin) {
                             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm.hideSoftInputFromWindow(edtUsername.getWindowToken(), 0);
-
-//                    String username = edtUsername.getText().toString();
-//                    String password = edtPassword.getText().toString();
 
                             if (saveLoginCheckBox.isChecked()) {
                                 loginPrefsEditor.putBoolean("saveLogin", true);
@@ -129,9 +101,7 @@ public class LoginActivity extends AppCompatActivity {
                                 loginPrefsEditor.commit();
                             }
                         }
-
                     }
-
                 }
             }
 
@@ -147,7 +117,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-
     public class postJSON extends AsyncTask<String, Integer, String> {
 
         @Override
@@ -159,15 +128,12 @@ public class LoginActivity extends AppCompatActivity {
 
             if (s == "false"){
                 Toast.makeText(LoginActivity.this, "UserName or password incorrect!", Toast.LENGTH_SHORT).show();
-            }
-
-            else {
+            } else {
             }
         }
 
         @Override
         protected String doInBackground(String... strings) {
-
             try{
                 URL url = new URL("http://si-enclave.herokuapp.com/api/v1/auth/login");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -177,11 +143,8 @@ public class LoginActivity extends AppCompatActivity {
                 JSONObject jsonParam = new JSONObject();
                 jsonParam.put("username", UserName);
                 jsonParam.put("password", Password);
-
                 DataOutputStream os = new DataOutputStream(conn.getOutputStream());
-                //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
                 os.writeBytes(jsonParam.toString());
-
                 InputStreamReader isr = new InputStreamReader(conn.getInputStream(), "UTF-8");
                 BufferedReader br = new BufferedReader(isr);
                 StringBuilder builder = new StringBuilder();
@@ -198,10 +161,7 @@ public class LoginActivity extends AppCompatActivity {
                 os.flush();
                 os.close();
 
-
                 int status = conn.getResponseCode();
-                Log.e("loggggggggggg", status+"");
-
                 if (status == 200){
                     mProgress.dismiss();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -225,34 +185,9 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Username or password incorrect!", Toast.LENGTH_SHORT).show();
                     }
                 });
-
             }
             return null;
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        AlertDialog.Builder builder=new AlertDialog.Builder(LoginActivity.this); //Home is name of the activity
-        builder.setMessage("Do you want to exit?");
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                finish();
-            }
-        });
-
-        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog alert=builder.create();
-        alert.show();
-
-        super.onBackPressed();
     }
 
     public void signUp(View view) {
@@ -268,13 +203,29 @@ public class LoginActivity extends AppCompatActivity {
         editor.commit();
     }
 
-
-
     public void readData()
     {
         SharedPreferences preferences = getSharedPreferences("token", MODE_PRIVATE);
         tokenRead = preferences.getString("token", "");
-        Log.e("tokenshare", tokenRead);
     }
 
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder=new AlertDialog.Builder(LoginActivity.this); //Home is name of the activity
+        builder.setMessage("Do you want to exit?");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                finishAffinity();
+            }
+        });
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alert=builder.create();
+        alert.show();
+    }
 }

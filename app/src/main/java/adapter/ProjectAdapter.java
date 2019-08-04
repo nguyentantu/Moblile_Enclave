@@ -7,19 +7,15 @@ import android.graphics.Color;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.example.navigation.DetailProjectActivity;
 import com.example.navigation.R;
 import com.squareup.picasso.Picasso;
-
 import java.text.NumberFormat;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import model.Project;
 
@@ -40,26 +36,18 @@ public class ProjectAdapter extends ArrayAdapter<Project> {
         View view = this.context.getLayoutInflater().inflate(this.resource, null);
 
         TextView txtNameproject = view.findViewById(R.id.txt_nameProject);
-        //TextView txtTechnology = view.findViewById(R.id.txt_technology);
         TextView txtEarning = view.findViewById(R.id.txt_earning);
         TextView txtCategory = view.findViewById(R.id.txt_category);
         TextView txtStatus = view.findViewById(R.id.txt_status);
         LinearLayout llProject = view.findViewById(R.id.ll_project);
         CircleImageView img_language = view.findViewById(R.id.img_language);
-
-        //CircleImageView imageView = view.findViewById(R.id.img_status);
-
         final Project project = getItem(position);
         txtNameproject.setText(project.getNameProject());
-        //txtTechnology.setText(project.getTechnology());
-
         NumberFormat currentLocale = NumberFormat.getInstance();
         String earning = currentLocale.format(project.getEarning());
-
         txtEarning.setText(earning+" VND");
         txtCategory.setText(project.getCategory());
         txtStatus.setText(project.getStatus().toUpperCase());
-
         if (project.getStatus().toUpperCase().equals("PENDING")) {
             txtStatus.setBackgroundColor(Color.YELLOW);
         } else if (project.getStatus().toUpperCase().equals("DONE")){
@@ -67,9 +55,7 @@ public class ProjectAdapter extends ArrayAdapter<Project> {
         } else if (project.getStatus().toUpperCase().equals("INPROGRESS")){
             txtStatus.setBackgroundColor(Color.GREEN);
         }
-
         String language = project.getTechnology().toString();
-
         switch (language){
             case "Swift":
                 Picasso.with(context).load(R.drawable.swift).into(img_language);
@@ -135,7 +121,6 @@ public class ProjectAdapter extends ArrayAdapter<Project> {
                break;
         }
 
-
         llProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,11 +128,8 @@ public class ProjectAdapter extends ArrayAdapter<Project> {
                 Intent intent = new Intent(context2, DetailProjectActivity.class);
                 intent.putExtra("id", project.getId());
                 context2.startActivity(intent);
-
-                Log.e("idadapter", project.getId()+"hhhhh");
             }
         });
-
         return view;
     }
 }

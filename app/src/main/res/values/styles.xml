@@ -23,19 +23,6 @@
         <item name="DialogSpotCount">8</item>
     </style>
 
-    <!--Dark / night mode theme-->
-    <!--<style name="darktheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
-        <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
-        <!--<item name="colorPrimary">#212121</item>-->
-        <!--<item name="colorPrimaryDark">#000000</item>-->
-        <!--<item name="colorAccent">@color/colorAccent</item>-->
-        <!--<item name="backgroundcolor">#303030</item>-->
-        <!--<item name="cardbackground">#424242</item>-->
-        <!--<item name="textcolor">#ffffff</item>-->
-        <!--<item name="tintcolor">#ffffff</item>-->
-        <!--<item name="buttoncolor">#2196F3</item>-->
-    <!--</style>-->
-
     <style name="parent">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -75,6 +62,5 @@
         <item name="android:textColor">@color/blackTextColor</item>
         <item name="android:textStyle">bold</item>
     </style>
-
 
 </resources>

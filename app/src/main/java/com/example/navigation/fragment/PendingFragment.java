@@ -17,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -27,11 +26,9 @@ import com.android.volley.toolbox.Volley;
 import com.example.navigation.DetailProjectActivity;
 import com.example.navigation.R;
 import com.squareup.picasso.Picasso;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -41,7 +38,6 @@ import java.net.URL;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import dmax.dialog.SpotsDialog;
 import model.Project;
@@ -82,33 +78,21 @@ public class PendingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_inprogress, container, false);
-
         recyclerView = view.findViewById(R.id.recycler_view);
         itemsList = new ArrayList<>();
         mAdapter = new StoreAdapter(getActivity(),itemsList);
-
         mProgress = new SpotsDialog(getActivity(), R.style.Custom);
         mProgress.show();
-
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new PendingFragment.GridSpacingItemDecoration(2, dpToPx(8), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         recyclerView.setNestedScrollingEnabled(false);
-
         requestQueue = Volley.newRequestQueue(getContext());
 
         parseJSON();
 
-
-//        PendingFragment.DanhSachSanPhamTask task = new PendingFragment.DanhSachSanPhamTask();
-//        task.execute();
-
-
-//        fetchStoreItems();
-
-        Log.e("moveveveve", movies+"");
         return view;
     }
 
@@ -119,9 +103,6 @@ public class PendingFragment extends Fragment {
             public void onResponse(JSONObject response) {
                 try {
                     JSONArray array = response.getJSONArray("results");
-                    //JSONObject jsonArray = response.getJSONObject("results");
-                    //total = array.getInt("total");
-                    //JSONArray array = jsonArray.getJSONArray("results");
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject p = (JSONObject) array.get(i);
                         id = p.getInt("id");
@@ -129,13 +110,11 @@ public class PendingFragment extends Fragment {
                         nameProject = p.getString("name");
                         techonology = p.getString("technology");
                         status = p.getString("status");
-
                         JSONObject jsonObject = p.getJSONObject("category");
                         category = jsonObject.getString("name");
                         movie = new Project(nameProject, techonology, category, status, earning, id);
                         itemsList.add(movie);
                     }
-
                     mAdapter = new StoreAdapter(getContext(),itemsList);
                     recyclerView.setAdapter(mAdapter);
                     mProgress.dismiss();
@@ -177,7 +156,6 @@ public class PendingFragment extends Fragment {
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-
                 InputStreamReader isr = new InputStreamReader(connection.getInputStream(), "UTF-8");
                 BufferedReader br = new BufferedReader(isr);
                 StringBuilder builder = new StringBuilder();
@@ -195,7 +173,6 @@ public class PendingFragment extends Fragment {
                     nameProject = p.getString("name");
                     techonology = p.getString("technology");
                     status = p.getString("status");
-
                     JSONObject jsonObject = p.getJSONObject("category");
                     category = jsonObject.getString("name");
                     movie = new Project(nameProject, techonology, category, status, earning, id);
@@ -272,7 +249,6 @@ public class PendingFragment extends Fragment {
                 nameProject = view.findViewById(R.id.txt_nameProject);
                 earning = view.findViewById(R.id.txt_earning);
                 category = view.findViewById(R.id.txt_category);
-                //status = view.findViewById(R.id.txt_status);
                 imgLanguage = view.findViewById(R.id.img_language);
                 technology = view.findViewById(R.id.txt_technology);
             }
@@ -297,13 +273,10 @@ public class PendingFragment extends Fragment {
 
             NumberFormat currentLocale = NumberFormat.getInstance();
             String earn = currentLocale.format(movie.getEarning());
-
             holder.nameProject.setText(movie.getNameProject());
             holder.earning.setText(earn+" VNĐ");
             holder.category.setText(movie.getCategory());
-           // holder.status.setText(movie.getStatus());
             holder.technology.setText(movie.getTechnology());
-
             final int id = movie.getId();
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -314,7 +287,6 @@ public class PendingFragment extends Fragment {
                     context.startActivity(intent);
                 }
             });
-
             String language = movie.getTechnology();
             switch (language){
                 case "Swift":

@@ -12,32 +12,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.ListView;
 
-import com.android.volley.RequestQueue;
 import com.example.navigation.fragment.DoneFragment;
 import com.example.navigation.fragment.InprogressFragment;
 import com.example.navigation.fragment.PendingFragment;
 
-import java.util.ArrayList;
-
-import adapter.ProjectAdapter;
-import model.Project;
-
 public class ProjectActivity extends AppCompatActivity {
 
-    ProjectAdapter projectAdapter;
-    ListView lvProject;
-    Project project;
-    ArrayList<Project> projects;
-
-    String nameProject, techonology, category, status;
-    int earning, id, total;
-
-    RequestQueue requestQueue;
-    int limit = 10;
-    Button btnLoadMore;
     ActionBar toolbar;
 
     @Override
@@ -120,5 +101,4 @@ public class ProjectActivity extends AppCompatActivity {
         startActivity(intent);
         super.onBackPressed();
     }
-
 }

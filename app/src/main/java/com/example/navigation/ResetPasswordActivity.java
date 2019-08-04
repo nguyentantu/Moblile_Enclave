@@ -5,19 +5,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -50,7 +47,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 finish();
             }
         });
-
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +65,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
                         try {
                             new postJSON().execute();
                         } catch (Exception e){
-
                         }
                     }
                 }
@@ -84,54 +79,11 @@ public class ResetPasswordActivity extends AppCompatActivity {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 
-    private void parseJSON() throws IOException, JSONException {
-
-        URL url = new URL("http://si-enclave.herokuapp.com/api/v1/auth/forget");
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("POST");
-        conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-        conn.setRequestProperty("Accept","application/json");
-        JSONObject jsonParam = new JSONObject();
-        jsonParam.put("email", Email);
-        DataOutputStream os = new DataOutputStream(conn.getOutputStream());
-        os.writeBytes(jsonParam.toString());
-        InputStreamReader isr = new InputStreamReader(conn.getInputStream(), "UTF-8");
-        BufferedReader br = new BufferedReader(isr);
-        StringBuilder builder = new StringBuilder();
-        String line = null;
-        while ((line = br.readLine()) != null) {
-            builder.append(line);
-        }
-        JSONObject jsonObject = new JSONObject(builder.toString());
-        id = jsonObject.getInt("id");
-
-        br.close();
-        os.flush();
-        os.close();
-
-        int status = conn.getResponseCode();
-        Log.e("loggggggggggg", status+"");
-
-        if (status == 200){
-            progressBar.setVisibility(View.GONE);
-            Intent intent = new Intent(ResetPasswordActivity.this, LoginActivity.class);
-            intent.putExtra("email", Email);
-            intent.putExtra("id", id);
-            startActivity(intent);
-        } else{
-        }
-    }
-
     public class postJSON extends AsyncTask<String, Integer, String> {
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-//            if (s == "200"){
-//                Intent intent = new Intent(ResetPasswordActivity.this, ResetPassword2Activity.class);
-//                intent.putExtra("id", id);
-//                startActivity(intent);
-//            }
         }
 
         @Override
@@ -161,7 +113,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 os.close();
 
                 final int status = conn.getResponseCode();
-
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -173,16 +124,13 @@ public class ResetPasswordActivity extends AppCompatActivity {
                                 intent.putExtra("id", id);
                                 startActivity(intent);
                                 break;
-
                             case 404:
                                    Toast.makeText(ResetPasswordActivity.this, "Something wrong!!", Toast.LENGTH_SHORT).show();
                                     progressBar.setVisibility(View.GONE);
                                    break;
                         }
-
                     }
                 });
-
             }catch (Exception ex){
                 runOnUiThread(new Runnable() {
                     @Override

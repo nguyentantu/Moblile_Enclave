@@ -9,9 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Button;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -38,7 +36,6 @@ public class ListEngineerActivity extends AppCompatActivity {
     ArrayList<Person> people;
     PersonAdapter personAdapter;
     RequestQueue requestQueue;
-    Button btnBack;
     AlertDialog mProgress;
 
 
@@ -46,7 +43,7 @@ public class ListEngineerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_engineer);
-        //getSupportActionBar().hide();
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Engineer List");
 
@@ -62,7 +59,6 @@ public class ListEngineerActivity extends AppCompatActivity {
         mProgress.show();
 
         parseJSON();
-
     }
 
     private void parseJSON() {
@@ -86,10 +82,7 @@ public class ListEngineerActivity extends AppCompatActivity {
                     personAdapter = new PersonAdapter(ListEngineerActivity.this, people);
                     recycler_person.setAdapter(personAdapter);
 
-//                    viewDialog.hideDialog();
                     mProgress.dismiss();
-
-                    Log.e("peopleList", people+"");
 
                 } catch (Exception e){
                 }
@@ -118,12 +111,6 @@ public class ListEngineerActivity extends AppCompatActivity {
             }
         }
     }
-//    private void createPersonList() {
-//        //people = Common.genPeopleGroup();
-//        people = Common.sortList(people); // sort
-//        people = Common.addAlphabet(people); // add alphabet header
-//    }
-
 
     @Override
     public void onBackPressed() {

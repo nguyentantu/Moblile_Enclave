@@ -119,6 +119,5 @@
                 android:drawablePadding="16dp">
             </EditText>
         </LinearLayout>
-
     </RelativeLayout>
 </RelativeLayout>

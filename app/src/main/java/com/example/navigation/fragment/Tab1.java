@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,10 +38,8 @@ public class Tab1 extends Fragment {
     int inProgress, pending, done;
     ProgressBar progressBar;
     LinearLayout llPro;
-
     String[] mChartLabel = new String[]{"Inprogress", "Pending", "Done", "", "", "", "", "", "", "", "", ""};
     PieChart pieChart;
-
     String tokenRead;
 
 
@@ -63,8 +60,6 @@ public class Tab1 extends Fragment {
 
         setHasOptionsMenu(true);
 
-//        parseJSON();
-
         ListEngineers task = new ListEngineers();
         task.execute();
     }
@@ -80,30 +75,23 @@ public class Tab1 extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Setup any handles to view objects here
-        // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
 
         pieChart = (PieChart) view.findViewById(R.id.pieChart);
-
         progressBar = view.findViewById(R.id.progressBar);
         llPro = view.findViewById(R.id.ll_pro);
-
         pieChart.setUsePercentValues(true);
         pieChart.getDescription().setEnabled(false);
         pieChart.setExtraOffsets(5, 10, 5, 5);
         pieChart.setDrawEntryLabels(false); // disable label items
-
         // Disable Legend Chart View
         Legend l = pieChart.getLegend();
         l.setEnabled(true);
-
         // Hole View
         pieChart.setDrawHoleEnabled(true);
         pieChart.setHoleColor(Color.WHITE);
-
         pieChart.animateY(1400, Easing.EasingOption.EaseInOutQuad); // Rotate Event
         // Start Rotation View
         pieChart.setRotationAngle(0);
-
         // enable rotation of the chart by touch
         pieChart.setRotationEnabled(true);
         pieChart.setHighlightPerTapEnabled(true);
@@ -118,24 +106,19 @@ public class Tab1 extends Fragment {
                 entries.add(new PieEntry(amounts.get(i),
                         mChartLabel[i % mChartLabel.length]));
             }
-
-            PieDataSet dataSet = new PieDataSet(entries, "           Project statistical");
-
+            PieDataSet dataSet = new PieDataSet(entries, "");
+            dataSet.setValueTextSize(15f);
             dataSet.setDrawIcons(true);
             dataSet.setSliceSpace(2f);
             dataSet.setIconsOffset(new MPPointF(0, 40));
             dataSet.setSelectionShift(5f);
-
             // Disable Chart Value View
             dataSet.setDrawValues(true);
-
             // Add colors for Chart Items
             ArrayList<Integer> colors = new ArrayList<>();//
             for (int c : ColorTemplate.COLORFUL_COLORS)
                 colors.add(c);
-
             dataSet.setColors(colors);
-
             PieData data = new PieData(dataSet);
             data.setValueFormatter(new PercentFormatter());
             data.setValueTextSize(11f);
@@ -144,6 +127,9 @@ public class Tab1 extends Fragment {
             // undo all highlights
             pieChart.highlightValues(null);
             pieChart.invalidate();
+            Legend legend = pieChart.getLegend();
+            legend.setFormSize(15f);
+            legend.setTextSize(15f);
             if (pieChart.getData() != null){
                 llPro.setVisibility(View.GONE);
             }
@@ -180,7 +166,6 @@ public class Tab1 extends Fragment {
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("Authorization", tokenRead);
                 connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-
                 InputStreamReader isr = new InputStreamReader(connection.getInputStream(), "UTF-8");
                 BufferedReader br = new BufferedReader(isr);
                 StringBuilder builder = new StringBuilder();
@@ -205,7 +190,6 @@ public class Tab1 extends Fragment {
     {
         SharedPreferences preferences = this.getActivity().getSharedPreferences("token", MODE_PRIVATE);
         tokenRead = preferences.getString("token", "");
-        Log.e("tokenshareread", tokenRead);
     }
 
 }

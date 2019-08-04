@@ -1,6 +1,5 @@
 package com.example.navigation.fragment;
 
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -27,11 +25,9 @@ import com.android.volley.toolbox.Volley;
 import com.example.navigation.DetailProjectActivity;
 import com.example.navigation.R;
 import com.squareup.picasso.Picasso;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -41,7 +37,6 @@ import java.net.URL;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import dmax.dialog.SpotsDialog;
 import model.Project;
@@ -49,7 +44,7 @@ import model.Project;
 public class InprogressFragment extends Fragment {
 
     String nameProject, techonology, category, status;
-    int earning, id, total, idTeam;
+    int earning, id, total;
     RequestQueue requestQueue;
     //ArrayList<Project> movies;
     Project movie;
@@ -86,17 +81,14 @@ public class InprogressFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view);
         itemsList = new ArrayList<>();
         mAdapter = new StoreAdapter(getContext(),itemsList);
-
         mProgress = new SpotsDialog(getActivity(), R.style.Custom);
         mProgress.show();
-
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(8), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         recyclerView.setNestedScrollingEnabled(false);
-
         requestQueue = Volley.newRequestQueue(getContext());
 
         parseJSON();
@@ -118,7 +110,6 @@ public class InprogressFragment extends Fragment {
                         nameProject = p.getString("name");
                         techonology = p.getString("technology");
                         status = p.getString("status");
-
                         JSONObject jsonObject = p.getJSONObject("category");
                         category = jsonObject.getString("name");
                         movie = new Project(nameProject, techonology, category, status, earning, id);
@@ -139,7 +130,6 @@ public class InprogressFragment extends Fragment {
         });
         requestQueue.add(request);
     }
-
 
     class DanhSachSanPhamTask extends AsyncTask<Void, Void, String> {
         @Override
@@ -165,7 +155,6 @@ public class InprogressFragment extends Fragment {
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-
                 InputStreamReader isr = new InputStreamReader(connection.getInputStream(), "UTF-8");
                 BufferedReader br = new BufferedReader(isr);
                 StringBuilder builder = new StringBuilder();
@@ -183,7 +172,6 @@ public class InprogressFragment extends Fragment {
                     nameProject = p.getString("name");
                     techonology = p.getString("technology");
                     status = p.getString("status");
-
                     JSONObject jsonObject = p.getJSONObject("category");
                     category = jsonObject.getString("name");
                     movie = new Project(nameProject, techonology, category, status, earning, id);
@@ -274,7 +262,6 @@ public class InprogressFragment extends Fragment {
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.store_item_row, parent, false);
-
             return new MyViewHolder(itemView);
         }
 
@@ -300,7 +287,6 @@ public class InprogressFragment extends Fragment {
                     context.startActivity(intent);
                 }
             });
-
             String language = movie.getTechnology();
             switch (language){
                 case "Swift":

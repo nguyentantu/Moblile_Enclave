@@ -2,6 +2,7 @@ package adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -9,17 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import com.example.navigation.DetailEnActivity;
 import com.example.navigation.R;
 import com.squareup.picasso.Picasso;
-
 import java.text.NumberFormat;
 import java.util.ArrayList;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import model.Person;
 
 public class EngineerInTeamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
     int resource;
     Context context;
     ArrayList<Person> personsList;
@@ -34,7 +34,6 @@ public class EngineerInTeamAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         notifyDataSetChanged();
     }
 
-
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -46,18 +45,14 @@ public class EngineerInTeamAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-
         if (viewHolder instanceof EngineerInTeamAdapter.PersonViewHolder){
             EngineerInTeamAdapter.PersonViewHolder personViewHolder = (EngineerInTeamAdapter.PersonViewHolder) viewHolder;
             personViewHolder.txtName.setText(personsList.get(i).getLastName());
             personViewHolder.txtEmail.setText(personsList.get(i).getEmail());
             personViewHolder.txtRole.setText(personsList.get(i).getRole());
-
             NumberFormat currentLocale = NumberFormat.getInstance();
             String salary = currentLocale.format(personsList.get(i).getSalary());
             personViewHolder.txtSalary.setText(salary+" VNĐ");
-            //personViewHolder.txtExperienceYear.setText(personsList.get(i).getExperienceYear()+"");
-
             if (personsList.get(i).getExperienceYear() < 3){
                 personViewHolder.txtExperienceYear.setText("SW 1");
             } else if (personsList.get(i).getExperienceYear() < 5){
@@ -68,7 +63,6 @@ public class EngineerInTeamAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             } else {
                 personViewHolder.txtExperienceYear.setText("SW 4");
             }
-
             final String avatar = personsList.get(i).getAvatar();
             // Set avatar
             Picasso.with(context).load(avatar).into(personViewHolder.imgPerson);
@@ -79,12 +73,21 @@ public class EngineerInTeamAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             } else if (personViewHolder.txtRole.getText().equals("leader") ){
                 personViewHolder.txtRole.setBackgroundColor(Color.RED);
                 personViewHolder.txtRole.setText(personsList.get(i).getRole().toUpperCase());
-            }
-            else if (personViewHolder.txtRole.getText().equals("quality assurance") ){
+            } else if (personViewHolder.txtRole.getText().equals("quality assurance") ){
                 personViewHolder.txtRole.setText("QA");
                 personViewHolder.txtRole.setBackgroundColor(Color.YELLOW);
             }
-
+            final int id = personsList.get(i).getIdPerson();
+            personViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, DetailEnActivity.class);
+                    intent.putExtra("id", id);
+                    intent.putExtra("avatar",avatar);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 
