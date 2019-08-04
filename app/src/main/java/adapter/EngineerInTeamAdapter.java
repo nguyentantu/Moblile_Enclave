@@ -78,7 +78,7 @@ public class EngineerInTeamAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 personViewHolder.txtRole.setText("DEV");
             } else if (personViewHolder.txtRole.getText().equals("leader") ){
                 personViewHolder.txtRole.setBackgroundColor(Color.RED);
-                personViewHolder.txtRole.setText(personsList.get(i).getRole());
+                personViewHolder.txtRole.setText(personsList.get(i).getRole().toUpperCase());
             }
             else if (personViewHolder.txtRole.getText().equals("quality assurance") ){
                 personViewHolder.txtRole.setText("QA");
