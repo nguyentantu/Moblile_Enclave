@@ -4,16 +4,20 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.navigation.DetailEnActivity;
 import com.example.navigation.R;
 import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import model.Person;
 
@@ -49,7 +53,7 @@ public class ListEngineerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             personViewHolder.txtEmail.setText(personsList.get(i).getSkype());
             final String avatar = personsList.get(i).getAvatar();
             // Set avatar
-            Picasso.with(context).load(avatar).into(personViewHolder.imgPerson);
+            Picasso.get().load(avatar).into(personViewHolder.imgPerson);
             if (personsList.get(i).getRole().toUpperCase().equals("DEVELOPER") ){
                 personViewHolder.txtRole.setBackgroundColor(Color.GREEN);
                 personViewHolder.txtRole.setText("DEV");

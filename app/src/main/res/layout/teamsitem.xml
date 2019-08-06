@@ -7,7 +7,7 @@
     android:focusable="true"
     android:clickable="true"
     android:layout_margin="3dp"
-    android:background="@drawable/box_shape"
+    android:background="@drawable/box_shape2"
     android:orientation="horizontal">
 
     <LinearLayout

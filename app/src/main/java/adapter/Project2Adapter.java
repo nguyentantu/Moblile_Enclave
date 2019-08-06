@@ -3,12 +3,13 @@ package adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.navigation.DetailProjectActivity;
 import com.example.navigation.R;
@@ -86,69 +87,69 @@ public class Project2Adapter extends RecyclerView.Adapter<Project2Adapter.Exampl
         String language = currentItem.getTechnology();
         switch (language){
             case "Swift":
-                Picasso.with(context).load(R.drawable.swift).into(viewHolder.imgLanguage);
+                Picasso.get().load(R.drawable.swift).into(viewHolder.imgLanguage);
                 break;
             case "TypeScript":
-                Picasso.with(context).load(R.drawable.typescript).into(viewHolder.imgLanguage);
+                Picasso.get().load(R.drawable.typescript).into(viewHolder.imgLanguage);
                 break;
             case "React Native":
-                Picasso.with(context).load(R.drawable.react_native).into(viewHolder.imgLanguage);
+                Picasso.get().load(R.drawable.react_native).into(viewHolder.imgLanguage);
                 break;
             case "Angular JS":
-                Picasso.with(context).load(R.drawable.angular).into(viewHolder.imgLanguage);
+                Picasso.get().load(R.drawable.angular).into(viewHolder.imgLanguage);
                 break;
             case "VueJS":
-                Picasso.with(context).load(R.drawable.vuejs).into(viewHolder.imgLanguage);
+                Picasso.get().load(R.drawable.vuejs).into(viewHolder.imgLanguage);
                 break;
             case "Go lang":
-                Picasso.with(context).load(R.drawable.go_lang).into(viewHolder.imgLanguage);
+                Picasso.get().load(R.drawable.go_lang).into(viewHolder.imgLanguage);
                 break;
             case "Objective-C":
-                Picasso.with(context).load(R.drawable.object_c).into(viewHolder.imgLanguage);
+                Picasso.get().load(R.drawable.object_c).into(viewHolder.imgLanguage);
                 break;
             case "R":
-                Picasso.with(context).load(R.drawable.r).into(viewHolder.imgLanguage);
+                Picasso.get().load(R.drawable.r).into(viewHolder.imgLanguage);
                 break;
             case "Nodejs":
                 viewHolder.technology.setVisibility(View.GONE);
-                Picasso.with(context).load(R.drawable.nodejs).into(viewHolder.imgLanguage);
+                Picasso.get().load(R.drawable.nodejs).into(viewHolder.imgLanguage);
                 break;
             case "PHP":
                 viewHolder.technology.setVisibility(View.GONE);
-                Picasso.with(context).load(R.drawable.php).into(viewHolder.imgLanguage);
+                Picasso.get().load(R.drawable.php).into(viewHolder.imgLanguage);
                 break;
             case "JavaScript":
-                Picasso.with(context).load(R.drawable.javascript).into(viewHolder.imgLanguage);
+                Picasso.get().load(R.drawable.javascript).into(viewHolder.imgLanguage);
                 break;
             case "Java":
                 viewHolder.technology.setVisibility(View.GONE);
-                Picasso.with(context).load(R.drawable.java).into(viewHolder.imgLanguage);
+                Picasso.get().load(R.drawable.java).into(viewHolder.imgLanguage);
                 break;
             case "C/C++":
                 viewHolder.technology.setVisibility(View.GONE);
-                Picasso.with(context).load(R.drawable.cccc).into(viewHolder.imgLanguage);
+                Picasso.get().load(R.drawable.cccc).into(viewHolder.imgLanguage);
                 break;
             case "Python":
-                Picasso.with(context).load(R.drawable.python).into(viewHolder.imgLanguage);
+                Picasso.get().load(R.drawable.python).into(viewHolder.imgLanguage);
                 break;
             case "Ruby":
-                Picasso.with(context).load(R.drawable.ruby).into(viewHolder.imgLanguage);
+                Picasso.get().load(R.drawable.ruby).into(viewHolder.imgLanguage);
                 break;
             case "Visual Basic":
-                Picasso.with(context).load(R.drawable.visual_basic).into(viewHolder.imgLanguage);
+                Picasso.get().load(R.drawable.visual_basic).into(viewHolder.imgLanguage);
                 break;
             case "Kotlin":
-                Picasso.with(context).load(R.drawable.kotlin).into(viewHolder.imgLanguage);
+                Picasso.get().load(R.drawable.kotlin).into(viewHolder.imgLanguage);
                 break;
             case "Perl":
-                Picasso.with(context).load(R.drawable.perl).into(viewHolder.imgLanguage);
+                Picasso.get().load(R.drawable.perl).into(viewHolder.imgLanguage);
                 break;
             case "ReactJS":
-                Picasso.with(context).load(R.drawable.react_native).into(viewHolder.imgLanguage);
+                Picasso.get().load(R.drawable.react_native).into(viewHolder.imgLanguage);
                 break;
             case "C#":
                 viewHolder.technology.setVisibility(View.GONE);
-                Picasso.with(context).load(R.drawable.c_sharp).into(viewHolder.imgLanguage);
+                Picasso.get().load(R.drawable.c_sharp).into(viewHolder.imgLanguage);
                 break;
             default:
                 break;

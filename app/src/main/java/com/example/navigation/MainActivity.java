@@ -2,22 +2,17 @@ package com.example.navigation;
 
 import android.animation.ValueAnimator;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,7 +22,27 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.core.view.MenuItemCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.viewpager.widget.ViewPager;
+
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
@@ -37,6 +52,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.annotation.Nullable;
 
 import adapter.PagerAdapter;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -53,12 +74,70 @@ public class MainActivity extends AppCompatActivity
     int totalPro = 0;
     int totalTeam = 0;
     int totalManager = 0;
-    int id;
+    int id, idUser;
 
     String email, lastName, firstName, Strava;
     CircleImageView avatar;
     TextView txtTotalEngineer, txtProject, txtTeam, txtManager, txtGmail, txtNameAdmin;
     String tokenRead;
+
+    private static final int MY_REQUEST_CODE = 100;
+    Set<String> listSet;
+    final String KEY_SAVE = "dataSave";
+    final String NAME_DATA = "listID";
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        listSet = getShared();
+        if (listSet == null) {
+            listSet = new HashSet<>();
+        } else {
+            System.out.println(listSet.size() + "Realtime size");
+
+        }
+        db.collection("activities")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshots,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            return;
+                        }
+
+                        List<DocumentChange> listDocument = snapshots.getDocumentChanges();
+
+                        for (int i = 0; i <= listDocument.size() - 1; i++) {
+                            String idNotifi = listDocument.get(i).getDocument().getId();
+                            String mess = listDocument.get(i).getDocument().getString("action");
+                            String name;
+
+                            Intent intent2 = getIntent();
+                            idUser = intent2.getIntExtra("id",0);
+
+                            Map<String,Object> map =  listDocument.get(i).getDocument().getData();
+                            String id = String.valueOf(map.get("userId"));
+                            if (id.equals(idUser+"")){
+                                name = "You";
+                            }
+                            else {
+                                name = listDocument.get(i).getDocument().getString("fullName");
+                            }
+                            String message = name+" "+mess;
+                            if (!listSet.contains(idNotifi)) {
+                                listSet.add(idNotifi);
+                                createNotification(message, listSet.size());
+                            } else {
+                            }
+                        }
+                        System.out.println(listSet.size() + "Realtime size");
+                        setShared(listSet);
+                    }
+                });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -196,7 +275,7 @@ public class MainActivity extends AppCompatActivity
 
             txtGmail.setText(email);
             txtNameAdmin.setText(firstName+" "+lastName);
-            Picasso.with(MainActivity.this).load(Strava).into(avatar);
+            Picasso.get().load(Strava).into(avatar);
 
             ValueAnimator animator = ValueAnimator.ofInt(1, totalEn);
             ValueAnimator animator2 = ValueAnimator.ofInt(1, totalPro);
@@ -378,4 +457,54 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences preferences = getSharedPreferences("token", MODE_PRIVATE);
         tokenRead = preferences.getString("token", "");
     }
+
+
+    public void createNotification(String msgText, int notificationID) {
+
+        NotificationCompat.Builder notBuilder = new NotificationCompat.Builder(this);
+
+        notBuilder.setSmallIcon(R.drawable.bell)
+                .setContentTitle("New Enclave Notification")
+                .setContentText(msgText);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, MY_REQUEST_CODE,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        notBuilder.setContentIntent(pendingIntent);
+        notBuilder.setShowWhen(true);
+        notBuilder.setColor(ContextCompat.getColor(this,R.color.colorPrimary));
+        notBuilder.setLargeIcon(BitmapFactory.decodeResource( getResources(), R.drawable.logo_enclave));
+
+        Notification notification = notBuilder.build();
+
+        NotificationManagerCompat.from(this).notify(notificationID, notification);
+
+    }
+
+    private void setShared(Set<String> idNotifi) {
+        SharedPreferences sharedPreferences = getSharedPreferences(NAME_DATA, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if(sharedPreferences.getStringSet(KEY_SAVE,null)!=null){
+            editor.putStringSet(KEY_SAVE,null);
+            editor.apply();
+            editor.putStringSet(KEY_SAVE, idNotifi);
+            editor.apply();
+            editor.commit();
+        }else{
+            editor.putStringSet(KEY_SAVE, idNotifi);
+            editor.apply();
+            editor.commit();
+        }
+
+
+
+    }
+
+    private Set<String> getShared() {
+        Set<String> listData;
+        SharedPreferences sharedPreferences = getSharedPreferences(NAME_DATA, Context.MODE_PRIVATE);
+        listData = sharedPreferences.getStringSet(KEY_SAVE, null);
+        return listData;
+    }
+
 }

@@ -4,17 +4,21 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.navigation.DetailEnActivity;
 import com.example.navigation.R;
 import com.squareup.picasso.Picasso;
+
 import java.text.NumberFormat;
 import java.util.ArrayList;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import model.Person;
 
@@ -49,7 +53,7 @@ public class EngineerInTeamAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             EngineerInTeamAdapter.PersonViewHolder personViewHolder = (EngineerInTeamAdapter.PersonViewHolder) viewHolder;
             personViewHolder.txtName.setText(personsList.get(i).getLastName());
             personViewHolder.txtEmail.setText(personsList.get(i).getEmail());
-            personViewHolder.txtRole.setText(personsList.get(i).getRole());
+            //personViewHolder.txtRole.setText(personsList.get(i).getRole());
             NumberFormat currentLocale = NumberFormat.getInstance();
             String salary = currentLocale.format(personsList.get(i).getSalary());
             personViewHolder.txtSalary.setText(salary+" VNĐ");
@@ -65,15 +69,15 @@ public class EngineerInTeamAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             }
             final String avatar = personsList.get(i).getAvatar();
             // Set avatar
-            Picasso.with(context).load(avatar).into(personViewHolder.imgPerson);
+            Picasso.get().load(avatar).into(personViewHolder.imgPerson);
 
-            if (personViewHolder.txtRole.getText().equals("developer") ){
+            if (personsList.get(i).getRole().toLowerCase().equals("developer") ){
                 personViewHolder.txtRole.setBackgroundColor(Color.GREEN);
                 personViewHolder.txtRole.setText("DEV");
-            } else if (personViewHolder.txtRole.getText().equals("leader") ){
+            } else if (personsList.get(i).getRole().toLowerCase().equals("leader") ){
                 personViewHolder.txtRole.setBackgroundColor(Color.RED);
                 personViewHolder.txtRole.setText(personsList.get(i).getRole().toUpperCase());
-            } else if (personViewHolder.txtRole.getText().equals("quality assurance") ){
+            } else if (personsList.get(i).getRole().toLowerCase().equals("quality assurance") ){
                 personViewHolder.txtRole.setText("QA");
                 personViewHolder.txtRole.setBackgroundColor(Color.YELLOW);
             }

@@ -3,18 +3,22 @@ package adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.navigation.AlphalbetActivity;
 import com.example.navigation.DetailEnActivity;
 import com.example.navigation.R;
 import com.squareup.picasso.Picasso;
+
 import java.util.List;
+
 import Common.Common;
 import de.hdodenhof.circleimageview.CircleImageView;
 import model.Person;
@@ -82,7 +86,7 @@ public class PersonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             final int id = personList.get(i).getId();
             final String avatar = personList.get(i).getAvatar();
             // Set avatar
-            Picasso.with(context).load(avatar).into(personViewHolder.img_person_avatar);
+            Picasso.get().load(avatar).into(personViewHolder.img_person_avatar);
             personViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

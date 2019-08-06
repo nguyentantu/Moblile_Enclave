@@ -8,26 +8,32 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.squareup.picasso.Picasso;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import dmax.dialog.SpotsDialog;
 import model.Engineers;
+
 import static android.Manifest.permission.CALL_PHONE;
 
 public class DetailEnActivity extends AppCompatActivity {
@@ -70,7 +76,7 @@ public class DetailEnActivity extends AppCompatActivity {
         Intent intent = getIntent();
         id = intent.getIntExtra("id",0);
         avatar = intent.getStringExtra("avatar");
-        Picasso.with(getApplicationContext()).load(avatar)//download URL
+        Picasso.get().load(avatar)//download URL
                 .into(imgProDetail);
 
             mProgress.show();
@@ -219,9 +225,10 @@ public class DetailEnActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(DetailEnActivity.this, ListEngineerActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intent);
+//        Intent intent = new Intent(DetailEnActivity.this, ListEngineerActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        startActivity(intent);
+        finish();
         super.onBackPressed();
     }
 

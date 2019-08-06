@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "612565009564",
+    "firebase_url": "https://enclave-23839.firebaseio.com",
+    "project_id": "enclave-23839",
+    "storage_bucket": "enclave-23839.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612565009564:android:da79a7b8eef02bd0",
+        "android_client_info": {
+          "package_name": "com.example.navigation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "612565009564-7b6t0m51dqhlvkfcjl2ur32c48s67kjb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeGtsnylkacY3aggR8uZK30sr7QuD0kLc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "612565009564-7b6t0m51dqhlvkfcjl2ur32c48s67kjb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
