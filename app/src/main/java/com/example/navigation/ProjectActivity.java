@@ -76,7 +76,6 @@ public class ProjectActivity extends AppCompatActivity {
                     loadFragment(fragment);
                     return true;
             }
-
             return false;
         }
     };

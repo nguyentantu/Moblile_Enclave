@@ -11,12 +11,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -26,9 +26,11 @@ import com.android.volley.toolbox.Volley;
 import com.example.navigation.DetailProjectActivity;
 import com.example.navigation.R;
 import com.squareup.picasso.Picasso;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -38,6 +40,7 @@ import java.net.URL;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import dmax.dialog.SpotsDialog;
 import model.Project;
@@ -81,8 +84,10 @@ public class PendingFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view);
         itemsList = new ArrayList<>();
         mAdapter = new StoreAdapter(getActivity(),itemsList);
+
         mProgress = new SpotsDialog(getActivity(), R.style.Custom);
         mProgress.show();
+
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new PendingFragment.GridSpacingItemDecoration(2, dpToPx(8), true));
@@ -139,7 +144,6 @@ public class PendingFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String s) {
-            Log.e("tototoatooato", movie + "");
             mAdapter = new StoreAdapter(getContext(),itemsList);
             recyclerView.setAdapter(mAdapter);
         }

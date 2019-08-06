@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -151,7 +152,19 @@ public class DetailProjectActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(nameProject);
             txtDescription.setText(description);
             txtStartDay.setText(startDay.substring(0,10));
-            txtStatus.setText(status.toUpperCase());
+
+            if (status.toUpperCase().equals("DONE")){
+                txtStatus.setText(status.toUpperCase());
+                txtStatus.setBackgroundColor(Color.RED);
+            } else if (status.toUpperCase().equals("PENDING")){
+                txtStatus.setText(status.toUpperCase());
+                txtStatus.setBackgroundColor(Color.YELLOW);
+            } else if (status.toUpperCase().equals("INPROGRESS")){
+                txtStatus.setText(status.toUpperCase());
+                txtStatus.setBackgroundColor(Color.GREEN);
+            }
+            //txtStatus.setText(status.toUpperCase());
+
             txtTeam.setText(team);
             txtTechnology.setText(technology);
             NumberFormat currentLocale = NumberFormat.getInstance();
@@ -163,6 +176,7 @@ public class DetailProjectActivity extends AppCompatActivity {
                 txtTeam.setVisibility(View.GONE);
                 teamvv.setVisibility(View.GONE);
                 txtInform.setVisibility(View.VISIBLE);
+                mProgress.dismiss();
             } else if (team != null ){
                 parseJSON2();
             }

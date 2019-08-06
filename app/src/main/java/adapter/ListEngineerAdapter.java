@@ -47,17 +47,16 @@ public class ListEngineerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             PersonViewHolder personViewHolder = (PersonViewHolder) viewHolder;
             personViewHolder.txtName.setText(personsList.get(i).getName());
             personViewHolder.txtEmail.setText(personsList.get(i).getSkype());
-            personViewHolder.txtRole.setText(personsList.get(i).getRole());
             final String avatar = personsList.get(i).getAvatar();
             // Set avatar
             Picasso.with(context).load(avatar).into(personViewHolder.imgPerson);
-            if (personViewHolder.txtRole.getText().equals("developer") ){
+            if (personsList.get(i).getRole().toUpperCase().equals("DEVELOPER") ){
                 personViewHolder.txtRole.setBackgroundColor(Color.GREEN);
                 personViewHolder.txtRole.setText("DEV");
-            } else if (personViewHolder.txtRole.getText().equals("leader") ){
+            } else if (personsList.get(i).getRole().toUpperCase().equals("LEADER") ){
                 personViewHolder.txtRole.setBackgroundColor(Color.RED);
                 personViewHolder.txtRole.setText(personsList.get(i).getRole().toUpperCase());
-            } else if (personViewHolder.txtRole.getText().equals("quality assurance") ){
+            } else if (personsList.get(i).getRole().toUpperCase().equals("QUALITY ASSURANCE") ){
                 personViewHolder.txtRole.setText("QA");
                 personViewHolder.txtRole.setBackgroundColor(Color.YELLOW);
             }

@@ -205,6 +205,7 @@ public class ResetPassword2Activity extends AppCompatActivity {
                     }
                 });
             }catch (Exception ex){
+                Toast.makeText(ResetPassword2Activity.this, "Something Wrong!", Toast.LENGTH_SHORT).show();
             }
             return null;
         }

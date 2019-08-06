@@ -54,12 +54,12 @@ public class ResetPasswordActivity extends AppCompatActivity {
                Email = edtEmail.getText().toString().trim();
                 if (TextUtils.isEmpty(Email)) {
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(getApplication(), "Enter your registered email id", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), "Enter your registered Email", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
                     if (!isValidEmail(Email)){
                         progressBar.setVisibility(View.GONE);
-                        Toast.makeText(ResetPasswordActivity.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ResetPasswordActivity.this, "Please enter a valid email!", Toast.LENGTH_SHORT).show();
                     } else {
                         progressBar.setVisibility(View.VISIBLE);
                         try {
