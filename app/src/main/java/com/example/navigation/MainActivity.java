@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -444,7 +445,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(webPageIntent);
         } else if (id == R.id.nav_send) {
             Intent webPageIntent = new Intent(Intent.ACTION_VIEW);
-            webPageIntent.setData(Uri.parse("http://enclaveit.com/"));
+            webPageIntent.setData(Uri.parse("https://enclave-management-si.herokuapp.com/home"));
             startActivity(webPageIntent);
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -463,6 +464,10 @@ public class MainActivity extends AppCompatActivity
 
         NotificationCompat.Builder notBuilder = new NotificationCompat.Builder(this);
 
+        //Define sound URI
+        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+
         notBuilder.setSmallIcon(R.drawable.bell)
                 .setContentTitle("New Enclave Notification")
                 .setContentText(msgText);
@@ -472,6 +477,7 @@ public class MainActivity extends AppCompatActivity
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
         notBuilder.setContentIntent(pendingIntent);
         notBuilder.setShowWhen(true);
+        notBuilder.setSound(soundUri);
         notBuilder.setColor(ContextCompat.getColor(this,R.color.colorPrimary));
         notBuilder.setLargeIcon(BitmapFactory.decodeResource( getResources(), R.drawable.logo_enclave));
 
