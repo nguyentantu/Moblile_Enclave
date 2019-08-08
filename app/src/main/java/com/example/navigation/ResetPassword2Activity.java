@@ -3,7 +3,6 @@ package com.example.navigation;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -68,10 +67,9 @@ public class ResetPassword2Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (TextUtils.isEmpty(Email)) {
+                if (!checkData()){
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(getApplication(), "Enter your new password", Toast.LENGTH_SHORT).show();
-                    return;
                 }else {
                     if (!edtPassword.getText().toString().trim().equals(edtConfirmPassword.getText().toString().trim())) {
                         Toast.makeText(ResetPassword2Activity.this, "Password not matching", Toast.LENGTH_SHORT).show();
@@ -106,6 +104,14 @@ public class ResetPassword2Activity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private boolean checkData() {
+        if(edtConfirmPassword.getText().length() == 0 || edtPassword.getText().length() == 0){
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public class postJSON extends AsyncTask<String, Integer, String> {
@@ -206,7 +212,13 @@ public class ResetPassword2Activity extends AppCompatActivity {
                     }
                 });
             }catch (Exception ex){
-                Toast.makeText(ResetPassword2Activity.this, "Something Wrong!", Toast.LENGTH_SHORT).show();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(ResetPassword2Activity.this, "Incorrect Code!", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                    }
+                });
             }
             return null;
         }

@@ -170,7 +170,7 @@ public class DetailProjectActivity extends AppCompatActivity {
             txtTechnology.setText(technology);
             NumberFormat currentLocale = NumberFormat.getInstance();
             String earninG = currentLocale.format(earning);
-            txtEarning.setText(earninG+" VNĐ");
+            txtEarning.setText(earninG+" VND");
             txtEndDay.setText(endDay.substring(0,10));
 
             if (team == null){

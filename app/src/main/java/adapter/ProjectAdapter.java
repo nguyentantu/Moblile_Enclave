@@ -55,7 +55,7 @@ public class ProjectAdapter extends ArrayAdapter<Project> {
         if (project.getStatus().toUpperCase().equals("PENDING")) {
             txtStatus.setBackgroundColor(Color.YELLOW);
         } else if (project.getStatus().toUpperCase().equals("DONE")){
-            txtStatus.setBackgroundColor(Color.RED);
+            txtStatus.setBackgroundColor(Color.parseColor("#eb2f06"));
         } else if (project.getStatus().toUpperCase().equals("INPROGRESS")){
             txtStatus.setBackgroundColor(Color.GREEN);
         }

@@ -55,14 +55,14 @@ public class ListEngineerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             // Set avatar
             Picasso.get().load(avatar).into(personViewHolder.imgPerson);
             if (personsList.get(i).getRole().toUpperCase().equals("DEVELOPER") ){
-                personViewHolder.txtRole.setBackgroundColor(Color.GREEN);
+                personViewHolder.txtRole.setBackgroundColor(Color.parseColor("#36c6d3"));
                 personViewHolder.txtRole.setText("DEV");
             } else if (personsList.get(i).getRole().toUpperCase().equals("LEADER") ){
-                personViewHolder.txtRole.setBackgroundColor(Color.RED);
+                personViewHolder.txtRole.setBackgroundColor(Color.parseColor("#eb2f06"));
                 personViewHolder.txtRole.setText(personsList.get(i).getRole().toUpperCase());
             } else if (personsList.get(i).getRole().toUpperCase().equals("QUALITY ASSURANCE") ){
                 personViewHolder.txtRole.setText("QA");
-                personViewHolder.txtRole.setBackgroundColor(Color.YELLOW);
+                personViewHolder.txtRole.setBackgroundColor(Color.parseColor("#36c6d3"));
             }
             final int id = personsList.get(i).getId();
             personViewHolder.itemView.setOnClickListener(new View.OnClickListener() {

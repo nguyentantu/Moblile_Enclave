@@ -27,6 +27,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
@@ -47,6 +48,7 @@
                         android:id="@+id/txt_role"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:padding="3dp"
                         android:text="member"/>
 
                 </LinearLayout>

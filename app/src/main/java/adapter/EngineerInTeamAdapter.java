@@ -56,7 +56,7 @@ public class EngineerInTeamAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             //personViewHolder.txtRole.setText(personsList.get(i).getRole());
             NumberFormat currentLocale = NumberFormat.getInstance();
             String salary = currentLocale.format(personsList.get(i).getSalary());
-            personViewHolder.txtSalary.setText(salary+" VNĐ");
+            personViewHolder.txtSalary.setText(salary+" VND");
             if (personsList.get(i).getExperienceYear() < 3){
                 personViewHolder.txtExperienceYear.setText("SW 1");
             } else if (personsList.get(i).getExperienceYear() < 5){
@@ -72,14 +72,14 @@ public class EngineerInTeamAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             Picasso.get().load(avatar).into(personViewHolder.imgPerson);
 
             if (personsList.get(i).getRole().toLowerCase().equals("developer") ){
-                personViewHolder.txtRole.setBackgroundColor(Color.GREEN);
+                personViewHolder.txtRole.setBackgroundColor(Color.parseColor("#36c6d3"));
                 personViewHolder.txtRole.setText("DEV");
             } else if (personsList.get(i).getRole().toLowerCase().equals("leader") ){
-                personViewHolder.txtRole.setBackgroundColor(Color.RED);
+                personViewHolder.txtRole.setBackgroundColor(Color.parseColor("#eb2f06"));
                 personViewHolder.txtRole.setText(personsList.get(i).getRole().toUpperCase());
             } else if (personsList.get(i).getRole().toLowerCase().equals("quality assurance") ){
                 personViewHolder.txtRole.setText("QA");
-                personViewHolder.txtRole.setBackgroundColor(Color.YELLOW);
+                personViewHolder.txtRole.setBackgroundColor(Color.parseColor("#36c6d3"));
             }
             final int id = personsList.get(i).getIdPerson();
             personViewHolder.itemView.setOnClickListener(new View.OnClickListener() {

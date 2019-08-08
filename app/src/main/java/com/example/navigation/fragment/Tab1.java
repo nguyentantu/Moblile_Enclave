@@ -20,7 +20,6 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
 
 import org.json.JSONObject;
@@ -39,9 +38,11 @@ public class Tab1 extends Fragment {
     int inProgress, pending, done;
     ProgressBar progressBar;
     LinearLayout llPro;
-    String[] mChartLabel = new String[]{"Inprogress", "Pending", "Done", "", "", "", "", "", "", "", "", ""};
+    String[] mChartLabel = new String[]{"In-progress", "Pending", "Done", "", "", "", "", "", "", "", "", ""};
     PieChart pieChart;
     String tokenRead;
+
+    Integer[] integerColor = new Integer[]{Color.parseColor("#00cec9"), Color.parseColor("#fbc531"), Color.parseColor("#eb2f06")};
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -88,8 +89,8 @@ public class Tab1 extends Fragment {
         Legend l = pieChart.getLegend();
         l.setEnabled(true);
         // Hole View
-        pieChart.setDrawHoleEnabled(true);
-        pieChart.setHoleColor(Color.WHITE);
+        pieChart.setDrawHoleEnabled(false);
+        //pieChart.setHoleColor(Color.parseColor("#ff7675"));
         pieChart.animateY(1400, Easing.EasingOption.EaseInOutQuad); // Rotate Event
         // Start Rotation View
         pieChart.setRotationAngle(0);
@@ -108,7 +109,7 @@ public class Tab1 extends Fragment {
                         mChartLabel[i % mChartLabel.length]));
             }
             PieDataSet dataSet = new PieDataSet(entries, "");
-            dataSet.setValueTextSize(15f);
+            dataSet.setValueTextSize(17f);
             dataSet.setDrawIcons(true);
             dataSet.setSliceSpace(2f);
             dataSet.setIconsOffset(new MPPointF(0, 40));
@@ -117,7 +118,7 @@ public class Tab1 extends Fragment {
             dataSet.setDrawValues(true);
             // Add colors for Chart Items
             ArrayList<Integer> colors = new ArrayList<>();//
-            for (int c : ColorTemplate.COLORFUL_COLORS)
+            for (int c : integerColor)
                 colors.add(c);
             dataSet.setColors(colors);
             PieData data = new PieData(dataSet);

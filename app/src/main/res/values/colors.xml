@@ -56,4 +56,5 @@
     <color name="whiteTextColor">#fff</color>
     <color name="blackTextColor">#000</color>
     <color name="bgBottomNavigation">#95a5a6</color>
+    <color name="redColor">#ff7675</color>
 </resources>

@@ -445,7 +445,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(webPageIntent);
         } else if (id == R.id.nav_send) {
             Intent webPageIntent = new Intent(Intent.ACTION_VIEW);
-            webPageIntent.setData(Uri.parse("https://enclave-management-si.herokuapp.com/home"));
+            webPageIntent.setData(Uri.parse("https://enclave-management.herokuapp.com/home"));
             startActivity(webPageIntent);
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

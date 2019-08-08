@@ -65,10 +65,10 @@ public class Project2Adapter extends RecyclerView.Adapter<Project2Adapter.Exampl
 
         if (currentItem.getStatus().toUpperCase().equals("INPROGRESS")){
             viewHolder.txtStatus.setText(currentItem.getStatus().toUpperCase());
-            viewHolder.txtStatus.setBackgroundColor(Color.GREEN);
+            viewHolder.txtStatus.setBackgroundColor(Color.parseColor("#00cec9"));
         } else  if (currentItem.getStatus().toUpperCase().equals("DONE")){
             viewHolder.txtStatus.setText(currentItem.getStatus().toUpperCase());
-            viewHolder.txtStatus.setBackgroundColor(Color.RED);
+            viewHolder.txtStatus.setBackgroundColor(Color.parseColor("#eb2f06"));
         } else  if (currentItem.getStatus().toUpperCase().equals("PENDING")){
             viewHolder.txtStatus.setText(currentItem.getStatus().toUpperCase());
             viewHolder.txtStatus.setBackgroundColor(Color.YELLOW);

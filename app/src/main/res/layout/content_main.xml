@@ -87,6 +87,7 @@
                                     android:padding="5dp"
                                     android:textSize="30dp"
                                     android:textStyle="bold"
+                                    android:textColor="@color/white"
                                     android:layout_marginTop="10dp"
                                     android:layout_marginLeft="10dp" />
                                 <TextView
@@ -95,6 +96,7 @@
                                     android:text=" Engineers"
                                     android:textSize="20dp"
                                     android:textStyle="bold"
+                                    android:textColor="@color/white"
                                     android:layout_marginTop="20dp"/>
                             </LinearLayout>
 
@@ -129,11 +131,12 @@
                                     android:id="@+id/txt_pro"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
                                     android:layout_marginTop="10dp"
                                     android:gravity="center"
                                     android:padding="5dp"
+                                    android:textColor="@color/white"
                                     android:textSize="45dp"
-                                    android:layout_marginLeft="10dp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -142,6 +145,7 @@
                                     android:text="Projects"
                                     android:textSize="20dp"
                                     android:textStyle="bold"
+                                    android:textColor="@color/white"
                                     android:layout_marginLeft="20dp"/>
 
                             </LinearLayout>
@@ -189,6 +193,7 @@
                                     android:padding="5dp"
                                     android:textSize="45dp"
                                     android:textStyle="bold"
+                                    android:textColor="@color/white"
                                     android:layout_marginTop="20dp"/>
 
                                 <TextView
@@ -197,6 +202,7 @@
                                     android:text="Teams"
                                     android:textSize="20dp"
                                     android:layout_marginLeft="20dp"
+                                    android:textColor="@color/white"
                                     android:textStyle="bold" />
 
                             </LinearLayout>
@@ -234,6 +240,7 @@
                                     android:padding="5dp"
                                     android:textSize="30dp"
                                     android:textStyle="bold"
+                                    android:textColor="@color/white"
                                     android:layout_marginTop="10dp"
                                     android:layout_marginLeft="10dp"/>
 
@@ -243,6 +250,7 @@
                                     android:text=" Managers"
                                     android:textSize="20dp"
                                     android:textStyle="bold"
+                                    android:textColor="@color/white"
                                     android:layout_marginTop="20dp"/>
 
                             </LinearLayout>
